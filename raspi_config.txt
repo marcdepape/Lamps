@@ -1,0 +1,20 @@
+// USE ATOM
+
+sudo apt update
+sudo apt install git
+
+
+git clone https://github.com/iqaudio/Pi-Codec.git
+
+sudo nano /boot/config.txt
+
+//Disable audio
+#dtparam=audio=on
+
+[ALL]
+dtoverlay=iqaudio-codec
+dtoverlay=vc4-kms-v3d,audio=off
+
+sudo alsactl restore -f IQaudIO_Codec_StereoMIC_record_and_HP_playback.state
+
+https://pimylifeup.com/raspberry-pi-afp/
