@@ -2,7 +2,7 @@ state.IQaudIOCODEC {
 	control.1 {
 		iface MIXER
 		name 'Mic 1 Volume'
-		value 0
+		value 5
 		comment {
 			access 'read write'
 			type INTEGER
@@ -10,7 +10,7 @@ state.IQaudIOCODEC {
 			range '0 - 7'
 			dbmin -600
 			dbmax 3600
-			dbvalue.0 -600
+			dbvalue.0 2400
 		}
 	}
 	control.2 {
