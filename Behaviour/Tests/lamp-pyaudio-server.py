@@ -12,9 +12,8 @@ CHUNK = 4096
 audio = pyaudio.PyAudio()
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serversocket.bind(('', 4444))
+serversocket.bind(('', 8100))
 serversocket.listen(5)
-
 
 def callback(in_data, frame_count, time_info, status):
     for s in read_list[1:]:
