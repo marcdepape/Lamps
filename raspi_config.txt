@@ -27,3 +27,10 @@ https://github.com/aiXander/Realtime_PyAudio_FFT
 
 https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/installing-circuitpython-on-raspberry-pi
 https://learn.adafruit.com/neopixels-on-raspberry-pi
+
+// CLONE CARDS
+https://www.raspberrypistarterkits.com/how-to/clone-raspberry-pi-sd-card-on-windows-linux-macos/
+https://learn.adafruit.com/resizing-raspberry-pi-boot-partition/bonus-shrinking-images
+
+// GIT
+https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
