@@ -25,6 +25,8 @@ https://stackoverflow.com/questions/46386011/real-time-audio-signal-processing-u
 https://stackoverflow.com/questions/47814829/a-real-time-spectrum-analyser-with-pyaudio-in-python-on-raspi
 https://github.com/aiXander/Realtime_PyAudio_FFT
 
+pip install pyaudio
+
 https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/installing-circuitpython-on-raspberry-pi
 https://learn.adafruit.com/neopixels-on-raspberry-pi
 
