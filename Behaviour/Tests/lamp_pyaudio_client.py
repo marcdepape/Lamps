@@ -10,7 +10,7 @@ RATE = 44100
 CHUNK = 4096
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('127.0.0.1', 8100))
+s.connect((192.168.68.66, 8100))
 audio = pyaudio.PyAudio()
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
 
