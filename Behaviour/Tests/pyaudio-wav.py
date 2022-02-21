@@ -5,7 +5,7 @@ import numpy as np
 filename = 'modular.wav'
 
 # Set chunk size of 1024 samples per data frame
-chunk = 1024
+chunk = 4096
 
 # Open the sound file
 wf = wave.open(filename, 'rb')
