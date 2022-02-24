@@ -19,6 +19,8 @@ s.connect(('192.168.68.66', 8100))
 audio = pyaudio.PyAudio()
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
 
+volume = 0
+
 try:
     sleep(1)
     while volume < 90:
