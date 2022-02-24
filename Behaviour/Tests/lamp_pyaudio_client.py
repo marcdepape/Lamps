@@ -28,8 +28,8 @@ def streaming():
         stream.write(data)
 
 try:
-    stream = threading.Thread(target=streaming)
-    stream.start()
+    audio = threading.Thread(target=streaming)
+    audio.start()
 
     while volume < 100:
         volume += 1
