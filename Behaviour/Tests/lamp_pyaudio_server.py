@@ -20,7 +20,6 @@ def callback(in_data, frame_count, time_info, status):
         s.send(in_data)
     return (None, pyaudio.paContinue)
 
-
 # start Recording
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=callback)
 # stream.start_stream()
@@ -37,9 +36,9 @@ try:
                 read_list.append(clientsocket)
                 print ("Connection from", address)
             else:
-                data = s.recv(1024)
-                if not data:
-                    read_list.remove(s)
+                read_list.remove(s)
+                print ("Client connection closed")
+
 except KeyboardInterrupt:
     pass
 

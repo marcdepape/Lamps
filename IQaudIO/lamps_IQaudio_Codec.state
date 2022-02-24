@@ -2,7 +2,7 @@ state.IQaudIOCODEC {
 	control.1 {
 		iface MIXER
 		name 'Mic 1 Volume'
-		value 5
+		value 0
 		comment {
 			access 'read write'
 			type INTEGER
@@ -10,13 +10,13 @@ state.IQaudIOCODEC {
 			range '0 - 7'
 			dbmin -600
 			dbmax 3600
-			dbvalue.0 2400
+			dbvalue.0 -600
 		}
 	}
 	control.2 {
 		iface MIXER
 		name 'Mic 2 Volume'
-		value 5
+		value 4
 		comment {
 			access 'read write'
 			type INTEGER
@@ -24,7 +24,7 @@ state.IQaudIOCODEC {
 			range '0 - 7'
 			dbmin -600
 			dbmax 3600
-			dbvalue.0 2400
+			dbvalue.0 1800
 		}
 	}
 	control.3 {
@@ -46,8 +46,8 @@ state.IQaudIOCODEC {
 	control.4 {
 		iface MIXER
 		name 'Mixin PGA Volume'
-		value.0 7
-		value.1 7
+		value.0 9
+		value.1 9
 		comment {
 			access 'read write'
 			type INTEGER
@@ -55,15 +55,15 @@ state.IQaudIOCODEC {
 			range '0 - 15'
 			dbmin -450
 			dbmax 1800
-			dbvalue.0 600
-			dbvalue.1 600
+			dbvalue.0 900
+			dbvalue.1 900
 		}
 	}
 	control.5 {
 		iface MIXER
 		name 'ADC Volume'
-		value.0 114
-		value.1 114
+		value.0 122
+		value.1 122
 		comment {
 			access 'read write'
 			type INTEGER
@@ -71,8 +71,8 @@ state.IQaudIOCODEC {
 			range '0 - 127'
 			dbmin -9999999
 			dbmax 1125
-			dbvalue.0 150
-			dbvalue.1 150
+			dbvalue.0 750
+			dbvalue.1 750
 		}
 	}
 	control.6 {
@@ -110,7 +110,7 @@ state.IQaudIOCODEC {
 	control.8 {
 		iface MIXER
 		name 'Lineout Volume'
-		value 53
+		value 59
 		comment {
 			access 'read write'
 			type INTEGER
@@ -118,7 +118,7 @@ state.IQaudIOCODEC {
 			range '0 - 63'
 			dbmin -4800
 			dbmax 1500
-			dbvalue.0 500
+			dbvalue.0 1100
 		}
 	}
 	control.9 {
