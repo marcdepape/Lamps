@@ -32,9 +32,10 @@ try:
 
 except KeyboardInterrupt:
     while volume > 0:
+        data = s.recv(CHUNK)
+        stream.write(data)
         volume -= 1
         mixer.setvolume(volume)
-        sleep(0.01)
 
 print('Shutting down')
 s.close()
