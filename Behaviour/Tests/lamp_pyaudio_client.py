@@ -34,7 +34,7 @@ try:
     while volume < 100:
         volume += 1
         mixer.setvolume(volume)
-        sleep(0.2)
+        sleep(0.5)
 
     while True:
         pass
@@ -43,7 +43,7 @@ except KeyboardInterrupt:
     while volume > 0:
         volume -= 1
         mixer.setvolume(volume)
-        sleep(0.2)
+        sleep(0.5)
 
 print('Shutting down')
 s.close()
