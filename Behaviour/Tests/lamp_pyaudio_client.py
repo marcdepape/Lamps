@@ -23,14 +23,13 @@ stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, fr
 volume = 0
 
 try:
-    sleep(1)
-    while volume < 100:
-        volume += 1
-        mixer.setvolume(volume)
-        sleep(0.01)
     while True:
         data = s.recv(CHUNK)
         stream.write(data)
+        if volume < 100:
+            volume += 1
+            mixer.setvolume(volume)
+
 except KeyboardInterrupt:
     while volume > 0:
         volume -= 1
