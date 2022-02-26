@@ -24,6 +24,7 @@ https://pimylifeup.com/raspberry-pi-afp/
 https://stackoverflow.com/questions/46386011/real-time-audio-signal-processing-using-python
 https://stackoverflow.com/questions/47814829/a-real-time-spectrum-analyser-with-pyaudio-in-python-on-raspi
 https://github.com/aiXander/Realtime_PyAudio_FFT
+https://dolby.io/blog/capturing-high-quality-audio-with-python-and-pyaudio/
 
 pip install pyaudio
 
