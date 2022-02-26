@@ -12,7 +12,7 @@ import threading
 
 # RPI HOSTNAME
 this_lamp = subprocess.check_output('hostname')
-this_lamp = this_lamp.replace("lamp","",1)
+this_lamp = this_lamp.replace("lamp","")
 
 # SERVER
 server_context = zmq.Context()
