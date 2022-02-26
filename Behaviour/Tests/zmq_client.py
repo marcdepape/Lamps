@@ -45,4 +45,4 @@ while True:
     print("Received request: %s" % message)
 
     #  Do some 'work'
-    time.sleep(1)
+    sleep(1)
