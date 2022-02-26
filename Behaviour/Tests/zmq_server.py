@@ -29,7 +29,6 @@ lamp = True
 def subscribe():
     while True:
         message = frontend.recv_json()
-        message = json.loads(message)
         print("NEW MESSAGE: " + message)
         sleep(1)
 
