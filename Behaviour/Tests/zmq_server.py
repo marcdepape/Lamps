@@ -29,7 +29,8 @@ lamp = True
 def subscribe():
     message = frontend.recv_json()
     message = json.loads(message)
-    print(message)
+
+    print("NEW MESSAGE: " + message)
     sleep(1)
 
 proxy = threading.Thread(target=subscribe)
