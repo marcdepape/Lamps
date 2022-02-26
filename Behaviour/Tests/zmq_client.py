@@ -32,10 +32,11 @@ client.setsockopt(zmq.SUBSCRIBE, b'')
 client.set_hwm(1)
 
 def publish():
-    message = json.dumps({"lamp": this_lamp})
-    server.send_json(message)
-    print("SEND MESSAGE: " + message)
-    sleep(10)
+    while True:
+        message = json.dumps({"lamp": this_lamp})
+        server.send_json(message)
+        print("SEND MESSAGE: " + message)
+        sleep(10)
 
 node = threading.Thread(target=publish)
 node.start()

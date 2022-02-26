@@ -27,11 +27,11 @@ frontend.set_hwm(1)
 lamp = True
 
 def subscribe():
-    message = frontend.recv_json()
-    message = json.loads(message)
-
-    print("NEW MESSAGE: " + message)
-    sleep(1)
+    while True:
+        message = frontend.recv_json()
+        message = json.loads(message)
+        print("NEW MESSAGE: " + message)
+        sleep(1)
 
 proxy = threading.Thread(target=subscribe)
 proxy.start()
