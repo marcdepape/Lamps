@@ -9,16 +9,14 @@ import zmq
 import json
 import threading
 
-
+context = zmq.Context()
 
 # SUB
-frontend_context = zmq.Context()
-frontend = frontend_context.socket(zmq.SUB)
+frontend = context.socket(zmq.SUB)
 frontend.bind("tcp://*:8101")
 
 # PUB
-backend_context = zmq.Context()
-backend = backend_context.socket(zmq.PUB)
+backend = context.socket(zmq.PUB)
 backend.bind("tcp://*:8100")
 backend.set_hwm(1)
 
@@ -26,21 +24,20 @@ backend.set_hwm(1)
 frontend.setsockopt(zmq.SUBSCRIBE, b'')
 frontend.set_hwm(1)
 
-lamp = 0
+lamp = True
 
-def publish():
-    message = json.dumps({"lamp": lamp})
-    backend.send_json(message)
-    lamp != lamp
-    sleep(20)
+def subscribe():
+    message = frontend.recv_json()
+    message = json.loads(message)
+    print(message)
+    sleep(1)
 
-proxy = threading.Thread(target=publish)
+proxy = threading.Thread(target=subscribe)
 proxy.start()
 
 while True:
-    #  Wait for next request from client
-    message = frontend.recv()
-    print("Received request: %s" % message)
-
-    #  Do some 'work'
-    time.sleep(1)
+    message = json.dumps({"lamp": lamp})
+    backend.send_json(message)
+    lamp = not lamp
+    print("DUMP: " + message)
+    sleep(5)

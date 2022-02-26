@@ -14,6 +14,7 @@ import threading
 this_lamp = subprocess.check_output('hostname')
 this_lamp = this_lamp.decode("utf-8")
 this_lamp = this_lamp.replace('lamp','',1)
+print("THIS LAMP IS LAMP NUMBER:" + this_lamp)
 
 # SERVER
 server_context = zmq.Context()
@@ -40,7 +41,7 @@ node.start()
 
 while True:
     #  Wait for next request from client
-    message = client.recv()
+    message = client.recv_json()
     print("Received request: %s" % message)
 
     #  Do some 'work'
