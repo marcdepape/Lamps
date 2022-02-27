@@ -19,7 +19,7 @@ zmq_socket.set_hwm(1)
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-CHUNK = 1024
+CHUNK = 4096
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(0)
@@ -36,7 +36,6 @@ def streaming():
     while True:
         data = zmq_socket.recv(CHUNK)
         stream.write(data)
-        print("NEW DATA")
 
 try:
     audio = threading.Thread(target=streaming)
