@@ -13,6 +13,8 @@ context = zmq.Context()
 #  Socket to talk to server
 zmq_socket = context.socket(zmq.SUB)
 zmq_socket.connect("tcp://lamp0.local:8100")
+zmq_socket.setsockopt(zmq.SUBSCRIBE, b'')
+zmq_socket.set_hwm(1)
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1

@@ -19,10 +19,10 @@ audio = pyaudio.PyAudio()
 context = zmq.Context()
 zmq_socket = context.socket(zmq.PUB)
 zmq_socket.bind("tcp://*:8100")
+zmq_socket.set_hwm(1)
 
 def callback(in_data, frame_count, time_info, status):
     zmq_socket.send(in_data)
-    print("SEND DATA")
     return (None, pyaudio.paContinue)
 
 # start Recording
