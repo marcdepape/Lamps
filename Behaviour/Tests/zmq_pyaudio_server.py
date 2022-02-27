@@ -17,7 +17,7 @@ audio = pyaudio.PyAudio()
 #serversocket.listen(5)
 
 context = zmq.Context()
-zmq_socket = context.socket(zmq.REP)
+zmq_socket = context.socket(zmq.PUB)
 zmq_socket.bind("tcp://*:5555")
 
 def callback(in_data, frame_count, time_info, status):
@@ -34,15 +34,7 @@ print ("recording...")
 
 try:
     while True:
-        readable, writable, errored = select.select(read_list, [], [])
-        for s in readable:
-            if s is zmq_socket:
-                (zmq_socket, address) = zmq_socket.accept()
-                read_list.append(zmq_socket)
-                print ("Connection from", address)
-            else:
-                read_list.remove(s)
-                print ("Client connection closed")
+        pass
 
 except KeyboardInterrupt:
     pass
