@@ -17,7 +17,7 @@ audio = pyaudio.PyAudio()
 #serversocket.listen(5)
 
 context = zmq.Context()
-socket = context.socket(zmq.REP)
+zmq_socket = context.socket(zmq.REP)
 zmq_socket.bind("tcp://*:5555")
 
 def callback(in_data, frame_count, time_info, status):
