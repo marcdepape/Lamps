@@ -18,7 +18,7 @@ audio = pyaudio.PyAudio()
 
 context = zmq.Context()
 zmq_socket = context.socket(zmq.PUB)
-zmq_socket.bind("tcp://*:5555")
+zmq_socket.bind("tcp://*:8100")
 
 def callback(in_data, frame_count, time_info, status):
     for s in read_list[1:]:
