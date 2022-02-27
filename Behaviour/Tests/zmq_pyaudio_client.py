@@ -19,7 +19,7 @@ zmq_socket.set_hwm(1)
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-CHUNK = 4096
+CHUNK = 2048
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(0)

@@ -8,7 +8,7 @@ import zmq
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-CHUNK = 4096
+CHUNK = 2048
 
 audio = pyaudio.PyAudio()
 
