@@ -12,12 +12,12 @@ context = zmq.Context()
 
 #  Socket to talk to server
 zmq_socket = context.socket(zmq.SUB)
-zmq_socket.connect("tcp://192.168.68.66:8100")
+zmq_socket.connect("tcp://lamp0.local:8100")
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-CHUNK = 4096
+CHUNK = 1024
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(0)
@@ -34,6 +34,7 @@ def streaming():
     while True:
         data = zmq_socket.recv(CHUNK)
         stream.write(data)
+        print("NEW DATA")
 
 try:
     audio = threading.Thread(target=streaming)

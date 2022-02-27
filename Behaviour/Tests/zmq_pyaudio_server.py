@@ -8,7 +8,7 @@ import zmq
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-CHUNK = 4096
+CHUNK = 1024
 
 audio = pyaudio.PyAudio()
 
@@ -23,6 +23,7 @@ zmq_socket.bind("tcp://*:8100")
 def callback(in_data, frame_count, time_info, status):
     for s in read_list[1:]:
         zmq_socket.send(in_data)
+        print("SEND DATA")
     return (None, pyaudio.paContinue)
 
 # start Recording
