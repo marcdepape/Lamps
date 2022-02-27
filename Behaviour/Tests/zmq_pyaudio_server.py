@@ -29,7 +29,7 @@ def callback(in_data, frame_count, time_info, status):
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=callback)
 # stream.start_stream()
 
-read_list = [serversocket]
+read_list = [zmq_socket]
 print ("recording...")
 
 try:
