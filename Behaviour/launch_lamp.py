@@ -71,7 +71,7 @@ listen = context.socket(zmq.SUB)
 def playback():
     sound = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
     print("SPEAKER CREATED")
-    while lamo.is_listening:
+    while lamp.is_listening:
         data = listen.recv(CHUNK)
         sound.write(data)
 
