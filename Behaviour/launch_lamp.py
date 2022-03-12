@@ -15,6 +15,9 @@ this_lamp = this_lamp.decode("utf-8")
 this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 
+mixer = alsaaudio.Mixer()
+mixer.setvolume(0)
+
 # VARIABLES ------------------------------------------------------
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
@@ -52,11 +55,15 @@ listen = context.socket(zmq.SUB)
 
 def playback():
     speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
+    volume = 0
     print("SPEAKER CREATED")
     while True:
         if is_listening:
             data = listen.recv(CHUNK)
             speaker.write(data)
+            if volume < 100:
+                volume += 1
+                mixer.setvolume(volume)
         else:
             pass
 
@@ -107,11 +114,8 @@ try:
 
     if is_listening:
         listening = threading.Thread(target=playback())
-        print("PLAYBACK")
         listening.start()
-        print("LISTENING THREAD")
-        #volume = fadeIn(volume)
-        print ("LISTENING")
+        print("LISTENING")
     else:
         print ("BROADCASTING")
 
