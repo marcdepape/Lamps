@@ -95,6 +95,7 @@ def setupBroadcast():
     print("SETUP BROADCAST!!!!!")
     if lamp.audio.is_active():
         fadeOut()
+        speaker_sub.disconnect(streams[lamp.stream])
         print("LISTEN OPEN")
         lamp.audio.stop_stream()
         print("STOP STREAM")
