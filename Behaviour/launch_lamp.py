@@ -4,7 +4,6 @@ import pyaudio
 import zmq
 import json
 import subprocess
-import sys
 import alsaaudio
 from threading import Thread
 from time import sleep
@@ -30,9 +29,11 @@ lamp_stream = 0
 lamp_id = int(this_lamp)
 
 audio = pyaudio.PyAudio()
-audio = pyaudio.PyAudio()
 
 context = zmq.Context()
+
+# broadcasting --------------------------------------------------------------------
+
 mic_pub = context.socket(zmq.PUB)
 mic_pub.bind("tcp://*:8100")
 
@@ -45,6 +46,7 @@ def broadcast(in_data, frame_count, time_info, status):
     else:
         pass
 
+# listening ---------------------------------------------------------------------
 
 streams = [
     "tcp://lamp0.local:8100",
@@ -66,16 +68,28 @@ def playback():
 
 listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
 
-# setup functions
+# transition functions ------------------------------------------
 
-def setupBroadcast():
+def fadeIn():
     volume = mixer.getvolume()
     volume = int(volume[0])
-    while volume > 100:
+    while volume < 100:
         volume += 1
         mixer.setvolume(volume)
         sleep(0.5)
 
+def fadeOut():
+    volume = mixer.getvolume()
+    volume = int(volume[0])
+    while volume > 0:
+        volume -= 1
+        mixer.setvolume(volume)
+        sleep(0.5)
+
+# setup functions ------------------------------------------------------------
+
+def setupBroadcast():
+    fadeOut()
     is_listening = False;
     if listening.is_alive():
         listening.join()
@@ -89,41 +103,13 @@ def setupListen():
     print("ZMQ CONNECT TO: " + streams[lamp_stream])
 
     if sound.is_active():
-        volume = mixer.getvolume()
-        volume = int(volume[0])
-        while volume > 0:
-            volume -= 1
-            mixer.setvolume(volume)
-            sleep(0.5)
+        fadeOut()
         is_broadcasting = False;
         sound.close()
 
     listening.start()
+    fadeIn()
 
-    volume = mixer.getvolume()
-    volume = int(volume[0])
-    while volume < 100:
-        volume += 1
-        mixer.setvolume(volume)
-        sleep(0.5)
-
-
-# transition functions ------------------------------------------
-
-def fadeIn(current_volume):
-    while current_volume > 0:
-        current_volume -= 1
-        print(current_volume)
-        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%+"])
-        sleep(0.5)
-    return current_volume
-
-def fadeOut(current_volume):
-    while current_volume > 0:
-        current_volume -= 1
-        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%-"])
-        sleep(0.5)
-    return current_volume
 
 # main loop ------------------------------------------------------
 
