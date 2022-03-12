@@ -177,6 +177,7 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
+        pass
         #sleep(10)
         #print("SWITCH!")
         #switcher()
