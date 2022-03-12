@@ -84,8 +84,9 @@ listening.start()
 
 # alsa mixer ---------------------------------------------------------------
 mixer = alsaaudio.Mixer()
-print(mixer.getvolume())
-mixer.setvolume(0)
+volume = mixer.getvolume()
+volume[0] = 0
+mixer.setvolume(volume)
 
 # transition functions ------------------------------------------
 
@@ -109,9 +110,9 @@ try:
 
     if is_listening:
         volume = mixer.getvolume()
-        while volume < 100:
-            volume += 1
-            mixer.setvolume(100)
+        while volume[0] < 100:
+            volume[0] += 1
+            mixer.setvolume(volume)
             sleep(0.5)
         print ("LISTENING")
     else:
