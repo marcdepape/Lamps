@@ -42,7 +42,7 @@ CHANNELS = 1
 RATE = 22050
 CHUNK = 1024
 
-audio = pyaudio.PyAudio()
+audio_out = pyaudio.PyAudio()
 
 context = zmq.Context()
 mic_pub = context.socket(zmq.PUB)
@@ -56,11 +56,11 @@ def broadcast(in_data, frame_count, time_info, status):
     else:
         pass
 
-# start Recording
-mic = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
+mic = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
 
 # pyaudio listen setup -----------------------------------------------
-speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
+audio_in = pyaudio.PyAudio()
+speaker = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
 this_stream = 0
 
 streams = [
