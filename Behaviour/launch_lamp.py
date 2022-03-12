@@ -74,7 +74,7 @@ def setupBroadcast():
         mixer.setvolume(volume)
         sleep(0.5)
 
-    is_listening = false;
+    is_listening = False;
     listening.join()
 
     sound = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
@@ -86,11 +86,13 @@ def setupListen():
     print("ZMQ CONNECT TO: " + streams[lamp_stream])
 
     if sound.is_active():
+        volume = mixer.getvolume()
+        volume = int(volume[0])
         while volume > 0:
             volume -= 1
             mixer.setvolume(volume)
             sleep(0.5)
-        is_broadcasting = false;
+        is_broadcasting = False;
         sound.close()
 
     listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
