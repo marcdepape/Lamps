@@ -17,7 +17,7 @@ print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 
 # alsa mixer ---------------------------------------------------------------
 mixer = alsaaudio.Mixer()
-print(mixer.getvolume(PCM_PLAYBACK))
+print(mixer.getvolume())
 mixer.setvolume(0)
 
 # states ---------------------------------------------------------
@@ -111,7 +111,7 @@ try:
         volume = mixer.getvolume()
         while volume < 100:
             volume += 1
-            mixer.setvolume(100, PCM_PLAYBACK)
+            mixer.setvolume(100)
             sleep(0.5)
         print ("LISTENING")
     else:
