@@ -112,6 +112,7 @@ def setupListen():
         fadeOut()
         print("BROADCAST OPEN")
         lamp.audio.stop_stream()
+        
         print("STOP STREAM")
         lamp.audio.close()
         print("BROADCAST CLOSED")
