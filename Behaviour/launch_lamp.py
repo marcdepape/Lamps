@@ -124,8 +124,8 @@ def setupListen():
         print("BROADCAST CLOSED")
 
     print("SUBSCRIBE")
-    listen.connect(streams[lamp.stream])
-    listen.setsockopt(zmq.SUBSCRIBE, b'')
+    speaker_sub.connect(streams[lamp.stream])
+    speaker_sub.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
     listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
