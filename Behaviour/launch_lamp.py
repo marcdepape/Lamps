@@ -59,7 +59,7 @@ def playback():
     print("SPEAKER CREATED")
     while is_listening:
         data = listen.recv(CHUNK)
-        speaker.write(data)
+        #speaker.write(data)
         if volume < 100:
             volume += 1
             mixer.setvolume(volume)
@@ -112,8 +112,8 @@ if __name__ == "__main__":
         print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
 
-    setupListen()
     setupBroadcast()
+    setupListen()
     listening.start()
 
     if is_listening:
