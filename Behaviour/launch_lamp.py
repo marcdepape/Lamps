@@ -64,6 +64,8 @@ def playback():
         data = listen.recv(CHUNK)
         speaker.write(data)
 
+listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
+
 # setup functions
 
 def setupBroadcast():
@@ -95,7 +97,6 @@ def setupListen():
         is_broadcasting = False;
         sound.close()
 
-    listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
     listening.start()
 
     volume = mixer.getvolume()
