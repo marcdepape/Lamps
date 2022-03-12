@@ -53,7 +53,6 @@ listen = context.socket(zmq.SUB)
 def playback():
     speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
     print("SPEAKER CREATED")
-    print(is_listening)
     while True:
         if is_listening:
             data = listen.recv(CHUNK)
@@ -71,10 +70,6 @@ def setupListen():
     listen.connect(streams[lamp_stream])
     listen.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp_stream])
-    listening = threading.Thread(target=playback())
-    print("PLAYBACK")
-    listening.start()
-    print("LISTENING THREAD")
 # transition functions ------------------------------------------
 
 def fadeIn(current_volume):
@@ -111,6 +106,10 @@ try:
     subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
 
     if is_listening:
+        listening = threading.Thread(target=playback())
+        print("PLAYBACK")
+        listening.start()
+        print("LISTENING THREAD")
         volume = fadeIn(volume)
         print ("LISTENING")
     else:
