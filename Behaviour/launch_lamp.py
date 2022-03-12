@@ -11,7 +11,7 @@ from time import sleep
 this_lamp = subprocess.check_output('hostname')
 this_lamp = this_lamp.decode("utf-8")
 this_lamp = this_lamp.replace('lamp','',1)
-print("THIS LAMP IS LAMP NUMBER:" + int(this_lamp))
+print("THIS LAMP IS LAMP NUMBER:" + this_lamp)
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
