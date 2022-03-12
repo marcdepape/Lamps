@@ -90,6 +90,7 @@ def fadeIn(current_volume):
     while current_volume > 0:
         current_volume -= 1
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%+"])
+        print(current_volume)
         sleep(0.5)
     return current_volume
 
