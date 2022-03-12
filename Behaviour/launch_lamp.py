@@ -74,7 +74,7 @@ def fadeIn():
     print("FADE IN")
     while lamp.volume < 100:
         lamp.volume += 1
-        subprocess.call(["amixer", "-D", "sset", "Master", "1+%"])
+        subprocess.call(["amixer", "-D", "sset", "Master", "1%+"])
         sleep(0.01)
     print("VOLUME IS 100")
 
