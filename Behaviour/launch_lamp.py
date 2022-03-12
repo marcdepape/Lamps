@@ -6,7 +6,7 @@ import json
 import subprocess
 import sys
 import alsaaudio
-import threading import Thread
+from threading import Thread
 from time import sleep
 
 # RPI HOSTNAME ---------------------------------------------------
