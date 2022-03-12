@@ -112,9 +112,9 @@ if __name__ == "__main__":
         print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
 
-    setupBroadcast()
     setupListen()
-    listening.start()    
+    setupBroadcast()
+    listening.start()
 
     if is_listening:
         print("LISTENING")
