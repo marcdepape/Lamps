@@ -95,6 +95,7 @@ def fadeIn(current_volume):
     while current_volume < 100:
         current_volume += 1
         mixer.setvolume(current_volume)
+        print(current_volume)
         sleep(0.5)
     return current_volume
 
