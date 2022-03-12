@@ -36,12 +36,15 @@ context = zmq.Context()
 mic_pub = context.socket(zmq.PUB)
 mic_pub.bind("tcp://*:8100")
 
+sound = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
+
 def broadcast(in_data, frame_count, time_info, status):
     if is_broadcasting:
         mic_pub.send(in_data)
-        return (frame_count, pyaudio.paContinue)
+        return (None, pyaudio.paContinue)
     else:
         pass
+
 
 streams = [
     "tcp://lamp0.local:8100",
@@ -55,7 +58,7 @@ streams = [
 listen = context.socket(zmq.SUB)
 
 def playback():
-    speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
+    sound = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
     volume = 0
     print("SPEAKER CREATED")
     while is_listening:
@@ -68,13 +71,25 @@ def playback():
 # setup functions
 
 def setupBroadcast():
-    mic = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
-    mic.start_stream()
+    sound = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
+    sound.start_stream()
 
 def setupListen():
     listen.connect(streams[lamp_stream])
     listen.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp_stream])
+
+    if sound.is_active()
+        while volume > 0:
+            volume -= 1
+            mixer.setvolume(volume)
+            sleep(0.5)
+        sound.close()
+
+    listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
+    listening.start()
+
+
 # transition functions ------------------------------------------
 
 def fadeIn(current_volume):
@@ -94,7 +109,7 @@ def fadeOut(current_volume):
 
 # main loop ------------------------------------------------------
 
-listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
+
 #listening.daemon = True
 
 if __name__ == "__main__":
@@ -106,17 +121,14 @@ if __name__ == "__main__":
         lamp_stream = 1
         print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp_stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
+        setupBroadcast()
     elif lamp_id == 1:
         is_broadcasting = False
         is_listening = True
         lamp_stream = 0
         print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
-
-    setupBroadcast()
-    setupListen()
-    sleep(3)
-    listening.start()
+        setupListen()
 
     if is_listening:
         print("LISTENING")
