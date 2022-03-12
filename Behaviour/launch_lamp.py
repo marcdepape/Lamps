@@ -107,14 +107,15 @@ def setupBroadcast():
     sound.start_stream()
 
 def setupListen():
-    listen.connect(streams[lamp.stream])
-    listen.setsockopt(zmq.SUBSCRIBE, b'')
-    print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
     if sound.is_active():
         fadeOut()
         lamp.is_broadcasting = False;
         sound.close()
+
+    listen.connect(streams[lamp.stream])
+    listen.setsockopt(zmq.SUBSCRIBE, b'')
+    print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
     listening.start()
     fadeIn()
@@ -126,18 +127,16 @@ def switcher():
     if lamp.is_broadcasting:
         lamp.is_broadcasting = False
     else:
+        print("LAMP " + str(lamp.id) + " IS BROADCASTING TO " + str(lamp.stream))
         lamp.is_broadcasting = True
         setupBroadcast()
-        print("LAMP " + str(lamp.id) + " IS BROADCASTING TO " + str(lamp.stream))
-        return
 
     if lamp.is_listening:
         is_listening = False
     else:
+        print("LAMP " + str(lamp.id) + " IS LISTENING TO " + str(lamp.stream))
         lamp.is_listening = True
         setupListen()
-        print("LAMP " + str(lamp.id) + " IS LISTENING TO " + str(lamp.stream))
-        return
 
 if __name__ == "__main__":
     if lamp.id == 0:
