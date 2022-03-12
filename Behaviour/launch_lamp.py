@@ -67,6 +67,8 @@ def playback():
         else:
             pass
 
+listening = threading.Thread(target=playback(), daemon=True)
+
 # setup functions
 
 def setupBroadcast():
@@ -95,7 +97,7 @@ def fadeOut(current_volume):
     return current_volume
 
 # main loop ------------------------------------------------------
-try:
+if __name__ == "__main__":
     volume = 0
     if lamp_id == 0:
         is_broadcasting = True
@@ -111,22 +113,12 @@ try:
         setupListen()
         print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
+        listening.start()
 
     if is_listening:
-        listening = threading.Thread(target=playback(), daemon=True)
-        listening.start()
         print("LISTENING")
     else:
         print ("BROADCASTING")
 
     while True:
         pass
-
-except KeyboardInterrupt:
-    pass
-
-mic_pub.close()
-# stop Recording
-#mic.stop_stream()
-#mic.close()
-audio.terminate()
