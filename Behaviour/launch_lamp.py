@@ -64,6 +64,7 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
+    print("INSIDE LISTENER")
     data = speaker_sub.recv(CHUNK)
     return(data, pyaudio.paContinue)
 
