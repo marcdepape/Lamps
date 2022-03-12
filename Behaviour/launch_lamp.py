@@ -100,6 +100,7 @@ def fadeOut():
 def setupBroadcast():
     fadeOut()
     lamp.is_listening = False;
+
     if listening.is_alive():
         listening.join()
 
@@ -117,7 +118,9 @@ def setupListen():
     listen.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
+    listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
     listening.start()
+    print("NEW STREAM")
     fadeIn()
 
 
