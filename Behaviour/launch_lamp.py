@@ -21,12 +21,12 @@ mixer.setvolume(0)
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 22050
-CHUNK = 4096
+CHUNK = 1024
 
-is_broadcasting = True
-is_listening = False
-lamp_stream = 0
-lamp_id = int(this_lamp)
+global is_broadcasting = True
+global is_listening = False
+global lamp_stream = 0
+global lamp_id = int(this_lamp)
 
 audio = pyaudio.PyAudio()
 
