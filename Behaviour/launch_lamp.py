@@ -47,7 +47,6 @@ audio_out = pyaudio.PyAudio()
 context = zmq.Context()
 mic_pub = context.socket(zmq.PUB)
 mic_pub.bind("tcp://*:8100")
-mic_pub.set_hwm(1)
 
 def broadcast(in_data, frame_count, time_info, status):
     if is_broadcasting:
@@ -75,7 +74,6 @@ streams = [
 listen = context.socket(zmq.SUB)
 listen.connect(streams[lamp_stream])
 listen.setsockopt(zmq.SUBSCRIBE, b'')
-listen.set_hwm(1)
 
 def playback():
     while True:
@@ -86,6 +84,7 @@ def playback():
             pass
 
 listening = threading.Thread(target=playback)
+listening.start()
 
 # transition functions ------------------------------------------
 
@@ -109,7 +108,6 @@ try:
     volume = 0
     if is_listening:
         mixer.setvolume(100)
-        listening.start()
         print ("LISTENING")
     else:
         mic.start_stream()
