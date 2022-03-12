@@ -158,6 +158,10 @@ def switcher():
         setupListen()
 
 if __name__ == "__main__":
+    print("")
+    print("--------------------------------------------")
+    print("MAIN")
+    print("")
     if lamp.id == 0:
         lamp.is_broadcasting = True
         lamp.is_listening = False
