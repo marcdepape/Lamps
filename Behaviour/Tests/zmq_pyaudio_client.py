@@ -38,8 +38,8 @@ def streaming():
         stream.write(data)
 
 try:
-    audio = threading.Thread(target=streaming)
-    audio.start()
+    lamp_stream = threading.Thread(target=streaming)
+    lamp_stream.start()
 
     while volume < 100:
         volume += 1
@@ -59,3 +59,4 @@ print('Shutting down')
 s.close()
 stream.close()
 audio.terminate()
+lamp_stream.terminate()
