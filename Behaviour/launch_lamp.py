@@ -84,9 +84,7 @@ listening.start()
 
 # alsa mixer ---------------------------------------------------------------
 mixer = alsaaudio.Mixer()
-volume = mixer.getvolume()
-volume[0] = 0
-mixer.setvolume(volume)
+mixer.setvolume(0)
 
 # transition functions ------------------------------------------
 
