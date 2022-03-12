@@ -32,6 +32,8 @@ elif lamp_id == 1:
     lamp_stream = 0
     print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
 
+subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
+
 # pyaudio broadcast setup --------------------------------------------------
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
@@ -84,13 +86,13 @@ listening.start()
 
 # transition functions ------------------------------------------
 
-def fadeIn(current_volume):
-    while current_volume < 100:
-        current_volume += 1
-        mixer.setvolume(current_volume)
-        print(current_volume)
+volume = 0
+
+def fadeIn():
+    while volume < 100:
+        volume += 1
+        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%+"])
         sleep(0.5)
-    return current_volume
 
 def fadeOut(current_volume):
     while current_volume > 0:
@@ -103,7 +105,7 @@ def fadeOut(current_volume):
 try:
 
     if is_listening:
-        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
+        fadeIn()
         print ("LISTENING")
     else:
         mic.start_stream()
