@@ -77,6 +77,7 @@ def fadeIn():
         volume += 1
         mixer.setvolume(volume)
         sleep(0.5)
+    print("VOLUME IS 100")
 
 def fadeOut():
     volume = mixer.getvolume()
@@ -85,6 +86,7 @@ def fadeOut():
         volume -= 1
         mixer.setvolume(volume)
         sleep(0.5)
+    print("VOLUME IS 0")
 
 # setup functions ------------------------------------------------------------
 
