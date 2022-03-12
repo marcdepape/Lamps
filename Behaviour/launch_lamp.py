@@ -121,7 +121,7 @@ def setupListen():
     lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
     lamp.audio.start_stream()
     fadeIn()
-
+    print("STREAM STARTED!!!")
 
 # switching ------------------------------------------------------
 
@@ -169,6 +169,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(10)
+        sleep(20)
         print("SWITCH!")
-        switcher()
+        #switcher()
