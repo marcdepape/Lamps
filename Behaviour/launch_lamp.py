@@ -154,7 +154,7 @@ if __name__ == "__main__":
     print("MAIN")
     print("")
 
-    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
+    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
 
     if lamp.id == 0:
         lamp.is_broadcasting = True
