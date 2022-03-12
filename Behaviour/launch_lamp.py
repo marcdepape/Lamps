@@ -15,11 +15,6 @@ this_lamp = this_lamp.decode("utf-8")
 this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 
-# alsa mixer ---------------------------------------------------------------
-mixer = alsaaudio.Mixer()
-print(mixer.getvolume())
-mixer.setvolume(0)
-
 # states ---------------------------------------------------------
 is_broadcasting = True
 is_listening = False
@@ -86,6 +81,11 @@ def playback():
 
 listening = threading.Thread(target=playback)
 listening.start()
+
+# alsa mixer ---------------------------------------------------------------
+mixer = alsaaudio.Mixer()
+print(mixer.getvolume())
+mixer.setvolume(0)
 
 # transition functions ------------------------------------------
 
