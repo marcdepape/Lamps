@@ -107,7 +107,10 @@ def fadeOut(current_volume):
 try:
     volume = 0
     if is_listening:
-        mixer.setvolume(100)
+        while volume < 100:
+            volume += 1
+            mixer.setvolume(volume)
+            sleep(0.5)
         print ("LISTENING")
     else:
         mic.start_stream()
