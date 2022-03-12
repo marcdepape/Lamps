@@ -70,8 +70,7 @@ def listener(in_data, frame_count, time_info, status):
     print("INSIDE LISTENER")
     if lamp.is_listening:
         data = speaker_sub.recv(CHUNK)
-        lamp.audio.write(data)
-        return(None, pyaudio.paContinue)
+        return(data, pyaudio.paContinue)
     else:
         pass
 
@@ -106,7 +105,7 @@ def setupBroadcast():
         print("LISTEN CLOSED")
 
     print("OPEN BROADCAST!!!!!")
-    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
+    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
     lamp.audio.start_stream()
 
 def setupListen():
