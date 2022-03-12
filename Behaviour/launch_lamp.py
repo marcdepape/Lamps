@@ -29,12 +29,12 @@ if lamp_id == 0:
     is_broadcasting = True
     is_listening = False
     lamp_stream = 1
-    print("LAMP " + lamp_id + " IS BROADCASTING TO " + lamp_stream)
+    print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp_stream))
 elif lamp_id == 1:
     is_broadcasting = False
     is_listening = True
     lamp_stream = 0
-    print("LAMP " + lamp_id + " IS LISTENING TO " + lamp_stream)
+    print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
 
 # pyaudio broadcast setup --------------------------------------------------
 FORMAT = pyaudio.paInt16
