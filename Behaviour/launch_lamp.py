@@ -75,17 +75,17 @@ def fadeIn():
     volume = mixer.getvolume()
     volume = int(volume[0])
     while volume < 100:
-        volume += 1
+        volume += 2
         mixer.setvolume(volume)
         sleep(0.01)
-    print("VOLUME IS 0")
+    print("VOLUME IS 100")
 
 def fadeOut():
     print("FADE OUT")
     volume = mixer.getvolume()
     volume = int(volume[0])
     while volume > 0:
-        volume -= 1
+        volume -= 2
         mixer.setvolume(volume)
         sleep(0.01)
     print("VOLUME IS 0")
@@ -173,6 +173,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(20)
+        sleep(30)
         print("SWITCH!")
-        #switcher()
+        switcher()
