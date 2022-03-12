@@ -36,7 +36,7 @@ elif lamp_id == 1:
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 22050
-CHUNK = 1024
+CHUNK = 4096
 
 audio_out = pyaudio.PyAudio()
 
