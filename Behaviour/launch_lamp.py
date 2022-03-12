@@ -59,7 +59,6 @@ mic.start_stream()
 
 # pyaudio listen setup -----------------------------------------------
 speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
-speaker.start_stream()
 
 volume = 0
 this_stream = 0
@@ -82,7 +81,7 @@ def playback():
     while True:
         if is_listening:
             data = listen.recv(CHUNK)
-            spreaker.write(data)
+            speaker.write(data)
         else:
             pass
 
