@@ -53,8 +53,10 @@ def broadcaster(in_data, frame_count, time_info, status):
     else:
         pass
 
+print("OPEN BROADCAST")
 broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
 broadcast.close()
+print("CLOSE BROADCAST")
 
 # listening ---------------------------------------------------------------------
 
@@ -77,8 +79,10 @@ def listener(in_data, frame_count, time_info, status):
     else:
         pass
 
+print("OPEN LISTEN")
 listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
 listen.close()
+print("CLOSE LISTEN")
 
 # transition functions ------------------------------------------
 
@@ -102,12 +106,26 @@ def fadeOut():
 
 def setupBroadcast():
     print("SETUP BROADCAST!!!!!")
+    if listen.is_active():
+        print("LISTEN OPEN")
+        fadeOut()
+        lamp.is_listening = False;
+        listen.stop_stream()
+        listen.close()
+        print("LISTEN CLOSED")
 
     broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
     broadcast.start_stream()
 
 def setupListen():
     print("SETUP LISTEN!!!!!")
+    if broadcast.is_active():
+        print("BROADCAST OPEN")
+        fadeOut()
+        lamp.is_broadcasting = False;
+        broadcast.stop_stream()
+        broadcast.close()
+        print("BROADCAST CLOSED")
 
     print("SUBSCRIBE")
     speaker_sub.connect(streams[lamp.stream])
