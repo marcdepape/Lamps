@@ -116,6 +116,9 @@ def setupListen():
 # switching ------------------------------------------------------
 
 def switcher():
+    print(is_broadcasting)
+
+def switcherOld():
     if is_broadcasting:
         is_broadcasting = False
     else:
@@ -154,6 +157,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(30)
+        sleep(10)
         print("SWITCH!")
         switcher()
