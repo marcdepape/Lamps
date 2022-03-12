@@ -90,22 +90,24 @@ listening.start()
 
 volume = 0
 
-def fadeIn():
-    while volume < 100:
-        volume += 1
-        mixer.setvolume(volume)
+def fadeIn(current_volume):
+    while current_volume < 100:
+        current_volume += 1
+        mixer.setvolume(current_volume)
         sleep(0.5)
+    return current_volume
 
-def fadeOut():
-    while volume > 0:
-        volume -= 1
-        mixer.setvolume(volume)
+def fadeOut(current_volume):
+    while current_volume > 0:
+        current_volume -= 1
+        mixer.setvolume(current_volume)
         sleep(0.5)
+    return current_volume
 
 # main loop ------------------------------------------------------
 try:
     if is_listening:
-        fadeIn()
+        volume = fadeIn(volume)
         print ("LISTENING")
     else:
         print ("BROADCASTING")
