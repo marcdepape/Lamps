@@ -93,8 +93,8 @@ def fadeOut(current_volume):
 
 # main loop ------------------------------------------------------
 
-listening = Thread(name='listen_to_lamp', target=playback)
-listening.daemon = True
+listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
+#listening.daemon = True
 
 if __name__ == "__main__":
     volume = 0
