@@ -111,10 +111,21 @@ def setupListen():
     fadeIn()
 
 
-# main loop ------------------------------------------------------
+# switching ------------------------------------------------------
 
+def switcher():
+    is_broadcasting = not is_broadcasting
+    is_listening = not is_listening
 
-#listening.daemon = True
+    if is_broadcasting:
+        setupBroadcast()
+        print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp_stream))
+        return
+
+    if is_listening:
+        setupListen()
+        print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
+        return
 
 if __name__ == "__main__":
     if lamp_id == 0:
@@ -138,4 +149,5 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        pass
+        sleep(90)
+        switcher()
