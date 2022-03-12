@@ -70,7 +70,7 @@ def listener(in_data, frame_count, time_info, status):
     print("INSIDE LISTENER")
     if lamp.is_listening:
         data = speaker_sub.recv(CHUNK)
-        listen.write(data)
+        lamp.audio.write(data)
         return(None, pyaudio.paContinue)
     else:
         pass
@@ -177,6 +177,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(10)
-        print("SWITCH!")
-        switcher()
+        #sleep(10)
+        #print("SWITCH!")
+        #switcher()
