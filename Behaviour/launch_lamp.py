@@ -17,6 +17,7 @@ print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 
 # alsa mixer ---------------------------------------------------------------
 mixer = alsaaudio.Mixer()
+print(mixer.getvolume(PCM_PLAYBACK))
 mixer.setvolume(0)
 
 # states ---------------------------------------------------------
@@ -105,11 +106,12 @@ def fadeOut(current_volume):
 
 # main loop ------------------------------------------------------
 try:
-    volume = 0
+
     if is_listening:
+        volume = mixer.getvolume()
         while volume < 100:
             volume += 1
-            mixer.setvolume(volume)
+            mixer.setvolume(100, PCM_PLAYBACK)
             sleep(0.5)
         print ("LISTENING")
     else:
