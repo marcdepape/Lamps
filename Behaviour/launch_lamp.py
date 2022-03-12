@@ -47,7 +47,7 @@ mic_pub.bind("tcp://*:8100")
 mic_pub.set_hwm(1)
 
 def broadcast(in_data, frame_count, time_info, status):
-    mic_stream.send(in_data)
+    mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
 # start Recording
