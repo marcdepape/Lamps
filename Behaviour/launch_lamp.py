@@ -23,15 +23,18 @@ mixer.setvolume(0)
 is_broadcasting = True
 is_listening = False
 lamp_stream = 0
+lamp_id = int(this_lamp)
 
-if this_lamp == 0:
+if lamp_id == 0:
     is_broadcasting = True
     is_listening = False
     lamp_stream = 1
-elif this_lamp == 1:
+    print("LAMP " + lamp_id + " IS BROADCASTING TO " lamp_stream)
+elif lamp_id == 1:
     is_broadcasting = False
     is_listening = True
     lamp_stream = 0
+    print("LAMP " + lamp_id + " IS LISTENING TO " lamp_stream)
 
 # pyaudio broadcast setup --------------------------------------------------
 FORMAT = pyaudio.paInt16
@@ -100,10 +103,11 @@ def fadeOut():
 
 # main loop ------------------------------------------------------
 try:
-    print ("STREAMING")
-
     if is_listening:
         fadeIn()
+        print ("LISTENING")
+    else:
+        print ("BROADCASTING")
 
     while True:
         pass
