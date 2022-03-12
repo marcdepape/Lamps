@@ -134,7 +134,7 @@ def switcher():
         setupBroadcast()
 
     if lamp.is_listening:
-        is_listening = False
+        lamp.is_listening = False
     else:
         print("LAMP " + str(lamp.id) + " IS LISTENING TO " + str(lamp.stream))
         lamp.is_listening = True
