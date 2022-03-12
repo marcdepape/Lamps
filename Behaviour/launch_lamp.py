@@ -64,11 +64,8 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
-    if speaker_sub.closed == False:
-        data = speaker_sub.recv(CHUNK)
-        return(data, pyaudio.paContinue)
-    else:
-        return(None, pyaudio.paContinue)
+    data = speaker_sub.recv(CHUNK)
+    return(data, pyaudio.paContinue)
 
 # transition functions ------------------------------------------
 
@@ -98,8 +95,6 @@ def setupBroadcast():
     print("SETUP BROADCAST!!!!!")
     if lamp.audio.is_active():
         fadeOut()
-        if speaker_sub.closed == False:
-            speaker_sub.close()
         print("LISTEN OPEN")
         lamp.audio.stop_stream()
         print("STOP STREAM")
@@ -121,7 +116,6 @@ def setupListen():
         print("BROADCAST CLOSED")
 
     print("SUBSCRIBE")
-    speaker_sub = context.socket(zmq.SUB)
     speaker_sub.connect(streams[lamp.stream])
     speaker_sub.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
