@@ -108,8 +108,10 @@ try:
 
     if is_listening:
         volume = mixer.getvolume()
-        while volume[0] < 100:
-            volume[0] += 1
+        print(volume)
+        volume = int(volume[0])
+        while volume < 100:
+            volume += 1
             mixer.setvolume(volume)
             sleep(0.5)
         print ("LISTENING")
