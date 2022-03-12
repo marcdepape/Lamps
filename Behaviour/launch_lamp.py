@@ -24,6 +24,8 @@ CHANNELS = 1
 RATE = 22050
 CHUNK = 4096
 
+volume = 0
+
 is_broadcasting = True
 is_listening = False
 lamp_stream = 0
@@ -122,8 +124,6 @@ def fadeOut(current_volume):
 #listening.daemon = True
 
 if __name__ == "__main__":
-    volume = 0
-
     if lamp_id == 0:
         is_broadcasting = True
         is_listening = False
