@@ -44,7 +44,6 @@ context = zmq.Context()
 # broadcasting --------------------------------------------------------------------
 
 mic_pub = context.socket(zmq.PUB)
-mic_pub.close("tcp://*:8100")
 mic_pub.bind("tcp://*:8100")
 
 def broadcaster(in_data, frame_count, time_info, status):
@@ -65,8 +64,11 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
-    data = speaker_sub.recv(CHUNK)
-    return(data, pyaudio.paContinue)
+    if speaker_sub.is_alive():
+        data = speaker_sub.recv(CHUNK)
+        return(data, pyaudio.paContinue)
+    else:
+        return(None, pyaudio.paContinue)
 
 # transition functions ------------------------------------------
 
