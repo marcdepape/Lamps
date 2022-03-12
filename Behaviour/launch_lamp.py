@@ -85,25 +85,26 @@ listening = threading.Thread(target=playback)
 listening.start()
 
 # transition functions ------------------------------------------
-def fadeIn():
-    while volume < 100:
-        volume += 1
+
+def fadeIn(current_volume):
+    while current_volume > 0:
+        current_volume -= 1
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%+"])
         sleep(0.5)
+    return current_volume
 
 def fadeOut(current_volume):
     while current_volume > 0:
         current_volume -= 1
-        mixer.setvolume(current_volume)
+        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%-"])
         sleep(0.5)
     return current_volume
 
-volume = 0
-
 # main loop ------------------------------------------------------
 try:
+    volume = 0
     if is_listening:
-        fadeIn()
+        volume = fadeIn(volume)
         print ("LISTENING")
     else:
         mic.start_stream()
