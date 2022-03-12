@@ -50,7 +50,6 @@ def broadcaster(in_data, frame_count, time_info, status):
     mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
-
 # listening ---------------------------------------------------------------------
 
 streams = [
@@ -152,17 +151,17 @@ if __name__ == "__main__":
 
     lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
 
-    if lamp.id == 0:
+    if lamp.id == 1:
         lamp.is_broadcasting = True
         lamp.is_listening = False
-        lamp.stream = 1
+        lamp.stream = 0
         print("LAMP " + str(lamp.id) + " IS BROADCASTING TO " + str(lamp.stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
         setupBroadcast()
-    elif lamp.id == 1:
+    elif lamp.id == 0:
         lamp.is_broadcasting = False
         lamp.is_listening = True
-        lamp.stream = 0
+        lamp.stream = 1
         print("LAMP " + str(lamp.id) + " IS LISTENING TO " + str(lamp.stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
         setupListen()
