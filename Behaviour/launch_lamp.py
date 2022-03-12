@@ -161,6 +161,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
+        sleep(30)
         print("SWITCH!")
         switcher()
-        sleep(10)
