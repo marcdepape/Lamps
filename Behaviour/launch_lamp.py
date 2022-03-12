@@ -99,6 +99,7 @@ def fadeOut():
 
 def setupBroadcast():
     if listen.is_active():
+        print("LISTEN OPEN")
         fadeOut()
         lamp.is_listening = False;
         listen.stop_stream()
@@ -109,6 +110,7 @@ def setupBroadcast():
 
 def setupListen():
     if broadcast.is_active():
+        print("BROADCAST OPEN")
         fadeOut()
         lamp.is_broadcasting = False;
         broadcast.stop_stream()
