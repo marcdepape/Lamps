@@ -74,6 +74,7 @@ def playback():
     while lamp.is_listening:
         data = listen.recv(CHUNK)
         sound.write(data)
+    print("THREAD KILLED")
 
 listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
 
@@ -108,8 +109,8 @@ def setupBroadcast():
     sound.start_stream()
 
 def setupListen():
-
     if sound.is_active():
+        print("CLOSE SOUND")
         fadeOut()
         lamp.is_broadcasting = False;
         sound.close()
@@ -118,7 +119,6 @@ def setupListen():
     listen.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
-    listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
     listening.start()
     print("NEW STREAM")
     fadeIn()
@@ -163,6 +163,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(30)
+        sleep(10)
         print("SWITCH!")
         switcher()
