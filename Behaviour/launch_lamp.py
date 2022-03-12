@@ -40,7 +40,7 @@ CHANNELS = 1
 RATE = 22050
 CHUNK = 4096
 
-audio_out = pyaudio.PyAudio()
+audio = pyaudio.PyAudio()
 
 context = zmq.Context()
 mic_pub = context.socket(zmq.PUB)
@@ -53,12 +53,10 @@ def broadcast(in_data, frame_count, time_info, status):
     else:
         pass
 
-mic = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
+mic = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
 
 # pyaudio listen setup -----------------------------------------------
-audio_in = pyaudio.PyAudio()
-speaker = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
-this_stream = 0
+speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
 
 streams = [
     "tcp://lamp0.local:8100",
@@ -81,16 +79,13 @@ def playback():
         else:
             pass
 
-listening = threading.Thread(target=playback)
-listening.start()
-
 # transition functions ------------------------------------------
 
 def fadeIn(current_volume):
     while current_volume > 0:
         current_volume -= 1
-        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%+"])
         print(current_volume)
+        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "1%+"])
         sleep(0.5)
     return current_volume
 
@@ -104,10 +99,16 @@ def fadeOut(current_volume):
 # main loop ------------------------------------------------------
 try:
     volume = 0
+
+    listening = threading.Thread(target=playback)
+    listening.start()
+
     if is_listening:
+        mic.close()
         volume = fadeIn(volume)
         print ("LISTENING")
     else:
+        speaker.close()
         mic.start_stream()
         print ("BROADCASTING")
 
