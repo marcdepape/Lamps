@@ -107,9 +107,7 @@ def fadeOut(current_volume):
 try:
 
     if is_listening:
-        volume = mixer.getvolume(0)
-        print(volume)
-        volume = int(volume[0])
+        volume = 0
         while volume < 100:
             volume += 1
             mixer.setvolume(volume)
