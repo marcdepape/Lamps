@@ -99,21 +99,22 @@ listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
 if __name__ == "__main__":
     volume = 0
 
-    if lamp_id == 1:
+    if lamp_id == 0:
         is_broadcasting = True
         is_listening = False
-        lamp_stream = 0
+        lamp_stream = 1
         print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp_stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
-    elif lamp_id == 0:
+    elif lamp_id == 1:
         is_broadcasting = False
         is_listening = True
-        lamp_stream = 1
+        lamp_stream = 0
         print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
 
     setupBroadcast()
     setupListen()
+    sleep(3)
     listening.start()
 
     if is_listening:
