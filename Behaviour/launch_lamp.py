@@ -64,7 +64,7 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
-    if speaker_sub.closed() == False:
+    if speaker_sub.closed == False:
         data = speaker_sub.recv(CHUNK)
         return(data, pyaudio.paContinue)
     else:
@@ -98,7 +98,7 @@ def setupBroadcast():
     print("SETUP BROADCAST!!!!!")
     if lamp.audio.is_active():
         fadeOut()
-        if speaker_sub.closed() == False:
+        if speaker_sub.closed == False:
             speaker_sub.disconnect(streams[lamp.stream])
         print("LISTEN OPEN")
         lamp.audio.stop_stream()
