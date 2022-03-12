@@ -110,7 +110,7 @@ def fadeOut(current_volume):
 try:
     volume = 0
     if is_listening:
-        volume = fadeIn(volume)
+        mixer.setvolume(100)
         print ("LISTENING")
     else:
         print ("BROADCASTING")
