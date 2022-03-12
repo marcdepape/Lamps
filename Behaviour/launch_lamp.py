@@ -28,7 +28,7 @@ if this_lamp == 0:
     is_broadcasting = True
     is_listening = False
     lamp_stream = 1
-else if this_lamp == 1:
+elif this_lamp == 1:
     is_broadcasting = False
     is_listening = True
     lamp_stream = 0
