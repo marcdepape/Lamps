@@ -23,10 +23,12 @@ CHANNELS = 1
 RATE = 22050
 CHUNK = 1024
 
-global is_broadcasting = True
-global is_listening = False
-global lamp_stream = 0
-global lamp_id = int(this_lamp)
+global is_broadcasting
+global is_listening
+global lamp_stream
+global lamp_id
+
+lamp_id = int(this_lamp)
 
 audio = pyaudio.PyAudio()
 
