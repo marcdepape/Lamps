@@ -59,8 +59,6 @@ mic.start_stream()
 
 # pyaudio listen setup -----------------------------------------------
 speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
-
-volume = 0
 this_stream = 0
 
 streams = [
@@ -89,6 +87,8 @@ listening = threading.Thread(target=playback)
 listening.start()
 
 # transition functions ------------------------------------------
+
+volume = 0
 
 def fadeIn():
     while volume < 100:
