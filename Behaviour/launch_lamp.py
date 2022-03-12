@@ -62,7 +62,7 @@ def playback():
     print("SPEAKER CREATED")
     while is_listening:
         data = listen.recv(CHUNK)
-        speaker.write(data)
+        sound.write(data)
 
 listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
 
