@@ -85,9 +85,6 @@ listening = threading.Thread(target=playback)
 listening.start()
 
 # transition functions ------------------------------------------
-
-volume = 0
-
 def fadeIn():
     while volume < 100:
         volume += 1
@@ -101,9 +98,10 @@ def fadeOut(current_volume):
         sleep(0.5)
     return current_volume
 
+volume = 0
+
 # main loop ------------------------------------------------------
 try:
-
     if is_listening:
         fadeIn()
         print ("LISTENING")
