@@ -117,6 +117,7 @@ def setupListen():
 
 def switcher():
     print(is_broadcasting)
+    is_broadcasting = not is_broadcasting
 
 def switcherOld():
     if is_broadcasting:
