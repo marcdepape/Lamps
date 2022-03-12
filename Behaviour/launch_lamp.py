@@ -71,21 +71,23 @@ def listener(in_data, frame_count, time_info, status):
 # transition functions ------------------------------------------
 
 def fadeIn():
+    print("FADE IN")
     volume = mixer.getvolume()
     volume = int(volume[0])
     while volume < 100:
         volume += 1
         mixer.setvolume(volume)
-        sleep(0.5)
+        sleep(0.05)
     print("VOLUME IS 100")
 
 def fadeOut():
+    print("FADE OUT")
     volume = mixer.getvolume()
     volume = int(volume[0])
     while volume > 0:
         volume -= 1
         mixer.setvolume(volume)
-        sleep(0.5)
+        sleep(0.05)
     print("VOLUME IS 0")
 
 # setup functions ------------------------------------------------------------
