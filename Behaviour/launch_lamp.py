@@ -24,8 +24,6 @@ CHANNELS = 1
 RATE = 22050
 CHUNK = 4096
 
-volume = 0
-
 is_broadcasting = True
 is_listening = False
 lamp_stream = 0
@@ -61,18 +59,16 @@ listen = context.socket(zmq.SUB)
 
 def playback():
     sound = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
-    volume = 0
     print("SPEAKER CREATED")
     while is_listening:
         data = listen.recv(CHUNK)
         speaker.write(data)
-        if volume < 100:
-            volume += 1
-            mixer.setvolume(volume)
 
 # setup functions
 
 def setupBroadcast():
+    volume = mixer.getvolume()
+    volume = int(volume[0])
     while volume > 100:
         volume += 1
         mixer.setvolume(volume)
@@ -99,6 +95,13 @@ def setupListen():
 
     listening = Thread(name='listen_to_lamp', target=playback, daemon=True)
     listening.start()
+
+    volume = mixer.getvolume()
+    volume = int(volume[0])
+    while volume < 100:
+        volume += 1
+        mixer.setvolume(volume)
+        sleep(0.5)
 
 
 # transition functions ------------------------------------------
