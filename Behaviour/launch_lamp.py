@@ -72,12 +72,10 @@ def listener(in_data, frame_count, time_info, status):
 
 def fadeIn():
     print("FADE IN")
-    volume = mixer.getvolume()
-    volume = int(volume[0])
-    while volume < 100:
-        volume += 1
-        mixer.setvolume(volume)
-        sleep(0.05)
+    while lamp.volume < 100:
+        lamp.volume += 1
+        subprocess.call(["amixer", "pulse", "sset", "Master", "1+%"])
+        sleep(0.01)
     print("VOLUME IS 100")
 
 def fadeOut():
@@ -87,7 +85,7 @@ def fadeOut():
     while volume > 0:
         volume -= 1
         mixer.setvolume(volume)
-        sleep(0.05)
+        sleep(0.01)
     print("VOLUME IS 0")
 
 # setup functions ------------------------------------------------------------
