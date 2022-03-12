@@ -59,6 +59,8 @@ mic.start_stream()
 
 # pyaudio listen setup -----------------------------------------------
 speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
+spreaker.start_stream()
+
 volume = 0
 this_stream = 0
 
