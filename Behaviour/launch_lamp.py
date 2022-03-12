@@ -15,32 +15,18 @@ this_lamp = this_lamp.decode("utf-8")
 this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 
-# states ---------------------------------------------------------
-is_broadcasting = True
-is_listening = False
-lamp_stream = 0
-lamp_id = int(this_lamp)
-
-if lamp_id == 1:
-    is_broadcasting = True
-    is_listening = False
-    lamp_stream = 0
-    print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp_stream))
-elif lamp_id == 0:
-    is_broadcasting = False
-    is_listening = True
-    lamp_stream = 1
-    print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
-
-subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
-
-# pyaudio broadcast setup --------------------------------------------------
+# VARIABLES ------------------------------------------------------
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 22050
 CHUNK = 4096
 
-audio_out = pyaudio.PyAudio()
+is_broadcasting = True
+is_listening = False
+lamp_stream = 0
+lamp_id = int(this_lamp)
+
+audio = pyaudio.PyAudio()
 
 context = zmq.Context()
 mic_pub = context.socket(zmq.PUB)
@@ -53,12 +39,6 @@ def broadcast(in_data, frame_count, time_info, status):
     else:
         pass
 
-mic = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
-
-# pyaudio listen setup -----------------------------------------------
-audio_in = pyaudio.PyAudio()
-speaker = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
-
 streams = [
     "tcp://lamp0.local:8100",
     "tcp://lamp1.local:8100",
@@ -69,16 +49,27 @@ streams = [
 ]
 
 listen = context.socket(zmq.SUB)
-listen.connect(streams[lamp_stream])
-listen.setsockopt(zmq.SUBSCRIBE, b'')
 
-def playback():
+def playback(_speaker):
     while True:
         if is_listening:
             data = listen.recv(CHUNK)
-            speaker.write(data)
+            _speaker.write(data)
         else:
             pass
+
+# setup functions
+
+def setupBroadcast():
+    mic = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
+    mic.start_stream()
+
+def setupListen():
+    listen.connect(streams[lamp_stream])
+    listen.setsockopt(zmq.SUBSCRIBE, b'')
+    speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
+    listening = threading.Thread(target=playback(speaker))
+    listening.start()
 
 # transition functions ------------------------------------------
 
@@ -100,15 +91,25 @@ def fadeOut(current_volume):
 # main loop ------------------------------------------------------
 try:
     volume = 0
+    if lamp_id == 0:
+        is_broadcasting = True
+        is_listening = False
+        lamp_stream = 1
+        setupBroadcast()
+        print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp_stream))
+    elif lamp_id == 1:
+        is_broadcasting = False
+        is_listening = True
+        lamp_stream = 0
+        setupListen()
+        print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
 
-    listening = threading.Thread(target=playback)
-    listening.start()
+    subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
 
     if is_listening:
         volume = fadeIn(volume)
         print ("LISTENING")
     else:
-        mic.start_stream()
         print ("BROADCASTING")
 
     while True:
@@ -119,6 +120,6 @@ except KeyboardInterrupt:
 
 mic_pub.close()
 # stop Recording
-mic.stop_stream()
-mic.close()
+#mic.stop_stream()
+#mic.close()
 audio.terminate()
