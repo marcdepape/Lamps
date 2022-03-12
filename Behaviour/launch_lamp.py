@@ -44,7 +44,7 @@ context = zmq.Context()
 # broadcasting --------------------------------------------------------------------
 
 mic_pub = context.socket(zmq.PUB)
-mic_pub.unbind("tcp://*:8100")
+mic_pub.close("tcp://*:8100")
 mic_pub.bind("tcp://*:8100")
 
 def broadcaster(in_data, frame_count, time_info, status):
