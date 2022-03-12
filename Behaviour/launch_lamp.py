@@ -96,10 +96,12 @@ def fadeOut():
 def setupBroadcast():
     print("SETUP BROADCAST!!!!!")
     if lamp.audio.is_active():
-        print("LISTEN OPEN")
+
         fadeOut()
         lamp.is_listening = False;
+        print("LISTEN OPEN")
         lamp.audio.stop_stream()
+        print("STOP STREAM")
         lamp.audio.close()
         print("LISTEN CLOSED")
 
@@ -110,10 +112,11 @@ def setupBroadcast():
 def setupListen():
     print("SETUP LISTEN!!!!!")
     if lamp.audio.is_active():
-        print("BROADCAST OPEN")
         fadeOut()
         lamp.is_broadcasting = False;
+        print("BROADCAST OPEN")
         lamp.audio.stop_stream()
+        print("STOP STREAM")
         lamp.audio.close()
         print("BROADCAST CLOSED")
 
@@ -125,7 +128,6 @@ def setupListen():
     print("OPEN LISTEN!!!!!")
     lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
     lamp.audio.start_stream()
-    print("NEW STREAM")
     fadeIn()
 
 
