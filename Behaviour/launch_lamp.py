@@ -77,7 +77,8 @@ def setupBroadcast():
         sleep(0.5)
 
     is_listening = False;
-    listening.join()
+    if listening.is_alive():
+        listening.join()
 
     sound = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
     sound.start_stream()
