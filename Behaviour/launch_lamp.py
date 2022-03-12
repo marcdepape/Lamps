@@ -114,15 +114,18 @@ def setupListen():
 # switching ------------------------------------------------------
 
 def switcher():
-    is_broadcasting = not is_broadcasting
-    is_listening = not is_listening
-
     if is_broadcasting:
+        is_broadcasting = False
+    else:
+        is_broadcasting = True
         setupBroadcast()
         print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp_stream))
         return
 
     if is_listening:
+        is_listening = False
+    else:
+        is_listening = True
         setupListen()
         print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp_stream))
         return
@@ -149,5 +152,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(90)
+        sleep(30)
+        print("SWITCH!")
         switcher()
