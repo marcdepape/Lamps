@@ -75,7 +75,7 @@ def fadeIn():
     volume = mixer.getvolume()
     volume = int(volume[0])
     while volume < 100:
-        volume -= 1
+        volume += 1
         mixer.setvolume(volume)
         sleep(0.01)
     print("VOLUME IS 0")
