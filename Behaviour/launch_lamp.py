@@ -17,8 +17,7 @@ class Lamp(object):
         self.volume = 0
         self.id = 0
         self.stream = 0
-        self.listen = None
-        self.broadcast = None
+        self.audio = None
 
 lamp = Lamp()
 
@@ -99,26 +98,26 @@ def fadeOut():
 
 def setupBroadcast():
     print("SETUP BROADCAST!!!!!")
-    if lamp.listen.is_active():
+    if lamp.audio.is_active():
         print("LISTEN OPEN")
         fadeOut()
         lamp.is_listening = False;
-        lamp.listen.stop_stream()
-        lamp.listen.close()
+        lamp.audio.stop_stream()
+        lamp.audio.close()
         print("LISTEN CLOSED")
 
     print("OPEN BROADCAST!!!!!")
-    lamp.broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
-    lamp.broadcast.start_stream()
+    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
+    lamp.audio.start_stream()
 
 def setupListen():
     print("SETUP LISTEN!!!!!")
-    if lamp.broadcast.is_active():
+    if lamp.audio.is_active():
         print("BROADCAST OPEN")
         fadeOut()
         lamp.is_broadcasting = False;
-        lamp.broadcast.stop_stream()
-        lamp.broadcast.close()
+        lamp.audio.stop_stream()
+        lamp.audio.close()
         print("BROADCAST CLOSED")
 
     print("SUBSCRIBE")
@@ -127,8 +126,8 @@ def setupListen():
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
     print("OPEN LISTEN!!!!!")
-    lamp.listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
-    lamp.listen.start_stream()
+    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
+    lamp.audio.start_stream()
     print("NEW STREAM")
     fadeIn()
 
@@ -155,6 +154,9 @@ if __name__ == "__main__":
     print("--------------------------------------------")
     print("MAIN")
     print("")
+
+    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
+
     if lamp.id == 0:
         lamp.is_broadcasting = True
         lamp.is_listening = False
