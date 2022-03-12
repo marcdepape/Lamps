@@ -82,11 +82,6 @@ def playback():
 listening = threading.Thread(target=playback)
 listening.start()
 
-# alsa mixer ---------------------------------------------------------------
-mixer = alsaaudio.Mixer()
-mixer.setvolume(100)
-print("VOLUME = 0")
-
 # transition functions ------------------------------------------
 
 def fadeIn(current_volume):
@@ -108,11 +103,7 @@ def fadeOut(current_volume):
 try:
 
     if is_listening:
-        volume = 0
-        while volume < 100:
-            volume += 1
-            mixer.setvolume(volume)
-            sleep(0.5)
+        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
         print ("LISTENING")
     else:
         mic.start_stream()
