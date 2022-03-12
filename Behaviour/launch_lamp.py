@@ -112,6 +112,7 @@ def setupListen():
     if sound.is_active():
         fadeOut()
         lamp.is_broadcasting = False;
+        sound.stop_stream()
         sound.close()
         print("CLOSE SOUND")
 
