@@ -109,6 +109,7 @@ def setupBroadcast():
         listen.close()
         print("LISTEN CLOSED")
 
+    broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
     broadcast.start_stream()
 
 def setupListen():
@@ -125,6 +126,7 @@ def setupListen():
     listen.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
+    listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
     listen.start_stream()
     print("NEW STREAM")
     fadeIn()
