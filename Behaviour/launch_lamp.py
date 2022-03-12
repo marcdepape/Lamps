@@ -30,6 +30,7 @@ lamp_stream = 0
 lamp_id = int(this_lamp)
 
 audio = pyaudio.PyAudio()
+#audio_out = pyaudio.PyAudio()
 
 context = zmq.Context()
 mic_pub = context.socket(zmq.PUB)
@@ -38,7 +39,7 @@ mic_pub.bind("tcp://*:8100")
 def broadcast(in_data, frame_count, time_info, status):
     if is_broadcasting:
         mic_pub.send(in_data)
-        return (None, pyaudio.paContinue)
+        return (frame_count, status)
     else:
         pass
 
