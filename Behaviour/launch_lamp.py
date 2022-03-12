@@ -136,7 +136,7 @@ def switcher():
     else:
         lamp.is_listening = True
         setupListen()
-        print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp.stream))
+        print("LAMP " + str(lamp.id) + " IS LISTENING TO " + str(lamp.stream))
         return
 
 if __name__ == "__main__":
@@ -144,14 +144,14 @@ if __name__ == "__main__":
         lamp.is_broadcasting = True
         lamp.is_listening = False
         lamp.stream = 1
-        print("LAMP " + str(lamp_id) + " IS BROADCASTING TO " + str(lamp.stream))
+        print("LAMP " + str(lamp.id) + " IS BROADCASTING TO " + str(lamp.stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
         setupBroadcast()
-    elif lamp_id == 1:
+    elif lamp.id == 1:
         lamp.is_broadcasting = False
         lamp.is_listening = True
         lamp.stream = 0
-        print("LAMP " + str(lamp_id) + " IS LISTENING TO " + str(lamp.stream))
+        print("LAMP " + str(lamp.id) + " IS LISTENING TO " + str(lamp.stream))
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
         setupListen()
 
