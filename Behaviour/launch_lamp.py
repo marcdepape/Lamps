@@ -71,7 +71,8 @@ speaker_sub = context.socket(zmq.SUB)
 def listener(in_data, frame_count, time_info, status):
     if lamp.is_listening:
         data = speaker_sub.recv(CHUNK)
-        return(data, pyaudio.paContinue)
+        listen.write(data)
+        return(None, pyaudio.paContinue)
     else:
         pass
 
