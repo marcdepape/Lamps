@@ -50,7 +50,7 @@ streams = [
 
 listen = context.socket(zmq.SUB)
 
-def playback(_speaker):
+def playback():
     speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
     while True:
         if is_listening:
