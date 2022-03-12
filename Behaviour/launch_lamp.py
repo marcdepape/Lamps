@@ -53,7 +53,7 @@ def broadcaster(in_data, frame_count, time_info, status):
     else:
         pass
 
-broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
+broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
 
 # listening ---------------------------------------------------------------------
 
