@@ -91,8 +91,6 @@ listening.start()
 
 # transition functions ------------------------------------------
 
-volume = 0
-
 def fadeIn(current_volume):
     while current_volume < 100:
         current_volume += 1
@@ -109,6 +107,7 @@ def fadeOut(current_volume):
 
 # main loop ------------------------------------------------------
 try:
+    volume = 0
     if is_listening:
         volume = fadeIn(volume)
         print ("LISTENING")
