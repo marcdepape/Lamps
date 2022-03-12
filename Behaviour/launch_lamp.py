@@ -17,9 +17,10 @@ class Lamp(object):
         self.volume = 0
         self.id = 0
         self.stream = 0
+        self.listen = None
+        self.broadcast = None
 
 lamp = Lamp()
-
 
 # RPI HOSTNAME ---------------------------------------------------
 this_lamp = subprocess.check_output('hostname')
@@ -54,11 +55,6 @@ def broadcaster(in_data, frame_count, time_info, status):
     else:
         pass
 
-print("OPEN BROADCAST")
-broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
-broadcast.close()
-print("CLOSE BROADCAST")
-
 # listening ---------------------------------------------------------------------
 
 streams = [
@@ -80,11 +76,6 @@ def listener(in_data, frame_count, time_info, status):
         return(None, pyaudio.paContinue)
     else:
         pass
-
-print("OPEN LISTEN")
-listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
-listen.close()
-print("CLOSE LISTEN")
 
 # transition functions ------------------------------------------
 
@@ -108,26 +99,26 @@ def fadeOut():
 
 def setupBroadcast():
     print("SETUP BROADCAST!!!!!")
-    if listen.is_active():
+    if lamp.listen.is_active():
         print("LISTEN OPEN")
         fadeOut()
         lamp.is_listening = False;
-        listen.stop_stream()
-        listen.close()
+        lamp.listen.stop_stream()
+        lamp.listen.close()
         print("LISTEN CLOSED")
 
     print("OPEN BROADCAST!!!!!")
-    broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
-    broadcast.start_stream()
+    lamp.broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
+    lamp.broadcast.start_stream()
 
 def setupListen():
     print("SETUP LISTEN!!!!!")
-    if broadcast.is_active():
+    if lamp.broadcast.is_active():
         print("BROADCAST OPEN")
         fadeOut()
         lamp.is_broadcasting = False;
-        broadcast.stop_stream()
-        broadcast.close()
+        lamp.broadcast.stop_stream()
+        lamp.broadcast.close()
         print("BROADCAST CLOSED")
 
     print("SUBSCRIBE")
@@ -136,8 +127,8 @@ def setupListen():
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
     print("OPEN LISTEN!!!!!")
-    listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
-    listen.start_stream()
+    lamp.listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
+    lamp.listen.start_stream()
     print("NEW STREAM")
     fadeIn()
 
