@@ -1,0 +1,30 @@
+0 | Create main python script
+1 | Launch server thread
+2 | Determine ID
+3 | Build address array
+4 | Build switcher
+      - Fade in
+      - Fade out
+      - Connect to stream
+      - Shut down stream
+5 | Launch PUB server
+      - Listen to X
+      - Broadcast
+      - Volume
+      - Fade time
+6 | Launch SUB thread
+      - Respond to change
+      - Report back
+7 | LEDs
+      - Bottom while streaming
+      - Transition
+      - Top while listening
+8 | GUI
+      - Manual switch
+      - Automatic switch timer
+      - Force reboot
+9 | Rotary encoder
+      - Fade light on and off
+      - Force switch
+      - Pull change back if not complete
+10| CRON job upon launching
