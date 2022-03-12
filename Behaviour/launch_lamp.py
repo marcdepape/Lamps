@@ -58,7 +58,6 @@ def broadcast(in_data, frame_count, time_info, status):
 
 # start Recording
 mic = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
-mic.start_stream()
 
 # pyaudio listen setup -----------------------------------------------
 speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
@@ -87,7 +86,6 @@ def playback():
             pass
 
 listening = threading.Thread(target=playback)
-listening.start()
 
 # transition functions ------------------------------------------
 
@@ -111,8 +109,10 @@ try:
     volume = 0
     if is_listening:
         mixer.setvolume(100)
+        listening.start()
         print ("LISTENING")
     else:
+        mic.start_stream()
         print ("BROADCASTING")
 
     while True:
