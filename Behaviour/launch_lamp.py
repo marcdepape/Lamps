@@ -113,7 +113,7 @@ try:
         subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
 
     if is_listening:
-        listening = threading.Thread(target=playback())
+        listening = threading.Thread(target=playback(), daemon=True)
         listening.start()
         print("LISTENING")
     else:
