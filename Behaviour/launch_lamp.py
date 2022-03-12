@@ -110,11 +110,12 @@ def setupBroadcast():
 
 def setupListen():
     if sound.is_active():
-        print("CLOSE SOUND")
         fadeOut()
         lamp.is_broadcasting = False;
         sound.close()
+        print("CLOSE SOUND")
 
+    print("SUBSCRIBE")
     listen.connect(streams[lamp.stream])
     listen.setsockopt(zmq.SUBSCRIBE, b'')
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
