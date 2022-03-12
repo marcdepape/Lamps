@@ -6,7 +6,7 @@ import json
 import subprocess
 import sys
 import alsaaudio
-import threading
+import threading import Thread
 from time import sleep
 
 # RPI HOSTNAME ---------------------------------------------------
@@ -57,17 +57,12 @@ def playback():
     speaker = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
     volume = 0
     print("SPEAKER CREATED")
-    while True:
-        if is_listening:
-            data = listen.recv(CHUNK)
-            speaker.write(data)
-            if volume < 100:
-                volume += 1
-                mixer.setvolume(volume)
-        else:
-            pass
-
-listening = threading.Thread(target=playback(), daemon=True)
+    while is_listening:
+        data = listen.recv(CHUNK)
+        speaker.write(data)
+        if volume < 100:
+            volume += 1
+            mixer.setvolume(volume)
 
 # setup functions
 
@@ -97,6 +92,10 @@ def fadeOut(current_volume):
     return current_volume
 
 # main loop ------------------------------------------------------
+
+listening = Thread(name='listen_to_lamp', target=playback)
+listening.daemon = True
+
 if __name__ == "__main__":
     volume = 0
     if lamp_id == 0:
