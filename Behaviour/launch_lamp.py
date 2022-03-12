@@ -122,7 +122,7 @@ def switcher():
     if state == True:
         is_broadcasting = False
         print(is_broadcasting)
-        
+
 def switcherOld():
     if is_broadcasting:
         is_broadcasting = False
@@ -162,6 +162,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(10)
         print("SWITCH!")
         switcher()
+        sleep(10)
