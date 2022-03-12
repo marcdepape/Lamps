@@ -54,6 +54,7 @@ def broadcaster(in_data, frame_count, time_info, status):
         pass
 
 broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
+broadcast.close()
 
 # listening ---------------------------------------------------------------------
 
@@ -77,6 +78,7 @@ def listener(in_data, frame_count, time_info, status):
         pass
 
 listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
+listen.close()
 
 # transition functions ------------------------------------------
 
