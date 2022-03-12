@@ -75,7 +75,7 @@ def listener(in_data, frame_count, time_info, status):
     else:
         pass
 
-listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcast)
+listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
 
 # transition functions ------------------------------------------
 
