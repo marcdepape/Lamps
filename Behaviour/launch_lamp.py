@@ -101,6 +101,7 @@ def fadeOut():
 # setup functions ------------------------------------------------------------
 
 def setupBroadcast():
+    print("SETUP BROADCAST!!!!!")
     if listen.is_active():
         print("LISTEN OPEN")
         fadeOut()
@@ -113,6 +114,7 @@ def setupBroadcast():
     broadcast.start_stream()
 
 def setupListen():
+    print("SETUP LISTEN!!!!!")
     if broadcast.is_active():
         print("BROADCAST OPEN")
         fadeOut()
