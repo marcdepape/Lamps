@@ -37,7 +37,7 @@ def audio_stream_UDP():
         while True:
             data = stream.read(CHUNK)
             server_socket.sendto(data,client_addr)
-            time.sleep(CHUNK/RATE)
+            time.sleep(0.7*CHUNK/RATE)
 
 t1 = threading.Thread(target=audio_stream_UDP, args=())
 t1.start()
