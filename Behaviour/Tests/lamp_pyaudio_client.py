@@ -40,8 +40,17 @@ def streaming():
         stream.write(data)
 
 try:
+    is_streaming = False
+    s.connect((streams[id], 8100))
+    sleep(1)
+    is_streaming = True
+    print(streams[id])
+
     audio = threading.Thread(target=streaming)
     audio.start()
+
+    sleep(15)
+    id = id + 1
 
     while True:
         is_streaming = False
