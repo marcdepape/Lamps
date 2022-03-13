@@ -29,47 +29,36 @@ streams = [
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 audio = pyaudio.PyAudio()
-stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
+
+def listener(in_data, frame_count, time_info, status):
+    data = s.recv(CHUNK)
+    return(data, pyaudio.paContinue)
+
+stream = audio.open(format=FORMAT,
+                            channels=CHANNELS,
+                            rate=RATE,
+                            output=True,
+                            frames_per_buffer=CHUNK,
+                            stream_callback=listener)
 
 volume = 0
 id = 1
 
-def streaming():
-    state = True
-    while is_streaming:
-        if state:
-            print("NOW STREAMING")
-            state = False
-        data = s.recv(CHUNK)
-        stream.write(data)
-
 try:
-    is_streaming = False
-    s.connect((streams[id], 8100))
-    sleep(1)
-    is_streaming = True
-    print(streams[id])
-
-    audio = threading.Thread(target=streaming)
-    audio.start()
-
-    sleep(15)
-    id = id + 1
-
     while True:
         print("SWITCH TO: " + str(id))
-        is_streaming = False
-        s.close()
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sleep(1)
         s.connect((streams[id], 8100))
         sleep(1)
-        is_streaming = True
+        stream.start_stream()
         print(streams[id])
         sleep(15)
         id = id + 1
         if id > 5:
             id = 1
+        stream.stop_stream()
+        s.close()
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sleep(1)
 
 except KeyboardInterrupt:
     while volume > 0:
