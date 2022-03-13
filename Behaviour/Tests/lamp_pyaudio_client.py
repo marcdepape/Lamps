@@ -13,17 +13,29 @@ RATE = 44100
 CHUNK = 4096
 
 mixer = alsaaudio.Mixer()
-mixer.setvolume(0)
+mixer.setvolume(100)
+
+is_streaming = False
+
+streams = [
+    "192.168.100.193",
+    "192.168.100.119",
+    "192.168.100.162",
+    "192.168.100.189",
+    "192.168.100.186",
+    "192.168.100.117",
+]
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('192.168.100.119', 8100))
+
 audio = pyaudio.PyAudio()
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
 
 volume = 0
+id = 0
 
 def streaming():
-    while True:
+    while is_streaming:
         data = s.recv(CHUNK)
         stream.write(data)
 
@@ -31,13 +43,16 @@ try:
     audio = threading.Thread(target=streaming)
     audio.start()
 
-    while volume < 100:
-        volume += 1
-        mixer.setvolume(volume)
-        sleep(0.5)
-
     while True:
-        pass
+        is_streaming = False
+        s.connect((streams[id], 8100))
+        sleep(1)
+        is_streaming = True
+        print(streams[id])
+        sleep(15)
+        id = id + 1
+        if id > 5:
+            id = 0
 
 except KeyboardInterrupt:
     while volume > 0:
