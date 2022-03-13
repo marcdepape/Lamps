@@ -16,11 +16,8 @@ def audio(source):
 
     player.play()
 
-    value = player.audio_output_device_enum()
-    print(value)
-    
-    time.sleep(10)
+    time.sleep(20)
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(100)
-audio("record.wav")
+audio("tcp://lamp0.local:8100")
