@@ -26,7 +26,9 @@ streams = [
     '192.168.100.117',
 ]
 
+id = 1
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((streams[id], 8100))
 
 audio = pyaudio.PyAudio()
 
@@ -41,14 +43,9 @@ stream = audio.open(format=FORMAT,
                             frames_per_buffer=CHUNK,
                             stream_callback=listener)
 
-volume = 0
-id = 1
-
 try:
     while True:
         print("SWITCH TO: " + str(id))
-        s.connect((streams[id], 8100))
-        sleep(1)
         stream.start_stream()
         print(streams[id])
         sleep(15)
@@ -58,6 +55,8 @@ try:
         stream.stop_stream()
         s.close()
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sleep(1)
+        s.connect((streams[id], 8100))
         sleep(1)
 
 except KeyboardInterrupt:
