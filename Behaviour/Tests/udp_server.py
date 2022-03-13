@@ -20,7 +20,7 @@ def audio_stream_UDP():
 
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
-    RATE = 44100
+    RATE = 22050
     CHUNK = 10*1024
 
     #wf = wave.open("Behaviour/Tests/modular.wav")
