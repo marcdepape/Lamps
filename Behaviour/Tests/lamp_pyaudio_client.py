@@ -45,12 +45,15 @@ if __name__ == "__main__":
         print("SWITCH TO: " + str(id))
         stream.start_stream()
         print(streams[id])
+        
         sleep(15)
+
         id = id + 1
         if id > 5:
             id = 1
-        stream.stop_stream()
+
         s.close()
+        stream.stop_stream()
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sleep(1)
         s.connect((streams[id], 8100))
