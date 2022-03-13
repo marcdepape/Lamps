@@ -18,8 +18,8 @@ def audio_stream_UDP():
 	p = pyaudio.PyAudio()
 	CHUNK = 10*1024
 	stream = p.open(format=p.get_format_from_width(2),
-					channels=2,
-					rate=44100,
+					channels=1,
+					rate=22050,
 					output=True,
 					frames_per_buffer=CHUNK)
 
