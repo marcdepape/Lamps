@@ -34,7 +34,8 @@ def speaker(in_data, frame_count, time_info, status):
 listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
 
 class Listener(object):
-    def __init__(self):
+    def __init__(self,lamp_id):
+        self.id = lamp_id
         self.is_listening = False
 
     def connect(lamp_stream):

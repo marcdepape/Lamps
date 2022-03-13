@@ -10,7 +10,6 @@ from listener import Listener
 from broadcaster import Broadcaster
 
 class Lamp(object):
-
     def __init__(self):
         self.is_live = True
         self.is_broadcasting = True
@@ -20,8 +19,6 @@ class Lamp(object):
         self.stream = 0
 
 lamp = Lamp()
-listener = Listener()
-broadcaster = Broadcaster()
 
 # RPI HOSTNAME ---------------------------------------------------
 this_lamp = subprocess.check_output('hostname')
@@ -32,6 +29,9 @@ lamp.id = int(this_lamp)
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(0)
+
+listener = Listener(lamp.id)
+broadcaster = Broadcaster(lamp.id)
 
 def fadeIn():
     print("FADE IN")
