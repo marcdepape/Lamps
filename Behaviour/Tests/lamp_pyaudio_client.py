@@ -63,7 +63,7 @@ try:
     while True:
         id = id + 1
         if id > 5:
-            id = 1
+            id = 0
 
         if id == lamp_id:
             id = id + 1
