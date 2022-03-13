@@ -7,7 +7,7 @@ import alsaaudio
 from threading import Thread
 from time import sleep
 
-class Broadcaster(Object):
+class Broadcaster(object):
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 22050
