@@ -99,7 +99,7 @@ def fadeOut():
 
 def setupBroadcast():
     fadeOut()
-    if lamp.listen.is_stopped() == True:
+    if lamp.listen.is_active() == False:
         print("STOP LISTEN")
         #lamp.listen.stop_stream()
         print("STREAM STOPPED")
@@ -108,7 +108,7 @@ def setupBroadcast():
 
 def setupListen():
     fadeOut()
-    if lamp.broadcast.is_stopped() == True:
+    if lamp.broadcast.is_active() == False:
         print("STOP BROADCAST")
         #lamp.broadcast.stop_stream()
         print("BROADCAST STOPPED")
