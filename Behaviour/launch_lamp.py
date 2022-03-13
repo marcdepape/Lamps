@@ -109,7 +109,7 @@ def setupListen():
     fadeOut()
     print("STOP BROADCAST")
     self.broadcast.stop_stream()
-    
+
     print("SUBSCRIBE")
     speaker_sub.connect(streams[lamp.stream])
     speaker_sub.setsockopt(zmq.SUBSCRIBE, b'')
@@ -166,6 +166,7 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
+        pass
         #sleep(30)
         #print("SWITCH!")
         #switcher()
