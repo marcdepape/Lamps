@@ -20,8 +20,8 @@ def audio_stream_UDP():
 
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
-    RATE = 22050
-    CHUNK = 10*1024
+    RATE = 44100
+    CHUNK = 4*1024
 
     #wf = wave.open("Behaviour/Tests/modular.wav")
     p = pyaudio.PyAudio()
@@ -42,7 +42,7 @@ def audio_stream_UDP():
         while True:
             data = stream.read(CHUNK)
             server_socket.sendto(data,client_addr)
-            time.sleep(0.8*CHUNK/RATE)
+            time.sleep(0.5*CHUNK/RATE)
 
 t1 = threading.Thread(target=audio_stream_UDP, args=())
 t1.start()
