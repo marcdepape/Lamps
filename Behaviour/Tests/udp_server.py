@@ -42,7 +42,7 @@ def audio_stream_UDP():
     while True:
         readable, writable, errored = select.select(read_list, [], [])
         for s in readable:
-            if s is serversocket:
+            if s is server_socket:
                 (client_socket, address) = server_socket.accept()
                 read_list.append(client_socket)
                 print ("Connection from", address)
