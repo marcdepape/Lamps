@@ -11,7 +11,6 @@ port = 8100
 # For details visit: www.pyshine.com
 
 def audio_stream_UDP():
-
     BUFF_SIZE = 65536
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF,BUFF_SIZE)
