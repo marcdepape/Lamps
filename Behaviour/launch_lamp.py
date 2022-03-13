@@ -51,7 +51,7 @@ def broadcaster(in_data, frame_count, time_info, status):
     mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
-self.broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
+lamp.broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
 
 # listening ---------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ def listener(in_data, frame_count, time_info, status):
     data = speaker_sub.recv(CHUNK)
     return(data, pyaudio.paContinue)
 
-self.listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
+lamp.listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
 
 
 # transition functions ------------------------------------------
@@ -100,15 +100,15 @@ def fadeOut():
 def setupBroadcast():
     fadeOut()
     print("STOP LISTEN")
-    self.listen.stop_stream()
+    lamp.listen.stop_stream()
 
     print("OPEN BROADCAST!!!!!")
-    self.broadcast.start_stream()
+    lamp.broadcast.start_stream()
 
 def setupListen():
     fadeOut()
     print("STOP BROADCAST")
-    self.broadcast.stop_stream()
+    lamp.broadcast.stop_stream()
 
     print("SUBSCRIBE")
     speaker_sub.connect(streams[lamp.stream])
@@ -116,7 +116,7 @@ def setupListen():
     print("ZMQ CONNECT TO: " + streams[lamp.stream])
 
     print("OPEN LISTEN!!!!!")
-    self.listen.start_stream()
+    lamp.listen.start_stream()
     fadeIn()
     print("STREAM STARTED!!!")
 
