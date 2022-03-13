@@ -25,7 +25,7 @@ def audio_stream_UDP():
 
     #wf = wave.open("Behaviour/Tests/modular.wav")
     p = pyaudio.PyAudio()
-    print('server listening at',(host_ip, (port)),wf.getframerate())
+    #print('server listening at',(host_ip, (port)),wf.getframerate())
 
     stream = p.open(format=FORMAT,
                     channels=CHANNELS,
