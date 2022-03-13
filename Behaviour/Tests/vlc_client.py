@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import vlc
-import alsaaudio
 import time
 
 def audio(source):
@@ -16,8 +15,9 @@ def audio(source):
 
     player.play()
 
-    time.sleep(20)
+    time.sleep(10)
 
-mixer = alsaaudio.Mixer()
-mixer.setvolume(100)
+print("PLAY!")
+audio("modular.wav")
+print("STREAM!")
 audio("tcp://lamp0.local:8100")
