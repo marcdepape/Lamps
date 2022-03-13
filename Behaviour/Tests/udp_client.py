@@ -16,10 +16,15 @@ def audio_stream_UDP():
 	client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 	client_socket.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF,BUFF_SIZE)
 	p = pyaudio.PyAudio()
-	CHUNK = 1024
-	stream = p.open(format=p.get_format_from_width(2),
-					channels=1,
-					rate=44100,
+
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 22050
+	CHUNK = 16*1024
+
+	stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
 					output=True,
 					frames_per_buffer=CHUNK)
 
@@ -44,8 +49,6 @@ def audio_stream_UDP():
 	client_socket.close()
 	print('Audio closed')
 	os._exit(1)
-
-
 
 t1 = threading.Thread(target=audio_stream_UDP, args=())
 t1.start()
