@@ -9,8 +9,8 @@ import threading
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
-RATE = 22050
-CHUNK = 4096
+RATE = 44100
+CHUNK = 16*1024
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(100)
