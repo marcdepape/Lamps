@@ -12,10 +12,9 @@ CHANNELS = 1
 RATE = 44100
 CHUNK = 4096
 
+audio = pyaudio.PyAudio()
 mixer = alsaaudio.Mixer()
 mixer.setvolume(100)
-
-is_streaming = False
 
 streams = [
     '192.168.100.193',
@@ -30,10 +29,7 @@ id = 1
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((streams[id], 8100))
 
-audio = pyaudio.PyAudio()
-
 def listener(in_data, frame_count, time_info, status):
-    print("LISTENER!")
     data = s.recv(CHUNK)
     return(data, pyaudio.paContinue)
 
@@ -44,7 +40,7 @@ stream = audio.open(format=FORMAT,
                     frames_per_buffer=CHUNK,
                     stream_callback=listener)
 
-try:
+if __name__ == "__main__":
     while True:
         print("SWITCH TO: " + str(id))
         stream.start_stream()
@@ -59,14 +55,3 @@ try:
         sleep(1)
         s.connect((streams[id], 8100))
         sleep(1)
-
-except KeyboardInterrupt:
-    while volume > 0:
-        volume -= 1
-        mixer.setvolume(volume)
-        sleep(0.5)
-
-print('Shutting down')
-s.close()
-stream.close()
-audio.terminate()
