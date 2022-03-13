@@ -14,6 +14,7 @@ class Listener(object):
     CHUNK = 1024
 
     audio = pyaudio.PyAudio()
+    context = zmq.Context.instance()
 
     streams = [
         "tcp://lamp0.local:8100",
