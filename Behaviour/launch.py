@@ -23,6 +23,16 @@ lamp = Lamp()
 listener = Listener()
 broadcaster = Broadcaster()
 
+# RPI HOSTNAME ---------------------------------------------------
+this_lamp = subprocess.check_output('hostname')
+this_lamp = this_lamp.decode("utf-8")
+this_lamp = this_lamp.replace('lamp','',1)
+print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
+lamp.id = int(this_lamp)
+
+mixer = alsaaudio.Mixer()
+mixer.setvolume(0)
+
 def fadeIn():
     print("FADE IN")
     volume = mixer.getvolume()
