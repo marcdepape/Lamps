@@ -16,7 +16,7 @@ mixer = alsaaudio.Mixer()
 mixer.setvolume(0)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('192.168.100.193', 8100))
+s.connect(('192.168.100.119', 8100))
 audio = pyaudio.PyAudio()
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
 
