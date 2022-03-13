@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import VLC
+import vlc
 
 Instance = vlc.Instance()
 player = Instance.media_player_new()
