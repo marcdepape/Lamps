@@ -57,10 +57,13 @@ def setupBroadcast():
     fadeOut()
     listener.is_listening = False
     broadcaster.is_broadcasting = True
+    broadcaster.start()
 
 def setupListen():
     listener.is_listening = True
     broadcaster.is_broadcasting = False
+    listener.connect(lamp.stream)
+    listener.start()
     fadeIn()
 
 if __name__ == "__main__":
@@ -82,12 +85,12 @@ if __name__ == "__main__":
 
     if lamp.is_broadcasting:
         setupBroadcast()
+
     else:
         setupListen()
 
-    listener.connect(lamp.stream)
-    listener.start()
-    broadcaster.start()
+
+
 
     while True:
         sleep(30)
