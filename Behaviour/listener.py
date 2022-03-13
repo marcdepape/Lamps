@@ -7,34 +7,35 @@ import alsaaudio
 from threading import Thread
 from time import sleep
 
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 22050
+CHUNK = 1024
+
+audio = pyaudio.PyAudio()
+
+context = zmq.Context()
+
+speaker_sub = context.socket(zmq.SUB)
+
+streams = [
+    "tcp://lamp0.local:8100",
+    "tcp://lamp1.local:8100",
+    "tcp://lamp2.local:8100",
+    "tcp://lamp3.local:8100",
+    "tcp://lamp4.local:8100",
+    "tcp://lamp5.local:8100",
+]
+
+def speaker(in_data, frame_count, time_info, status):
+    data = speaker_sub.recv(CHUNK)
+    return(data, pyaudio.paContinue)
+
+listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
+
 class Listener(object):
-    FORMAT = pyaudio.paInt16
-    CHANNELS = 1
-    RATE = 22050
-    CHUNK = 1024
-
-    audio = pyaudio.PyAudio()
-
-    context = zmq.Context()
-
-    streams = [
-        "tcp://lamp0.local:8100",
-        "tcp://lamp1.local:8100",
-        "tcp://lamp2.local:8100",
-        "tcp://lamp3.local:8100",
-        "tcp://lamp4.local:8100",
-        "tcp://lamp5.local:8100",
-    ]
-
     def __init__(self):
         self.is_listening = False
-        speaker_sub = context.socket(zmq.SUB)
-
-    def speaker(in_data, frame_count, time_info, status):
-            data = speaker_sub.recv(CHUNK)
-            return(data, pyaudio.paContinue)
-
-    listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
 
     def connect(lamp_stream):
         speaker_sub.connect(streams[lamp_stream])
