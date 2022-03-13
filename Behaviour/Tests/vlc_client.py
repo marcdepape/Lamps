@@ -2,7 +2,14 @@
 
 import vlc
 
-Instance = vlc.Instance()
-player = Instance.media_player_new()
-Media = Instance.media_new('tcp://lamp1.local:8100')
-player.play()
+def audio(source):
+
+    instance = vlc.Instance()
+
+    player = instance.media_player_new()
+
+    media = instance.media_new(source)
+
+    player.play()
+
+audio('tcp://lamp0.local:8100')
