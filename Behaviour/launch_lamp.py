@@ -48,7 +48,8 @@ mic_pub = context.socket(zmq.PUB)
 mic_pub.bind("tcp://*:8100")
 
 def broadcaster(in_data, frame_count, time_info, status):
-    mic_pub.send(in_data)
+    if lamp.is_broadcasting:
+        mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
 lamp.broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
@@ -67,8 +68,11 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
-    data = speaker_sub.recv(CHUNK)
-    return(data, pyaudio.paContinue)
+    if lamp.is_listening:
+        data = speaker_sub.recv(CHUNK)
+        return(data, pyaudio.paContinue)
+    else:
+        return(None, pyaudio.paContinue)
 
 lamp.listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
 
@@ -99,16 +103,9 @@ def fadeOut():
 
 def setupBroadcast():
     fadeOut()
-    print("STOP LISTEN")
-    lamp.listen.stop_stream()
-
-    print("OPEN BROADCAST!!!!!")
-    lamp.broadcast.start_stream()
 
 def setupListen():
     fadeOut()
-    print("STOP BROADCAST")
-    lamp.broadcast.stop_stream()
 
     print("SUBSCRIBE")
     speaker_sub.connect(streams[lamp.stream])
@@ -143,7 +140,8 @@ if __name__ == "__main__":
     print("MAIN")
     print("")
 
-    lamp.audio = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
+    lamp.broadcast.start_stream()
+    lamp.listen.start_stream()
 
     if lamp.id == 1:
         lamp.is_broadcasting = True
