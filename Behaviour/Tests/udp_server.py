@@ -25,7 +25,8 @@ def audio_stream_UDP():
     p = pyaudio.PyAudio()
 
     def callback(in_data, frame_count, time_info, status):
-        server_socket.send(in_data)
+        for s in read_list[1:]:
+            s.send(in_data)
         return (None, pyaudio.paContinue)
 
     stream = p.open(format=FORMAT,
@@ -35,8 +36,18 @@ def audio_stream_UDP():
                     frames_per_buffer=CHUNK,
                     stream_callback=callback)
 
+    read_list = [server_socket]
+
     while True:
-        server_socket.accept()
+        readable, writable, errored = select.select(read_list, [], [])
+        for s in readable:
+            if s is serversocket:
+                (client_socket, address) = server_socket.accept()
+                read_list.append(client_socket)
+                print ("Connection from", address)
+            else:
+                read_list.remove(s)
+                print ("Client connection closed")
 
 t1 = threading.Thread(target=audio_stream_UDP, args=())
 t1.start()
