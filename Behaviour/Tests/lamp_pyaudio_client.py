@@ -40,14 +40,15 @@ def streaming():
         stream.write(data)
 
 try:
+    s.connect((streams[id], 8100))
+    sleep(1)
+    is_streaming = True
+    print(streams[id])
+
     audio = threading.Thread(target=streaming)
     audio.start()
 
     while True:
-        s.connect((streams[id], 8100))
-        sleep(1)
-        is_streaming = True
-        print(streams[id])
         sleep(15)
         s.shutdown(2)
         s.close()
@@ -55,6 +56,12 @@ try:
         id = id + 1
         if id > 5:
             id = 1
+
+        s.connect((streams[id], 8100))
+        sleep(1)
+        is_streaming = True
+        print(streams[id])
+
 
 except KeyboardInterrupt:
     while volume > 0:
