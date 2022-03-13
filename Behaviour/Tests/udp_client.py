@@ -16,7 +16,7 @@ def audio_stream_UDP():
 	client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 	client_socket.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF,BUFF_SIZE)
 	p = pyaudio.PyAudio()
-	CHUNK = 4*1024
+	CHUNK = 1024
 	stream = p.open(format=p.get_format_from_width(2),
 					channels=1,
 					rate=44100,
