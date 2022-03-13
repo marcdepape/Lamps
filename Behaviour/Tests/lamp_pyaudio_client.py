@@ -37,11 +37,11 @@ def listener(in_data, frame_count, time_info, status):
     return(data, pyaudio.paContinue)
 
 stream = audio.open(format=FORMAT,
-                            channels=CHANNELS,
-                            rate=RATE,
-                            output=True,
-                            frames_per_buffer=CHUNK,
-                            stream_callback=listener)
+                    channels=CHANNELS,
+                    rate=RATE,
+                    output=True,
+                    frames_per_buffer=CHUNK,
+                    stream_callback=listener)
 
 try:
     while True:
