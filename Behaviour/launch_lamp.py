@@ -39,7 +39,8 @@ CHANNELS = 1
 RATE = 22050
 CHUNK = 1024
 
-audio = pyaudio.PyAudio()
+audio_in = pyaudio.PyAudio()
+audio_out = pyaudio.PyAudio()
 context = zmq.Context()
 
 # broadcasting --------------------------------------------------------------------
@@ -52,7 +53,7 @@ def broadcaster(in_data, frame_count, time_info, status):
         mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
-lamp.broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
+lamp.broadcast = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
 
 # listening ---------------------------------------------------------------------
 
@@ -74,7 +75,7 @@ def listener(in_data, frame_count, time_info, status):
     else:
         return(None, pyaudio.paContinue)
 
-lamp.listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
+lamp.listen = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
 
 
 # transition functions ------------------------------------------
