@@ -20,24 +20,23 @@ def audio_stream_UDP():
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 22050
-    CHUNK = 16*1024
+    CHUNK = 8*1024
 
     p = pyaudio.PyAudio()
+
+    def callback(in_data, frame_count, time_info, status):
+        server_socket.send(in_data)
+        return (None, pyaudio.paContinue)
 
     stream = p.open(format=FORMAT,
                     channels=CHANNELS,
                     rate=RATE,
                     input=True,
-                    frames_per_buffer=CHUNK)
+                    frames_per_buffer=CHUNK,
+                    stream_callback=callback)
 
     while True:
-        msg,client_addr = server_socket.recvfrom(BUFF_SIZE)
-        print('GOT connection from ',client_addr,msg)
-
-        while True:
-            data = stream.read(CHUNK)
-            server_socket.sendto(data,client_addr)
-            time.sleep(0.7*CHUNK/RATE)
+        serversocket.accept()
 
 t1 = threading.Thread(target=audio_stream_UDP, args=())
 t1.start()
