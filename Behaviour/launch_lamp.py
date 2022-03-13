@@ -106,11 +106,10 @@ def setupBroadcast():
     self.broadcast.start_stream()
 
 def setupListen():
-        fadeOut()
-        print("STOP BROADCAST")
-        self.broadcast.stop_stream()
-
-
+    fadeOut()
+    print("STOP BROADCAST")
+    self.broadcast.stop_stream()
+    
     print("SUBSCRIBE")
     speaker_sub.connect(streams[lamp.stream])
     speaker_sub.setsockopt(zmq.SUBSCRIBE, b'')
