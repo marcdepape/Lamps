@@ -28,9 +28,9 @@ class Broadcaster(object):
         self.is_broadcasting = False
         mic_pub.bind("tcp://*:8100")
 
-    def start():
+    def start(self):
         broadcast.start_stream()
 
-    def stop():
+    def stop(self):
         broadcast.stop_stream()
         broadcast.close()

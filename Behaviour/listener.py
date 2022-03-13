@@ -37,13 +37,13 @@ class Listener(object):
     def __init__(self):
         self.is_listening = False
 
-    def connect(lamp_stream):
+    def connect(self, lamp_stream):
         speaker_sub.connect(streams[lamp_stream])
         speaker_sub.setsockopt(zmq.SUBSCRIBE, b'')
 
-    def start():
+    def start(self):
         listen.start_stream()
 
-    def stop():
+    def stop(self):
         listen.stop_stream()
         listen.close()
