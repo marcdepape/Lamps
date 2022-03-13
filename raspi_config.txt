@@ -43,3 +43,5 @@ https://github.com/jackersson/gstreamer-python
 
 // SOUND
 https://python-sounddevice.readthedocs.io/en/0.4.4/
+https://pyglet.readthedocs.io/en/latest/programming_guide/media.html#simple-audio-playback
+https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#convert-sound-to-raw-pcm-audio
