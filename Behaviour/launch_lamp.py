@@ -40,7 +40,7 @@ RATE = 22050
 CHUNK = 1024
 
 audio = pyaudio.PyAudio()
-context = zmq.Context.instance()
+context = zmq.Context()
 
 # broadcasting --------------------------------------------------------------------
 
