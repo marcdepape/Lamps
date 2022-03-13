@@ -44,8 +44,5 @@ def audio_stream_UDP():
             server_socket.sendto(data,client_addr)
             time.sleep(0.8*CHUNK/RATE)
 
-
-
-
 t1 = threading.Thread(target=audio_stream_UDP, args=())
 t1.start()
