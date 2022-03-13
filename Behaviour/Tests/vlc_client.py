@@ -12,11 +12,14 @@ def audio(source):
 
     media = instance.media_new(source)
 
+    player.set_media(media)
+
     player.play()
 
     value = player.audio_output_device_enum()
     print(value)
-    time.sleep(30)
+    
+    time.sleep(10)
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(100)
