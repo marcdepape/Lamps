@@ -12,15 +12,14 @@ class Listener(object):
     CHANNELS = 1
     RATE = 22050
     CHUNK = 1024
-    listening = False
+
+    audio = pyaudio.PyAudio()
 
     def __init__(self):
         self.is_listening = False
 
-    audio = pyaudio.PyAudio()
-
     def speaker(in_data, frame_count, time_info, status):
-        if listening:
+        if self.is_listening:
             data = speaker_sub.recv(CHUNK)
             return(data, pyaudio.paContinue)
         else:
@@ -45,7 +44,6 @@ class Listener(object):
         speaker_sub.setsockopt(zmq.SUBSCRIBE, b'')
 
     def start():
-        listening = True
         listen.start_stream()
 
     def stop():
