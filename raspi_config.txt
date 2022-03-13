@@ -3,7 +3,6 @@
 sudo apt update
 sudo apt install git
 
-
 git clone https://github.com/iqaudio/Pi-Codec.git
 
 sudo nano /boot/config.txt
@@ -41,3 +40,6 @@ https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
 // gstreamer
 https://jejik.com/articles/2007/01/streaming_audio_over_tcp_with_python-gstreamer/
 https://github.com/jackersson/gstreamer-python
+
+// SOUND
+https://python-sounddevice.readthedocs.io/en/0.4.4/

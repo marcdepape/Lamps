@@ -37,7 +37,7 @@ mixer.setvolume(0)
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 22050
-CHUNK = 1024
+CHUNK = 8192
 
 audio_in = pyaudio.PyAudio()
 audio_out = pyaudio.PyAudio()
@@ -46,7 +46,7 @@ context = zmq.Context()
 # broadcasting --------------------------------------------------------------------
 
 mic_pub = context.socket(zmq.PUB)
-mic_pub.bind("udp://*:8100")
+mic_pub.bind("tcp://*:8100")
 
 def broadcaster(in_data, frame_count, time_info, status):
     mic_pub.send(in_data)
@@ -57,18 +57,18 @@ lamp.broadcast = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, inp
 # listening ---------------------------------------------------------------------
 
 streams = [
-    "udp://lamp0.local:8100",
-    "udp://lamp1.local:8100",
-    "udp://lamp2.local:8100",
-    "udp://lamp3.local:8100",
-    "udp://lamp4.local:8100",
-    "udp://lamp5.local:8100",
+    "tcp://lamp0.local:8100",
+    "tcp://lamp1.local:8100",
+    "tcp://lamp2.local:8100",
+    "tcp://lamp3.local:8100",
+    "tcp://lamp4.local:8100",
+    "tcp://lamp5.local:8100",
 ]
 
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
-    data = speaker_sub.recv(CHUNK)
+    data = speaker_sub.recv()
     return(data, pyaudio.paContinue)
 
 lamp.listen = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, stream_callback=listener)
