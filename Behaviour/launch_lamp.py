@@ -68,11 +68,14 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
+    if lamp.is_listening:
+        print("is listening")
+    else:
+        print("NOT LISTENING")
     data = speaker_sub.recv(CHUNK)
     return(data, pyaudio.paContinue)
 
 lamp.listen = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
-
 
 # transition functions ------------------------------------------
 
@@ -166,7 +169,10 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        pass
-        #sleep(30)
+        sleep(5)
+        if lamp.is_listening:
+            lamp.is_listening = False
+        else:
+            lamp.is_listening = True
         #print("SWITCH!")
         #switcher()
