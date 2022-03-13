@@ -14,12 +14,13 @@ class Broadcaster(object):
     CHUNK = 1024
 
     audio = pyaudio.PyAudio()
+    broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=microphone)
+
     context = zmq.Context.instance()
 
     mic_pub = context.socket(zmq.PUB)
 
     def __init__(self):
-        self.broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=microphone)
         self.is_broadcasting = False
         mic_pub.bind("tcp://*:8100")
 
@@ -29,8 +30,8 @@ class Broadcaster(object):
         return (None, pyaudio.paContinue)
 
     def start():
-        self.broadcast.start_stream()
+        broadcast.start_stream()
 
     def stop():
-        self.broadcast.stop_stream()
-        self.broadcast.close()
+        broadcast.stop_stream()
+        broadcast.close()

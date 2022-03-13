@@ -14,6 +14,8 @@ class Listener(object):
     CHUNK = 1024
 
     audio = pyaudio.PyAudio()
+    listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
+
     context = zmq.Context.instance()
 
     streams = [
@@ -28,7 +30,6 @@ class Listener(object):
     speaker_sub = context.socket(zmq.SUB)
 
     def __init__(self):
-        self.listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
         self.is_listening = False
 
     def connect(lamp_stream):
@@ -43,8 +44,8 @@ class Listener(object):
             return(None, pyaudio.paContinue)
 
     def start():
-        self.listen.start_stream()
+        listen.start_stream()
 
     def stop():
-        self.listen.stop_stream()
-        self.listen.close()
+        listen.stop_stream()
+        listen.close()
