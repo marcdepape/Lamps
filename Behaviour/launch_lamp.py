@@ -49,8 +49,7 @@ mic_pub = context.socket(zmq.PUB)
 mic_pub.bind("tcp://*:8100")
 
 def broadcaster(in_data, frame_count, time_info, status):
-    if lamp.is_broadcasting:
-        mic_pub.send(in_data)
+    mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
 lamp.broadcast = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
@@ -69,11 +68,8 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
-    if lamp.is_listening:
-        data = speaker_sub.recv(CHUNK)
-        return(data, pyaudio.paContinue)
-    else:
-        return(None, pyaudio.paContinue)
+    data = speaker_sub.recv(CHUNK)
+    return(data, pyaudio.paContinue)
 
 lamp.listen = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
 
