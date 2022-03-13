@@ -10,7 +10,7 @@ from time import sleep
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 22050
-CHUNK = 1024
+CHUNK = 4096
 
 context = zmq.Context()
 mic_pub = context.socket(zmq.PUB)
