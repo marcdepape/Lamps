@@ -53,6 +53,7 @@ try:
     id = id + 1
 
     while True:
+        s.close()
         is_streaming = False
         s.connect((streams[id], 8100))
         sleep(1)
