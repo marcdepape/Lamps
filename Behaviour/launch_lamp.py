@@ -36,8 +36,8 @@ mixer.setvolume(0)
 # VARIABLES ------------------------------------------------------
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
-RATE = 22050
-CHUNK = 32768
+RATE = 44100
+CHUNK = 16384
 
 audio_in = pyaudio.PyAudio()
 audio_out = pyaudio.PyAudio()
