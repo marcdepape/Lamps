@@ -1,11 +1,6 @@
 #!/usr/bin/python3
 import pyaudio
 import zmq
-import json
-import subprocess
-import alsaaudio
-from threading import Thread
-from time import sleep
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
