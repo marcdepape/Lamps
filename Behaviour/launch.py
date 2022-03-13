@@ -30,10 +30,8 @@ lamp.id = int(this_lamp)
 mixer = alsaaudio.Mixer()
 mixer.setvolume(0)
 
-listener = Listener(lamp.id)
-broadcaster = Broadcaster(lamp.id)
-
-print("LISTENER: " + str(listener.id))
+listener = Listener()
+broadcaster = Broadcaster()
 
 def fadeIn():
     print("FADE IN")
@@ -57,11 +55,11 @@ def fadeOut():
 
 def setupBroadcast():
     fadeOut()
-    listner.is_listening = False
+    listener.is_listening = False
     broadcaster.is_broadcasting = True
 
 def setupListen():
-    listner.is_listening = True
+    listener.is_listening = True
     broadcaster.is_broadcasting = False
     fadeIn()
 

@@ -24,9 +24,8 @@ def microphone(in_data, frame_count, time_info, status):
 broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=microphone)
 
 class Broadcaster(object):
-    def __init__(self, lamp_id):
+    def __init__(self):
         self.is_broadcasting = False
-        self.id = lamp_id;
         mic_pub.bind("tcp://*:8100")
 
     def start():
