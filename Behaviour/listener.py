@@ -19,11 +19,8 @@ class Listener(object):
         self.is_listening = False
 
     def speaker(in_data, frame_count, time_info, status):
-        if self.is_listening:
             data = speaker_sub.recv(CHUNK)
             return(data, pyaudio.paContinue)
-        else:
-            return(None, pyaudio.paContinue)
 
     listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
 

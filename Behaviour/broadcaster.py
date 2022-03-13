@@ -23,8 +23,7 @@ class Broadcaster(object):
     audio = pyaudio.PyAudio()
 
     def microphone(in_data, frame_count, time_info, status):
-        if self.is_broadcasting:
-            mic_pub.send(in_data)
+        mic_pub.send(in_data)
         return (None, pyaudio.paContinue)
 
     broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=microphone)
