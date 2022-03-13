@@ -56,6 +56,7 @@ try:
         print("SWITCH!")
         is_streaming = False
         s.close()
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sleep(1)
         s.connect((streams[id], 8100))
         sleep(1)
