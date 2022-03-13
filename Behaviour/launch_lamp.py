@@ -150,14 +150,12 @@ if __name__ == "__main__":
         lamp.is_listening = False
         lamp.stream = 0
         print("LAMP " + str(lamp.id) + " IS BROADCASTING TO " + str(lamp.stream))
-        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
         setupBroadcast()
     elif lamp.id == 0:
         lamp.is_broadcasting = False
         lamp.is_listening = True
         lamp.stream = 1
         print("LAMP " + str(lamp.id) + " IS LISTENING TO " + str(lamp.stream))
-        subprocess.call(["amixer", "-D", "pulse", "sset", "Master", "100%"])
         setupListen()
 
     if lamp.is_listening:
