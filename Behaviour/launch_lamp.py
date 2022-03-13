@@ -70,10 +70,11 @@ speaker_sub = context.socket(zmq.SUB)
 def listener(in_data, frame_count, time_info, status):
     if lamp.is_listening:
         print("is listening")
+        data = speaker_sub.recv(CHUNK)
+        return(data, pyaudio.paContinue)
     else:
         print("NOT LISTENING")
-    data = speaker_sub.recv(CHUNK)
-    return(data, pyaudio.paContinue)
+        return(None, pyaudio.paContinue)
 
 lamp.listen = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
 
