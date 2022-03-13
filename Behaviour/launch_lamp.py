@@ -111,7 +111,7 @@ def setupListen():
     fadeOut()
     if lamp.broadcast.is_active() == True:
         print("STOP BROADCAST")
-        lamp.broadcast.stop_stream()
+        #lamp.broadcast.stop_stream()
         print("BROADCAST STOPPED")
 
     print("SUBSCRIBE")
