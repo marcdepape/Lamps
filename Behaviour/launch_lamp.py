@@ -100,9 +100,12 @@ def fadeOut():
 
 def setupBroadcast():
     fadeOut()
+    #lamp.listen.stop_stream()
+    lamp.broadcast.start_stream()
 
 def setupListen():
     fadeOut()
+    #lamp.broadcast.stop_stream()
 
     print("SUBSCRIBE")
     speaker_sub.connect(streams[lamp.stream])
@@ -136,9 +139,6 @@ if __name__ == "__main__":
     print("--------------------------------------------")
     print("MAIN")
     print("")
-
-    lamp.broadcast.start_stream()
-    lamp.listen.start_stream()
 
     if lamp.id == 1:
         lamp.is_broadcasting = True
