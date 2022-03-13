@@ -53,7 +53,7 @@ try:
     id = id + 1
 
     while True:
-        print("SWITCH!")
+        print("SWITCH TO: " + str(id))
         is_streaming = False
         s.close()
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
