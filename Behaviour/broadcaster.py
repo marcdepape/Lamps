@@ -17,8 +17,11 @@ mic_pub = context.socket(zmq.PUB)
 
 audio = pyaudio.PyAudio()
 
+broadcasting = False
+
 def microphone(in_data, frame_count, time_info, status):
-    mic_pub.send(in_data)
+    if broadcasting:
+        mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
 broadcast = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=microphone)
@@ -29,6 +32,7 @@ class Broadcaster(object):
         mic_pub.bind("tcp://*:8100")
 
     def start(self):
+        broadcasting = self.is_broadcasting
         broadcast.start_stream()
 
     def stop(self):

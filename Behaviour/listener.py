@@ -18,6 +18,8 @@ context = zmq.Context()
 
 speaker_sub = context.socket(zmq.SUB)
 
+listening = False
+
 streams = [
     "tcp://lamp0.local:8100",
     "tcp://lamp1.local:8100",
@@ -28,8 +30,11 @@ streams = [
 ]
 
 def speaker(in_data, frame_count, time_info, status):
-    data = speaker_sub.recv(CHUNK)
-    return(data, pyaudio.paContinue)
+    if listening:
+        data = speaker_sub.recv(CHUNK)
+        return(data, pyaudio.paContinue)
+    else:
+        return(None, pyaudio.paContinue)
 
 listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
 
@@ -42,6 +47,7 @@ class Listener(object):
         speaker_sub.setsockopt(zmq.SUBSCRIBE, b'')
 
     def start(self):
+        listening = self.is_listening
         listen.start_stream()
 
     def stop(self):
