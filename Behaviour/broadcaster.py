@@ -15,7 +15,7 @@ class Broadcaster(object):
 
     audio = pyaudio.PyAudio()
 
-    context = zmq.Context.instance()
+    context = zmq.Context()
     mic_pub = context.socket(zmq.PUB)
 
     def __init__(self):

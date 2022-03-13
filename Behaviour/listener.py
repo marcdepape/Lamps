@@ -15,7 +15,7 @@ class Listener(object):
 
     audio = pyaudio.PyAudio()
 
-    context = zmq.Context.instance()
+    context = zmq.Context()
     speaker_sub = context.socket(zmq.SUB)
 
     streams = [
@@ -35,8 +35,6 @@ class Listener(object):
             return(data, pyaudio.paContinue)
 
     listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
-
-
 
     def connect(lamp_stream):
         speaker_sub.connect(streams[lamp_stream])
