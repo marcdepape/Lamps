@@ -37,3 +37,7 @@ https://learn.adafruit.com/resizing-raspberry-pi-boot-partition/bonus-shrinking-
 
 // GIT
 https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
+
+// gstreamer
+https://jejik.com/articles/2007/01/streaming_audio_over_tcp_with_python-gstreamer/
+https://github.com/jackersson/gstreamer-python

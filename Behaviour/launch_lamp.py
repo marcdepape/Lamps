@@ -46,7 +46,7 @@ context = zmq.Context()
 # broadcasting --------------------------------------------------------------------
 
 mic_pub = context.socket(zmq.PUB)
-mic_pub.bind("tcp://*:8100")
+mic_pub.bind("udp://*:8100")
 
 def broadcaster(in_data, frame_count, time_info, status):
     mic_pub.send(in_data)
@@ -57,12 +57,12 @@ lamp.broadcast = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, inp
 # listening ---------------------------------------------------------------------
 
 streams = [
-    "tcp://lamp0.local:8100",
-    "tcp://lamp1.local:8100",
-    "tcp://lamp2.local:8100",
-    "tcp://lamp3.local:8100",
-    "tcp://lamp4.local:8100",
-    "tcp://lamp5.local:8100",
+    "udp://lamp0.local:8100",
+    "udp://lamp1.local:8100",
+    "udp://lamp2.local:8100",
+    "udp://lamp3.local:8100",
+    "udp://lamp4.local:8100",
+    "udp://lamp5.local:8100",
 ]
 
 speaker_sub = context.socket(zmq.SUB)
