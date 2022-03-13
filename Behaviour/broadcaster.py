@@ -13,14 +13,14 @@ class Broadcaster(object):
     RATE = 22050
     CHUNK = 1024
 
+    audio = pyaudio.PyAudio()
+
     context = zmq.Context.instance()
     mic_pub = context.socket(zmq.PUB)
 
     def __init__(self):
         self.is_broadcasting = False
         mic_pub.bind("tcp://*:8100")
-
-    audio = pyaudio.PyAudio()
 
     def microphone(in_data, frame_count, time_info, status):
         mic_pub.send(in_data)

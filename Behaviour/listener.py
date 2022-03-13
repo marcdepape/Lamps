@@ -15,15 +15,6 @@ class Listener(object):
 
     audio = pyaudio.PyAudio()
 
-    def __init__(self):
-        self.is_listening = False
-
-    def speaker(in_data, frame_count, time_info, status):
-            data = speaker_sub.recv(CHUNK)
-            return(data, pyaudio.paContinue)
-
-    listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
-
     context = zmq.Context.instance()
     speaker_sub = context.socket(zmq.SUB)
 
@@ -35,6 +26,17 @@ class Listener(object):
         "tcp://lamp4.local:8100",
         "tcp://lamp5.local:8100",
     ]
+
+    def __init__(self):
+        self.is_listening = False
+
+    def speaker(in_data, frame_count, time_info, status):
+            data = speaker_sub.recv(CHUNK)
+            return(data, pyaudio.paContinue)
+
+    listen = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=speaker)
+
+
 
     def connect(lamp_stream):
         speaker_sub.connect(streams[lamp_stream])
