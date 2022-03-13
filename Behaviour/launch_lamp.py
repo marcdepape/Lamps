@@ -101,7 +101,7 @@ def setupBroadcast():
     fadeOut()
     if lamp.listen.is_active() == False:
         print("STOP LISTEN")
-        #lamp.listen.stop_stream()
+        lamp.listen.stop_stream()
         print("STREAM STOPPED")
 
     lamp.broadcast.start_stream()
@@ -110,7 +110,7 @@ def setupListen():
     fadeOut()
     if lamp.broadcast.is_active() == False:
         print("STOP BROADCAST")
-        #lamp.broadcast.stop_stream()
+        lamp.broadcast.stop_stream()
         print("BROADCAST STOPPED")
 
     print("SUBSCRIBE")
@@ -165,6 +165,6 @@ if __name__ == "__main__":
         print ("BROADCASTING")
 
     while True:
-        sleep(5)
-        #print("SWITCH!")
-        #switcher()
+        sleep(20)
+        print("SWITCH!")
+        switcher()
