@@ -37,7 +37,7 @@ mixer.setvolume(0)
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 22050
-CHUNK = 8192
+CHUNK = 16384
 
 audio_in = pyaudio.PyAudio()
 audio_out = pyaudio.PyAudio()
@@ -68,7 +68,7 @@ streams = [
 speaker_sub = context.socket(zmq.SUB)
 
 def listener(in_data, frame_count, time_info, status):
-    data = speaker_sub.recv()
+    data = speaker_sub.recv(CHUNK)
     return(data, pyaudio.paContinue)
 
 lamp.listen = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, stream_callback=listener)
