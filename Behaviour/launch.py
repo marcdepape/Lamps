@@ -33,6 +33,8 @@ mixer.setvolume(0)
 listener = Listener(lamp.id)
 broadcaster = Broadcaster(lamp.id)
 
+print("LISTENER: " + str(listener.id))
+
 def fadeIn():
     print("FADE IN")
     volume = mixer.getvolume()
