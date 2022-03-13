@@ -33,6 +33,7 @@ s.connect((streams[id], 8100))
 audio = pyaudio.PyAudio()
 
 def listener(in_data, frame_count, time_info, status):
+    print("LISTENER!")
     data = s.recv(CHUNK)
     return(data, pyaudio.paContinue)
 
