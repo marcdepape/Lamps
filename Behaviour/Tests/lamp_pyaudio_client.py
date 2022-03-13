@@ -53,8 +53,10 @@ try:
     id = id + 1
 
     while True:
-        s.close()
+        print("SWITCH!")
         is_streaming = False
+        s.close()
+        sleep(1)
         s.connect((streams[id], 8100))
         sleep(1)
         is_streaming = True
