@@ -37,7 +37,7 @@ mixer.setvolume(0)
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 22050
-CHUNK = 16384
+CHUNK = 24576
 
 audio_in = pyaudio.PyAudio()
 audio_out = pyaudio.PyAudio()
@@ -52,7 +52,7 @@ def broadcaster(in_data, frame_count, time_info, status):
     mic_pub.send(in_data)
     return (None, pyaudio.paContinue)
 
-lamp.broadcast = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, stream_callback=broadcaster)
+lamp.broadcast = audio_out.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK, stream_callback=broadcaster)
 
 # listening ---------------------------------------------------------------------
 
