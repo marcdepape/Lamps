@@ -36,7 +36,7 @@ def audio_stream_UDP():
                     stream_callback=callback)
 
     while True:
-        serversocket.accept()
+        server_socket.accept()
 
 t1 = threading.Thread(target=audio_stream_UDP, args=())
 t1.start()
