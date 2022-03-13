@@ -12,7 +12,7 @@ class Listener(object):
     CHANNELS = 1
     RATE = 22050
     CHUNK = 1024
-    listening
+    listening = False
 
     def __init__(self):
         self.is_listening = False
