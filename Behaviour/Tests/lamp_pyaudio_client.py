@@ -32,7 +32,7 @@ audio = pyaudio.PyAudio()
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK)
 
 volume = 0
-id = 0
+id = 1
 
 def streaming():
     while is_streaming:
@@ -61,7 +61,7 @@ try:
         sleep(15)
         id = id + 1
         if id > 5:
-            id = 0
+            id = 1
 
 except KeyboardInterrupt:
     while volume > 0:
