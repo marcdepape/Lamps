@@ -23,26 +23,15 @@ def audio_stream_UDP():
     RATE = 44100
     CHUNK = 10*1024
 
-    wf = wave.open("Behaviour/Tests/modular.wav")
+    #wf = wave.open("Behaviour/Tests/modular.wav")
     p = pyaudio.PyAudio()
     print('server listening at',(host_ip, (port)),wf.getframerate())
-
-    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                    channels=wf.getnchannels(),
-                    rate=wf.getframerate(),
-                    input=True,
-                    frames_per_buffer=CHUNK)
-
-    def callback(in_data, frame_count, time_info, status):
-        server_socket.sendto(in_data,client_addr)
-        return (None, pyaudio.paContinue)
 
     stream = p.open(format=FORMAT,
                     channels=CHANNELS,
                     rate=RATE,
                     input=True,
-                    frames_per_buffer=CHUNK,
-                    stream_callback=callback)
+                    frames_per_buffer=CHUNK)
 
     #data = None
     #sample_rate = wf.getframerate()
@@ -51,10 +40,9 @@ def audio_stream_UDP():
         print('GOT connection from ',client_addr,msg)
 
         while True:
-            pass
-            #data = wf.readframes(CHUNK)
-            #server_socket.sendto(data,client_addr)
-            #time.sleep(0.8*CHUNK/RATE)
+            data = stream.read(CHUNK)
+            server_socket.sendto(data,client_addr)
+            time.sleep(0.8*CHUNK/RATE)
 
 
 
