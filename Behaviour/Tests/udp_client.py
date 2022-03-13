@@ -19,7 +19,7 @@ def audio_stream_UDP():
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 22050
-	  CHUNK = 16*1024
+	CHUNK = 16*1024
 
 	p = pyaudio.PyAudio()
 
