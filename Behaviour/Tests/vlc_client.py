@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import vlc
+import alsaaudio
 
 def audio(source):
 
@@ -12,4 +13,6 @@ def audio(source):
 
     player.play()
 
-audio('tcp://lamp0.local:8100')
+mixer = alsaaudio.Mixer()
+mixer.setvolume(100)
+audio("record.wav")
