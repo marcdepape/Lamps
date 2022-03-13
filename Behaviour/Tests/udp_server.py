@@ -16,7 +16,7 @@ def audio_stream_UDP():
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF,BUFF_SIZE)
 
-    server_socket.bind((host_ip, (port)))
+    server_socket.bind('', 8100)
     CHUNK = 10*1024
     wf = wave.open("modular.wav")
     p = pyaudio.PyAudio()
