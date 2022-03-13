@@ -1,0 +1,36 @@
+# command to start listening
+gst-launch-1.0 rtspsrc location=rtsp://lamp1.local:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S32LE,channels=2 ! alsasink device="sysdefault:CARD=sndrpiwsp"
+
+gst-launch-1.0 rtspsrc location=rtsp://192.168.100.189:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S32LE,channels=2 ! alsasink device="sysdefault:CARD=sndrpiwsp"
+
+gst-launch-1.0 rtspsrc location=rtsp://lamp1.local:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S32LE,channels=2 ! alsasink device="sysdefault:CARD=sndrpiwsp"
+
+gst-launch-1.0 rtspsrc location=rtsp://192.168.100.119:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink device="sysdefault:CARD=sndrpiwsp"
+
+gst-launch-1.0 udpsrc port=3000 ! audio/x-ac3,channels=2,rate=44100 ! ac3parse ! a52dec ! audioconvert ! audio/x-raw,format=S32LE,channels=2 ! alsasink device="sysdefault:CARD=sndrpiwsp" sync=false
+gst-launch-1.0 -v alsasrc ! audioconvert ! avenc_ac3 ! rtpac3pay ! multiudpsink clients="192.168.0.28:3000"
+
+GST_DEBUG=2 gst-launch udpsrc caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)RAW, sampling=(string)YCbCr-4:4:4, depth=(string)8, width=(string)320, height=(string)240, colorimetry=(string)SMPTE240M, ssrc=(uint)1825678493, payload=(int)96, clock-base=(uint)4068866987, seqnum-base=(uint)24582" port=9996 ! queue ! rtpvrawdepay  ! queue ! ffmpegcolorspace ! autovideosink
+
+caps = "application/x-rtp, media=audio,clock-rate=44100,encoding-name=AC3,payload=96,ssrc=994905900,timestamp-offset=920538011,seqnum-offset=3644"
+
+# CAST
+
+# LAMP 1: 192.168.0.28
+gst-launch-1.0 -v alsasrc ! audioconvert ! avenc_ac3 ! rtpac3pay ! multiudpsink clients=lamp2.local:1901,lamp3.local:1901,lamp4.local:1901
+
+# LAMP 2: 192.168.0.26
+gst-launch-1.0 -v alsasrc ! audioconvert ! avenc_ac3 ! rtpac3pay ! multiudpsink clients=lamp1.local:1902,lamp3.local:1902,lamp4.local:1902
+gst-launch-1.0 -v alsasrc ! audioconvert ! avenc_ac3 ! rtpac3pay ! multiudpsink clients=192.168.0.28:1902,192.168.0.27:1902,192.168.0.25:1902,
+
+# LAMP 3: 192.168.0.27
+gst-launch-1.0 -v alsasrc ! audioconvert ! avenc_ac3 ! rtpac3pay ! multiudpsink clients=lamp1.local:1903,lamp2.local:1903,lamp4.local:1903
+gst-launch-1.0 -v alsasrc ! audioconvert ! avenc_ac3 ! rtpac3pay ! multiudpsink clients=192.168.0.25:1903,192.168.0.26:1903,192.168.0.28:1903
+
+# LAMP 4: 192.168.0.25
+gst-launch-1.0 -v alsasrc ! audioconvert ! avenc_ac3 ! rtpac3pay ! multiudpsink clients=lamp1.local:1904,lamp2.local:1904,lamp3.local:1904 &
+
+# LISTEN
+gst-launch-1.0 udpsrc port=1902 ! audio/x-ac3,channels=2,rate=44100 ! ac3parse ! a52dec ! audioconvert ! audio/x-raw,format=S32LE,channels=2 ! alsasink device="sysdefault:CARD=sndrpiwsp" sync=false
+
+gst-launch-1.0 udpsrc port=3000 ! audio/x-ac3,channels=2,rate=44100 ! ac3parse ! a52dec ! audioconvert ! audio/x-raw,format=S32LE,channels=2 ! alsasink device="sysdefault:CARD=sndrpiwsp" sync=false

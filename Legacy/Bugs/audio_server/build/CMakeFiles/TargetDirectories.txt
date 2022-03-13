@@ -1,0 +1,1 @@
+/home/pi/Development/bugs/audio_server/build/CMakeFiles/lamps-server.dir

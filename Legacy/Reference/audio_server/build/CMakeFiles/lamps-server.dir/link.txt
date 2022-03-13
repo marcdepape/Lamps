@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/lamps-server.dir/lamps-server.cpp.o  -o lamps-server  -L/usr/local/lib -rdynamic -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstrtspserver-1.0 -lgstbase-1.0 -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lgstrtspserver-1.0 -lgstbase-1.0 -Wl,-rpath,/usr/local/lib 
