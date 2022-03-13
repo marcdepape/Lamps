@@ -71,7 +71,12 @@ def listener(in_data, frame_count, time_info, status):
     data = speaker_sub.recv(CHUNK)
     return(data, pyaudio.paContinue)
 
-lamp.listen = audio_in.open(format=FORMAT, channels=CHANNELS, rate=RATE, output=True, frames_per_buffer=CHUNK, stream_callback=listener)
+lamp.listen = audio_in.open(format=FORMAT,
+                            channels=CHANNELS,
+                            rate=RATE,
+                            output=True,
+                            frames_per_buffer=CHUNK,
+                            stream_callback=listener)
 
 # transition functions ------------------------------------------
 

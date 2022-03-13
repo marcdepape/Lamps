@@ -6,7 +6,7 @@ import select
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
-RATE = 44100
+RATE = 22050
 CHUNK = 4096
 
 audio = pyaudio.PyAudio()
