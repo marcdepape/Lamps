@@ -2,6 +2,7 @@
 
 import vlc
 import alsaaudio
+import time
 
 def audio(source):
 
@@ -12,6 +13,10 @@ def audio(source):
     media = instance.media_new(source)
 
     player.play()
+
+    value = player.audio_output_device_enum()
+    print(value)
+    time.sleep(30)
 
 mixer = alsaaudio.Mixer()
 mixer.setvolume(100)
