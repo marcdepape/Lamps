@@ -16,7 +16,6 @@ class Listener(object):
     audio = pyaudio.PyAudio()
 
     context = zmq.Context()
-    speaker_sub = context.socket(zmq.SUB)
 
     streams = [
         "tcp://lamp0.local:8100",
@@ -29,6 +28,7 @@ class Listener(object):
 
     def __init__(self):
         self.is_listening = False
+        speaker_sub = context.socket(zmq.SUB)
 
     def speaker(in_data, frame_count, time_info, status):
             data = speaker_sub.recv(CHUNK)
