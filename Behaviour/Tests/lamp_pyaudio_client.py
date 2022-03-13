@@ -35,7 +35,11 @@ volume = 0
 id = 1
 
 def streaming():
+    state = True
     while is_streaming:
+        if state:
+            print("NOW STREAMING")
+            state = False
         data = s.recv(CHUNK)
         stream.write(data)
 
