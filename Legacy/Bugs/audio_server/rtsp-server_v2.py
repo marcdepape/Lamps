@@ -10,10 +10,10 @@ class RTSP_Server:
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
-        self.address = '192.168.100.186'
+        self.address = 'localhost'
         self.port = '8554'
 
-        #self.server.set_address(self.address)
+        self.server.set_address(self.address)
         self.server.set_service(self.port)
 
         #self.launch_description = '( playbin uri=file:///home/marc/Projects/Lamps/Legacy/Bugs/audio_server/05Arrows.mp3 )'
