@@ -7,7 +7,7 @@ stream = lamps.LampAudioStream()
 
 for x in range(0,5):
 
-    stream.start('lamp1.local')
+    stream.start('lamp4.local')
     print ("listening to lamp1")
     time.sleep(2)
 
