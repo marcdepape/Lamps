@@ -10,10 +10,10 @@ class RTSP_Server:
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
-        self.address = 'localhost'
+        #self.address = ''
         self.port = '8554'
 
-        self.server.set_address(self.address)
+        #self.server.set_address(self.address)
         self.server.set_service(self.port)
 
         #self.launch_description = '( playbin uri=file:///home/marc/Projects/Lamps/Legacy/Bugs/audio_server/05Arrows.mp3 )'
@@ -44,7 +44,7 @@ class RTSP_Server:
         self.mount_points.add_factory('/mic', self.factory)
 
         self.server.attach(None)
-        print('Stream ready')
+        print('Stream ready' + str(server.get_address()))
         GLib.MainLoop().run()
 
 

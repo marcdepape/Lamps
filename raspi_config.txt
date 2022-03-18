@@ -16,6 +16,12 @@ dtoverlay=vc4-kms-v3d,audio=off
 
 sudo alsactl restore -f IQaudIO_Codec_StereoMIC_record_and_HP_playback.state
 
+sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-pulseaudio
+sudo apt-get install libgstrtspserver-1.0-dev gstreamer1.0-rtsp
+sudo apt install python3-gst-1.0
+sudo apt-get install git build-essential autoconf automake autopoint libtool pkg-config
+
+
 https://pimylifeup.com/raspberry-pi-afp/
 
 
@@ -42,6 +48,7 @@ https://jejik.com/articles/2007/01/streaming_audio_over_tcp_with_python-gstreame
 https://github.com/jackersson/gstreamer-python
 https://github.com/GStreamer/gst-rtsp-server
 https://gstreamer.freedesktop.org/documentation/tutorials/basic/hello-world.html?gi-language=python
+https://davidmays.io/streaming-raspberry-pi-video-via-rtsp-with-gstreamer-and-video4linux/
 
 // SOUND
 https://python-sounddevice.readthedocs.io/en/0.4.4/
