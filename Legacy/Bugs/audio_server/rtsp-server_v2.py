@@ -10,7 +10,7 @@ class RTSP_Server:
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
-        self.address = 'localhost'
+        self.address = '127.0.0.17'
         self.port = '8554'
 
         self.server.set_address(self.address)
