@@ -40,8 +40,22 @@ https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git
 // gstreamer
 https://jejik.com/articles/2007/01/streaming_audio_over_tcp_with_python-gstreamer/
 https://github.com/jackersson/gstreamer-python
+https://github.com/GStreamer/gst-rtsp-server
+https://gstreamer.freedesktop.org/documentation/tutorials/basic/hello-world.html?gi-language=python
 
 // SOUND
 https://python-sounddevice.readthedocs.io/en/0.4.4/
 https://pyglet.readthedocs.io/en/latest/programming_guide/media.html#simple-audio-playback
 https://github.com/kkroening/ffmpeg-python/blob/master/examples/README.md#convert-sound-to-raw-pcm-audio
+
+// UDP
+https://pythontic.com/modules/socket/udp-client-server-example
+https://pyshine.com/How-to-send-audio-from-PyAudio-over-socket/
+https://ourpython.com/python/python-mp3-to-alsaaudio-through-ffmpeg-pipe-and-wave-openf-r
+
+// pydub
+https://github.com/jiaaro/pydub/issues/341
+
+// asyncio
+https://docs.python.org/3/library/asyncio.html
+https://stackoverflow.com/questions/48506460/python-simple-socket-client-server-using-asyncio

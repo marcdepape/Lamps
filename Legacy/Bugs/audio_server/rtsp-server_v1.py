@@ -1,5 +1,6 @@
 import gi
 gi.require_version('Gst', '1.0')
+gi.require_version('Gtk', '4.0')
 from gi.repository import GObject,Gtk
 from gi.repository import Gst as gst
 
@@ -7,7 +8,7 @@ from gi.repository import Gst as gst
 The following 2 lines are required for gstreamer => 1.0
 to initialize the GObject.
 '''
-GObject.threads_init()
+#GObject.threads_init()
 gst.init(None)
 
 # Create the pipeline for our elements.
@@ -23,7 +24,7 @@ pipeline = gst.Pipeline()
 gst.element_factory_make => gst.ElementFactory.make
 '''
 audio_source = gst.ElementFactory.make('filesrc', 'audio_source')
-decode = gst.ElementFactory.make('mad', 'decode')
+decode = gst.ElementFactory.make('mpegaudioparse', 'mpg123audiodec')
 convert = gst.ElementFactory.make('audioconvert', 'convert')
 equalizer = gst.ElementFactory.make('equalizer-3bands', 'equalizer')
 audio_sink = gst.ElementFactory.make('autoaudiosink', 'audio_sink')
@@ -83,7 +84,9 @@ gst.MESSAGE_ERROR => gst.MessageType.ERROR
 gst.MESSAGE_EOS => gst.MessageType.EOS
 '''
 msg = bus.timed_pop_filtered(gst.CLOCK_TIME_NONE,gst.MessageType.ERROR | gst.MessageType.EOS)
-print msg
+
+print("DONE!")
+print (msg)
 
 # Free resources.
 pipeline.set_state(gst.State.NULL)
