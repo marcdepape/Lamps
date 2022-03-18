@@ -20,6 +20,7 @@ class LampAudioStream(object):
 
         self.rtspsrc.set_property('location', url)
         self.pipeline.set_state(Gst.State.PLAYING)
+        print(url)
 
     def stop(self):
         self.pipeline.set_state(Gst.State.READY)
