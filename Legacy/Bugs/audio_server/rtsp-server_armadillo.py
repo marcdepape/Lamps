@@ -10,7 +10,7 @@ class RTSP_Server:
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
-        self.address = 'lamp4.local'
+        self.address = 'armadillo.local'
         self.port = '8554'
 
         self.server.set_address(self.address)
@@ -18,7 +18,7 @@ class RTSP_Server:
 
         #self.launch_description = '( playbin uri=file:///home/marc/Projects/Lamps/Legacy/Bugs/audio_server/05Arrows.mp3 )'
 
-        self.launch_description = "( filesrc location=05Arrows.ogg ! oggdemux ! queue ! rtpvorbispay name=pay0 pt=96 )"
+        self.launch_description = "( filesrc debug=TRUE location=05Arrows.ogg ! oggdemux ! queue ! rtpvorbispay name=pay0 pt=96 )"
 
         '''
         marc@armadillo:~$ gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink

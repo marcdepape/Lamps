@@ -17,7 +17,6 @@ class MyFactory(GstRtspServer.RTSPMediaFactory):
 		GstRtspServer.RTSPMediaFactory.__init__(self)
 
 	def do_create_element(self, url):
-        a_src = "filesrc location=05Arrows.mp3 ! mpegaudioparse ! mpg123audiodec" ! audioconvert ! audioresample ! autoaudiosink
 		s_src = "v4l2src ! video/x-raw,rate=30,width=320,height=240 ! videoconvert ! video/x-raw,format=I420"
 		s_h264 = "videoconvert ! vaapiencode_h264 bitrate=1000"
 		s_src = "videotestsrc ! video/x-raw,rate=30,width=320,height=240,format=I420"
