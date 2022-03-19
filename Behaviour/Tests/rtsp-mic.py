@@ -30,7 +30,7 @@ class RTSP_Server:
         self.mount_points.add_factory('/mic', self.factory)
 
         self.server.attach(None)
-        print('Stream ready: ' + str(self.server.get_address()))
+        print('Stream ready at: ' + str(self.server.get_address()))
         GLib.MainLoop().run()
 
 
