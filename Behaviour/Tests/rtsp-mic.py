@@ -15,7 +15,7 @@ class RTSP_Server:
 
         self.server.set_address(self.address)
         self.server.set_service(self.port)
-        self.launch_description = "( alsasrc ! queue ! audioconvert ! vorbisenc quality=0.7 ! rtpvorbispay name=pay0 pt=96)"
+        self.launch_description = "( alsasrc ! queue ! audioconvert ! vorbisenc quality=0.7 ! rtpvorbispay )"
 
         '''
         marc@armadillo:~$ gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
