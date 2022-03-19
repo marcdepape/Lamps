@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 
 	// vorbis encoder (default quality is 0.3)
 	pipeline << "vorbisenc quality=0.7 ! queue leaky=downstream max-size-buffers=16 ! ";
-	pipeline << "rtpvorbispay name=pay0 pt=96";
+	pipeline << "rtpvorbispay name=pay1 pt=97";
 
 	gst_rtsp_media_factory_set_shared(factory, TRUE);
 	gst_rtsp_media_factory_set_launch(factory, pipeline.str().c_str());
