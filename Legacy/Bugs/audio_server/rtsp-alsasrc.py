@@ -13,7 +13,7 @@ print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
 
 '''
-gst-launch-1.0 rtspsrc location=rtsp://lamp2.local:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+gst-launch-1.0 rtspsrc location=rtsp://lamp2.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
 
 class RTSP_Server:
@@ -22,7 +22,7 @@ class RTSP_Server:
 
         self.server = GstRtspServer.RTSPServer.new()
         self.address = 'lamp{}.local'.format(lamp_number)
-        self.port = '8554'
+        self.port = '8100'
 
         self.server.set_address(self.address)
         self.server.set_service(self.port)

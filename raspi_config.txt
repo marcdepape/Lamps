@@ -48,6 +48,7 @@ https://github.com/jackersson/gstreamer-python
 https://github.com/GStreamer/gst-rtsp-server
 https://gstreamer.freedesktop.org/documentation/tutorials/basic/hello-world.html?gi-language=python
 https://davidmays.io/streaming-raspberry-pi-video-via-rtsp-with-gstreamer-and-video4linux/
+https://askubuntu.com/questions/1095521/cant-build-gst-rtsp-server
 
 // SOUND
 https://python-sounddevice.readthedocs.io/en/0.4.4/
