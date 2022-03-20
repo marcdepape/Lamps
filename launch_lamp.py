@@ -68,11 +68,13 @@ class RTSP_Server:
 
 class Streamer(object):
     def __init__(self):
+        self.AMP_ELEMENT_NAME = 'lamps-audio-amplify'
+        self.RTSP_ELEMENT_NAME = 'lamps-rtsp-source'
         pipeline_string = self.pipeline_template()
 
         self.pipeline = Gst.parse_launch(pipeline_string)
-        self.rtspsrc = self.pipeline.get_by_name(RTSP_ELEMENT_NAME)
-        self.audioamplify = self.pipeline.get_by_name(AMP_ELEMENT_NAME)
+        self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
+        self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
         self.volume = 1
 
         print("pipeline:", pipeline_string)
@@ -102,7 +104,7 @@ class Streamer(object):
                 "audioconvert ! "
                 "audio/x-raw,format=S16LE,channels=2 ! "
                 "alsasink"
-                ).format(RTSP_ELEMENT_NAME, AMP_ELEMENT_NAME)
+                ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
 streamer = Streamer()
 server = RTSP_Server(lamp_id)
