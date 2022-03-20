@@ -104,6 +104,5 @@ class Streamer(object):
                 "alsasink"
                 ).format(RTSP_ELEMENT_NAME, AMP_ELEMENT_NAME)
 
-
-server = RTSP_Server(lamp_id)
 streamer = Streamer()
+server = RTSP_Server(lamp_id)
