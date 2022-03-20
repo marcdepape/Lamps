@@ -45,7 +45,6 @@ class Lamp(object):
 
 class RTSP_Server:
     def __init__(self, lamp_number):
-        Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
         self.address = 'lamp{}.local'.format(lamp_number)
@@ -106,5 +105,6 @@ class Streamer(object):
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
+Gst.init(None)
 streamer = Streamer()
 server = RTSP_Server(lamp_id)
