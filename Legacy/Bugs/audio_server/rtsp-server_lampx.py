@@ -1,26 +1,33 @@
 #!/usr/bin/env python
 import sys
+import subprocess
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GObject, GLib, GstRtspServer
 
+this_lamp = subprocess.check_output('hostname')
+this_lamp = this_lamp.decode("utf-8")
+this_lamp = this_lamp.replace('lamp','',1)
+print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
+lamp_id = int(this_lamp)
+
+'''
+marc@armadillo:~$ gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+'''
+
 class RTSP_Server:
-    def __init__(self):
+    def __init__(self, lamp_number):
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
-        self.address = '192.168.100.153'
+        self.address = 'lamp{}.local'.format(lamp_number)
         self.port = '8554'
 
         self.server.set_address(self.address)
         self.server.set_service(self.port)
 
         self.launch_description = "( filesrc location=05Arrows.ogg ! oggdemux ! queue ! rtpvorbispay name=pay0 pt=96 )"
-
-        '''
-        marc@armadillo:~$ gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
-        '''
 
         self.factory = GstRtspServer.RTSPMediaFactory.new()
         self.factory.set_launch(self.launch_description)
@@ -34,4 +41,4 @@ class RTSP_Server:
         GLib.MainLoop().run()
 
 
-server = RTSP_Server()
+server = RTSP_Server(lamp_id)
