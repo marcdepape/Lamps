@@ -95,16 +95,26 @@ class Streamer(object):
         self.audioamplify.set_property('amplification', volume)
 
     def pipeline_template(self):
-        return ("rtspsrc debug=TRUE latency=250 name={} ! "
+        return ("rtspsrc latency=250 name={} ! "
                 "queue ! "
                 "rtpvorbisdepay ! "
                 "vorbisdec ! "
                 "audioamplify name={} ! "
                 "audioconvert ! "
-                "audio/x-raw,format=S16LE,channels=2 ! "
+                "audio/x-raw,format=S16LE,rate=44100,channels=2 ! "
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
 Gst.init(None)
 streamer = Streamer()
 server = RTSP_Server(lamp_id)
+
+if __name__ == "__main__":
+    print("")
+    print("--------------------------------------------")
+    print("MAIN")
+    print("")
+
+    while True:
+        sleep(10)
+        print("SWITCH!")
