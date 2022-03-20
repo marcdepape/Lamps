@@ -93,7 +93,7 @@ class Streamer(object):
     def volume(self, volume):
         self.audioamplify.set_property('amplification', volume)
 
-    def pipeline_template():
+    def pipeline_template(self):
         return ("rtspsrc debug=TRUE latency=250 name={} ! "
                 "queue ! "
                 "rtpvorbisdepay ! "
