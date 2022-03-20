@@ -13,11 +13,11 @@ print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
 
 '''
-gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+gst-launch-1.0 rtspsrc location=rtsp://lamp2.local:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
 
 class RTSP_Server:
-    def __init__(self, lamp_number):
+    def __init__(self):
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
@@ -26,8 +26,8 @@ class RTSP_Server:
 
         self.server.set_address(self.address)
         self.server.set_service(self.port)
-
-        self.launch_description = "( filesrc location=05Arrows.ogg ! oggdemux ! queue ! rtpvorbispay name=pay0 pt=96 )"
+        #self.launch_description = "( alsasrc ! queue leaky=downstream max-size-buffers=16 ! queue ! audioconvert ! queue ! vorbisenc quality=0.7 ! queue leaky=downstream max-size-buffers=16 ! rtpvorbispay name=pay0 pt=96)"
+        self.launch_description = "( alsasrc device=0 ! queue ! audioconvert ! vorbisenc ! rtpvorbispay name=pay0 pt=96 )"
 
         self.factory = GstRtspServer.RTSPMediaFactory.new()
         self.factory.set_launch(self.launch_description)
@@ -37,8 +37,8 @@ class RTSP_Server:
         self.mount_points.add_factory('/mic', self.factory)
 
         self.server.attach(None)
-        print('Stream ready: ' + str(self.server.get_address()))
+        print('Stream ready at: ' + str(self.server.get_address()))
         GLib.MainLoop().run()
 
 
-server = RTSP_Server(lamp_id)
+server = RTSP_Server()
