@@ -128,7 +128,7 @@ class Streamer(object):
 Gst.init(None)
 streamer = Streamer()
 
-rtsp = threading.Thread(target=launchServer)
+rtsp = Thread(target=launchServer)
 rtsp.start()
 
 if __name__ == "__main__":
