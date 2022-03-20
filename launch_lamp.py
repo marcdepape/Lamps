@@ -43,9 +43,9 @@ class Lamp(object):
         self.listen = None
         self.broadcast = None
 
-def launchServer(lamp_number):
+def launchServer():
     server = GstRtspServer.RTSPServer.new()
-    address = 'lamp{}.local'.format(lamp_number)
+    address = 'lamp{}.local'.format(lamp_id)
     port = '8100'
 
     server.set_address(address)
@@ -128,7 +128,7 @@ class Streamer(object):
 Gst.init(None)
 streamer = Streamer()
 
-rtsp = Thread(target=launchServer,args=lamp_id)
+rtsp = Thread(target=launchServer)
 rtsp.start()
 
 if __name__ == "__main__":
