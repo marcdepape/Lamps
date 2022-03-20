@@ -17,7 +17,7 @@ gst-launch-1.0 rtspsrc location=rtsp://lamp2.local:8554/mic ! queue ! rtpvorbisd
 '''
 
 class RTSP_Server:
-    def __init__(self):
+    def __init__(self, lamp_number):
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
@@ -41,4 +41,4 @@ class RTSP_Server:
         GLib.MainLoop().run()
 
 
-server = RTSP_Server()
+server = RTSP_Server(lamp_id)
