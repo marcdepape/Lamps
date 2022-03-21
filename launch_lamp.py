@@ -91,8 +91,7 @@ if __name__ == "__main__":
     print("MAIN")
     print("")
 
-    streamer.start(2)
-
     while True:
-        sleep(10)
+        streamer.start(2)
+        sleep(60)
         print("SWITCH!")
