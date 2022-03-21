@@ -30,6 +30,8 @@ class Lamp(object):
         self.is_broadcasting = False
         self.is_listening = False
         self.volume = 0
+        self.peak = 1.5
+        self.fade_rate = 0.05
         self.id = 0
         self.stream = 0
 
@@ -80,6 +82,20 @@ class Streamer(object):
 streamer = Streamer()
 lamp = Lamp()
 
+def fadeIn():
+    print("FADE IN!")
+    while streamer.volume < lamp.peak:
+        streamer.changeVolume(0.01)
+        sleep(self.fade_rate)
+    print("DONE!")
+
+def fadeOut();
+    print("FADE OUT!")
+    while streamer.volume > 0:
+        streamer.changeVolume(-0.01)
+        sleep(self.fade_rate)
+    print("DONE!")
+
 if __name__ == "__main__":
     print("")
     print("--------------------------------------------")
@@ -91,11 +107,8 @@ if __name__ == "__main__":
             streamer.start(2)
             lamp.is_live = True
 
-        print("FADE IN!")
-        while streamer.volume < 1.5:
-            streamer.changeVolume(0.01)
-            sleep(0.05)
-        print("DONE!")
-
-        sleep(10)
+        fadeIn()
+        sleep(15)
+        fadeOut()
+        sleep(5)
         print("SWITCH!")
