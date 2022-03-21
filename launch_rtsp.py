@@ -25,7 +25,7 @@ class RTSP_Server:
 
         self.server.set_address(self.address)
         self.server.set_service(self.port)
-        self.launch_description = "( alsasrc ! queue leaky=downstream max-size-buffers=32 ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! audioconvert ! vorbisenc quality=0.7 ! queue leaky=downstream max-size-buffers=32 ! rtpvorbispay name=pay0 pt=96 )"
+        self.launch_description = "( alsasrc ! queue leaky=downstream max-size-buffers=8 ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! audioconvert ! vorbisenc quality=0.7 ! queue leaky=downstream max-size-buffers=8 ! rtpvorbispay name=pay0 pt=96 )"
 
         self.factory = GstRtspServer.RTSPMediaFactory.new()
         self.factory.set_launch(self.launch_description)
