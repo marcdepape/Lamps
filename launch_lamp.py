@@ -55,7 +55,7 @@ class Streamer(object):
 
         print("FADE IN!")
         while streamer.volume < 1.0:
-            streamer.changeVolume(0.1)
+            streamer.changeVolume(0.01)
             sleep(0.05)
         print("DONE!")
 
