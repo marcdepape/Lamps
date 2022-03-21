@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-
 import zmq
 import json
 import alsaaudio
@@ -26,14 +24,46 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue
 
 class Lamp(object):
     def __init__(self):
-        self.is_live = False
-        self.is_broadcasting = False
-        self.is_listening = False
+        self.live = False
         self.volume = 0
         self.peak = 1.5
         self.fade_rate = 0.05
         self.id = 0
         self.stream = 0
+        self.server = True
+        self.fade = "in"
+        self.state = "listening"
+        self.in_update = ""
+        self_out_status = ""
+        self.report = True
+
+        # SERVER
+        server_context = zmq.Context()
+        self.publish = server_context.socket(zmq.PUB)
+        self.publish.connect("tcp://armadillo.local:8101")
+        self.publish.set_hwm(1)
+
+        # CLIENT
+        client_context = zmq.Context()
+        self.subscribe = client_context.socket(zmq.SUB)
+        self.subscribe.connect("tcp://armadillo.local:8102")
+        self.subscribe.setsockopt(zmq.SUBSCRIBE, b'')
+        self.subscribe.set_hwm(1)
+
+    def status(self):
+        while self.report:
+            self.out_status = json.dumps({"id": self.lamp_id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state})
+            self.publish.send_json(self.out_update)
+            sleep(1)
+
+    def update(self):
+        update = self.subscribe.recv_json()
+        update = json.loads(update)
+        if update["lamp"] == self.lamp_id:
+            self.in_update = update
+            return self.in_update
+        else:
+            return -1
 
 class Streamer(object):
     def __init__(self):
@@ -76,7 +106,6 @@ class Streamer(object):
                 "audioamplify name={} ! "
                 "audioconvert ! "
                 "audio/x-raw,format=S16LE,rate=44100,channels=2 ! "
-                "queue ! "
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
@@ -87,11 +116,13 @@ def fadeIn():
     while streamer.volume < lamp.peak:
         streamer.changeVolume(0.01)
         sleep(lamp.fade_rate)
+    self.fade = "in"
 
 def fadeOut():
     while streamer.volume > 0:
         streamer.changeVolume(-0.01)
         sleep(lamp.fade_rate)
+    self.fade = "out"
 
 if __name__ == "__main__":
     print("")
@@ -100,7 +131,7 @@ if __name__ == "__main__":
     print("")
 
     while True:
-        if not lamp.is_live:
+        if not lamp.live:
             streamer.start(2)
             lamp.is_live = True
 
