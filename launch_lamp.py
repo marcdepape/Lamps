@@ -35,7 +35,7 @@ gst-launch-1.0 rtspsrc latency=250 location=rtsp://lamp2.local:8554/mic ! queue 
 
 class Lamp(object):
     def __init__(self):
-        self.is_live = True
+        self.is_live = False
         self.is_broadcasting = False
         self.is_listening = False
         self.volume = 0
@@ -85,6 +85,7 @@ class Streamer(object):
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
 streamer = Streamer()
+lamp = Lamp()
 
 if __name__ == "__main__":
     print("")
@@ -93,6 +94,8 @@ if __name__ == "__main__":
     print("")
 
     while True:
-        streamer.start(2)
-        sleep(60)
+        if not lamp.is_live:
+            streamer.start(2)
+            lamp.is_live = True
+        sleep(10)
         print("SWITCH!")
