@@ -46,12 +46,12 @@ class LampProxy(object):
         while self.running:
             self.receive = self.frontend.recv_json()
             self.receive = json.loads(self.receive)
-            print(self.receive)
+            print("RECEIVE: " + str(self.receive))
 
             lamp_id = 2
             self.message = json.dumps({"lamp": lamp_id, "rate": self.rate, "peak": self.peak, "live": self.live, "state": self.state[lamp_id], "listen": self.listeners[lamp_id]})
             self.backend.send_json(self.message)
-            print(self.message)
+            print("SEND: " + str(self.message))
 
     def setup(self):
         while self.live != 1:
