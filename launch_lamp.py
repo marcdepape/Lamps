@@ -76,6 +76,7 @@ class Streamer(object):
                 "audioamplify name={} ! "
                 "audioconvert ! "
                 "audio/x-raw,format=S16LE,rate=44100,channels=2 ! "
+                "queue ! "
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
