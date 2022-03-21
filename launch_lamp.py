@@ -53,12 +53,6 @@ class Streamer(object):
         self.audioamplify.set_property('amplification', 0)
         self.pipeline.set_state(Gst.State.PLAYING)
 
-        print("FADE IN!")
-        while streamer.volume < 1.5:
-            streamer.changeVolume(0.01)
-            sleep(0.05)
-        print("DONE!")
-
     def stop(self):
         self.pipeline.set_state(Gst.State.READY)
 
@@ -96,6 +90,12 @@ if __name__ == "__main__":
         if not lamp.is_live:
             streamer.start(2)
             lamp.is_live = True
+
+        print("FADE IN!")
+        while streamer.volume < 1.5:
+            streamer.changeVolume(0.01)
+            sleep(0.05)
+        print("DONE!")
 
         sleep(10)
         print("SWITCH!")
