@@ -34,7 +34,7 @@ class Lamp(object):
         self.fade = "in"
         self.state = "listening"
         self.in_update = ""
-        self_out_status = ""
+        self.out_status = ""
         self.report = True
 
         # SERVER
@@ -53,14 +53,15 @@ class Lamp(object):
     def status(self):
         while self.report:
             self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state})
-            self.publish.send_json(self.out_update)
+            self.publish.send_json(self.out_status)
             sleep(1)
 
     def update(self):
         update = self.subscribe.recv_json()
         update = json.loads(update)
-        if update["lamp"] == self.lamp_id:
+        if update["lamp"] == self.id:
             self.in_update = update
+            print(self.in_update)
             return self.in_update
         else:
             return -1
