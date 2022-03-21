@@ -54,7 +54,7 @@ class Streamer(object):
         self.pipeline.set_state(Gst.State.PLAYING)
 
         print("FADE IN!")
-        while streamer.volume < 1.0:
+        while streamer.volume < 1.5:
             streamer.changeVolume(0.01)
             sleep(0.05)
         print("DONE!")
