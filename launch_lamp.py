@@ -23,12 +23,12 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue
 '''
 
 class Lamp(object):
-    def __init__(self):
+    def __init__(self, lamp_num):
         self.live = False
         self.volume = 0
         self.peak = 1.5
         self.fade_rate = 0.05
-        self.id = 0
+        self.id = lamp_num
         self.stream = 0
         self.server = True
         self.fade = "in"
@@ -52,7 +52,7 @@ class Lamp(object):
 
     def status(self):
         while self.report:
-            self.out_status = json.dumps({"id": self.lamp_id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state})
+            self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state})
             self.publish.send_json(self.out_update)
             sleep(1)
 
@@ -110,7 +110,7 @@ class Streamer(object):
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
 streamer = Streamer()
-lamp = Lamp()
+lamp = Lamp(lamp_id)
 
 def fadeIn():
     while streamer.volume < lamp.peak:
