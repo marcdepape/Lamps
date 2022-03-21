@@ -116,13 +116,13 @@ def fadeIn():
     while streamer.volume < lamp.peak:
         streamer.changeVolume(0.01)
         sleep(lamp.fade_rate)
-    self.fade = "in"
+    lamp.fade = "in"
 
 def fadeOut():
     while streamer.volume > 0:
         streamer.changeVolume(-0.01)
         sleep(lamp.fade_rate)
-    self.fade = "out"
+    lamp.fade = "out"
 
 if __name__ == "__main__":
     print("")
