@@ -60,7 +60,7 @@ class Lamp(object):
         while self.report:
             update = self.subscribe.recv_json()
             update = json.loads(update)
-            print(self.in_update)
+            print("RECEIVE: " + str(update))
             if update["lamp"] == self.id:
                 self.in_update = update
                 return self.in_update
