@@ -18,15 +18,6 @@ this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
 
-streams = [
-    "tcp://lamp0.local:8100",
-    "tcp://lamp1.local:8100",
-    "tcp://lamp2.local:8100",
-    "tcp://lamp3.local:8100",
-    "tcp://lamp4.local:8100",
-    "tcp://lamp5.local:8100",
-]
-
 Gst.init(None)
 
 '''
@@ -41,20 +32,17 @@ class Lamp(object):
         self.volume = 0
         self.id = 0
         self.stream = 0
-        self.audio = None
-        self.listen = None
-        self.broadcast = None
 
 class Streamer(object):
     def __init__(self):
-        self.AMP_ELEMENT_NAME = 'lamps-audio-amplify'
-        self.RTSP_ELEMENT_NAME = 'lamps-rtsp-source'
+        self.AMP_ELEMENT_NAME = 'lamp-audio-amplify'
+        self.RTSP_ELEMENT_NAME = 'lamp-rtsp-source'
         pipeline_string = self.pipeline_template()
 
         self.pipeline = Gst.parse_launch(pipeline_string)
         self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
         self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
-        self.volume = 1
+        self.volume = 0
 
         print("pipeline:", pipeline_string)
 
@@ -62,16 +50,27 @@ class Streamer(object):
         url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
         print(url)
         self.rtspsrc.set_property('location', url)
+        self.audioamplify.set_property('amplification', 0)
         self.pipeline.set_state(Gst.State.PLAYING)
+
+        print("FADE IN!")
+        while streamer.volume < 1.0:
+            streamer.setVolume(0.1)
+            sleep(0.05)
+        print("DONE!")
 
     def stop(self):
         self.pipeline.set_state(Gst.State.READY)
 
-    def volume(self):
+    def getVolume(self):
         return self.audioamplify.get_property('amplification')
 
-    def volume(self, volume):
-        self.audioamplify.set_property('amplification', volume)
+    def setVolume(self, level):
+        self.audioamplify.set_property('amplification', level)
+
+    def changeVolume(self, change):
+        self.volume = self.volume + change
+        self.audioamplify.set_property('amplification', self.volume)
 
     def pipeline_template(self):
         return ("rtspsrc latency=250 name={} ! "
@@ -97,5 +96,6 @@ if __name__ == "__main__":
         if not lamp.is_live:
             streamer.start(2)
             lamp.is_live = True
+
         sleep(10)
         print("SWITCH!")
