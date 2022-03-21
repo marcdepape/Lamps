@@ -56,7 +56,7 @@ class Streamer(object):
 
         print("pipeline:", pipeline_string)
 
-    def start(self, lamp_num: str):
+    def start(self, lamp_num):
         url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
         print(url)
         self.rtspsrc.set_property('location', url)
@@ -82,7 +82,7 @@ class Streamer(object):
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
-Gst.init(None)
+#Gst.init(None)
 streamer = Streamer()
 
 if __name__ == "__main__":
