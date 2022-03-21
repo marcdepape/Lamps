@@ -58,10 +58,9 @@ class Streamer(object):
 
     def start(self, lamp_num: str):
         url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
-
+        print(url)
         self.rtspsrc.set_property('location', url)
         self.pipeline.set_state(Gst.State.PLAYING)
-        print(url)
 
     def stop(self):
         self.pipeline.set_state(Gst.State.READY)
@@ -91,6 +90,8 @@ if __name__ == "__main__":
     print("--------------------------------------------")
     print("MAIN")
     print("")
+
+    streamer.start(2)
 
     while True:
         sleep(10)
