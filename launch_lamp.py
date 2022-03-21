@@ -130,6 +130,11 @@ if __name__ == "__main__":
     print("MAIN")
     print("")
 
+    publisher = Thread(target=lamp.status, args=())
+    publisher.start()
+    subscriber = Thread(target=lamp.update, args=())
+    subscriber.start()
+
     while True:
         if not lamp.live:
             streamer.start(2)
