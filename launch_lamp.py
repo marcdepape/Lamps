@@ -89,7 +89,7 @@ def fadeIn():
         sleep(self.fade_rate)
     print("DONE!")
 
-def fadeOut();
+def fadeOut():
     print("FADE OUT!")
     while streamer.volume > 0:
         streamer.changeVolume(-0.01)
