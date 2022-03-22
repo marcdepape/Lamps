@@ -107,6 +107,18 @@ class Streamer(object):
     def stop(self):
         self.pipeline.set_state(Gst.State.READY)
 
+    def change(self, lamp_num):
+        self.pipeline.set_state(Gst.State.NULL)
+        self.pipeline_string = self.pipeline_template()
+        self.pipeline = Gst.parse_launch(self.pipeline_string)
+        self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
+        self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
+        url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
+        print(url)
+        self.rtspsrc.set_property('location', url)
+        self.audioamplify.set_property('amplification', 0)
+        self.pipeline.set_state(Gst.State.PLAYING)
+
     def getVolume(self):
         return self.audioamplify.get_property('amplification')
 
@@ -166,7 +178,7 @@ if __name__ == "__main__":
             print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
             fadeOut()
             if lamp.state == "streaming":
-                streamer.start(lamp.stream)
+                streamer.change(lamp.stream)
                 fadeIn()
                 lamp.change = False
             else:
