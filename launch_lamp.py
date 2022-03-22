@@ -97,11 +97,11 @@ class Streamer(object):
         print("pipeline:", pipeline_string)
 
     def start(self, lamp_num):
+        self.pipeline.set_state(Gst.State.READY)
         url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
         print(url)
         self.rtspsrc.set_property('location', url)
         self.audioamplify.set_property('amplification', 0)
-        self.pipeline.set_state(Gst.State.READY)
         self.pipeline.set_state(Gst.State.PLAYING)
 
     def stop(self):
@@ -132,16 +132,20 @@ streamer = Streamer()
 lamp = Lamp(lamp_id)
 
 def fadeIn():
+    print("FADING IN")
     while streamer.volume < lamp.peak:
         streamer.changeVolume(0.01)
         sleep(lamp.rate)
     lamp.fade = "in"
+    print("DONE!")
 
 def fadeOut():
+    print("FADING OUT")
     while streamer.volume > 0:
         streamer.changeVolume(-0.01)
         sleep(lamp.rate)
     lamp.fade = "out"
+    print("DONE!")
 
 if __name__ == "__main__":
     print("")
