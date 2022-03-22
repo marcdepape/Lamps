@@ -102,7 +102,7 @@ class Streamer(object):
 
         url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
         print(url)
-        
+
         self.rtspsrc.set_property('location', url)
         self.audioamplify.set_property('amplification', 0)
         self.pipeline.set_state(Gst.State.PLAYING)
