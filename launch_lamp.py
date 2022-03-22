@@ -97,9 +97,6 @@ class Streamer(object):
         print("pipeline:", self.pipeline_string)
 
     def start(self, lamp_num):
-        self.pipeline.set_state(Gst.State.READY)
-        self.pipeline = Gst.parse_launch(self.pipeline_string)
-
         url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
         print(url)
 
