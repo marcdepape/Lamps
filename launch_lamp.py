@@ -87,7 +87,7 @@ class Streamer(object):
     def __init__(self):
         self.AMP_ELEMENT_NAME = 'lamp-audio-amplify'
         self.RTSP_ELEMENT_NAME = 'lamp-rtsp-source'
-        pipeline_string = self.pipeline_template()
+        self.pipeline_string = self.pipeline_template()
 
         self.pipeline = Gst.parse_launch(pipeline_string)
         self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
@@ -98,7 +98,7 @@ class Streamer(object):
 
     def start(self, lamp_num):
         self.pipeline.set_state(Gst.State.READY)
-        self.pipeline = Gst.parse_launch(pipeline_string)
+        self.pipeline = Gst.parse_launch(self.pipeline_string)
 
         url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
         print(url)
