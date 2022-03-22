@@ -1,7 +1,8 @@
-# SUB + PUB setup
+#!/usr/bin/env python
 import zmq
 import json
 from time import sleep
+from threading import Thread
 
 class LampProxy(object):
     def __init__(self, number_of_lamps):

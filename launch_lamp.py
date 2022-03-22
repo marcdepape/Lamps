@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import zmq
 import json
-import alsaaudio
 from threading import Thread
 from time import sleep
 import subprocess
