@@ -89,7 +89,7 @@ class Streamer(object):
         self.RTSP_ELEMENT_NAME = 'lamp-rtsp-source'
         self.pipeline_string = self.pipeline_template()
 
-        self.pipeline = Gst.parse_launch(pipeline_string)
+        self.pipeline = Gst.parse_launch(self.pipeline_string)
         self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
         self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
         self.volume = 0
