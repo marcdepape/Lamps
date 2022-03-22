@@ -90,7 +90,7 @@ if __name__ == "__main__":
     publisher = Thread(target=lamps.updateOut, args=())
     publisher.start()
 
-    self.running = True
+    lamps.running = True
 
     while True:
         lamps.listeners[0] = -1
