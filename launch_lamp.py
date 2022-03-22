@@ -101,6 +101,7 @@ class Streamer(object):
         print(url)
         self.rtspsrc.set_property('location', url)
         self.audioamplify.set_property('amplification', 0)
+        self.pipeline.set_state(Gst.State.READY)
         self.pipeline.set_state(Gst.State.PLAYING)
 
     def stop(self):
