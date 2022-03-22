@@ -27,7 +27,7 @@ class Lamp(object):
         self.live = False
         self.volume = 0
         self.peak = 1.5
-        self.fade_rate = 0.05
+        self.rate = 0.05
         self.id = lamp_num
         self.stream = -1
         self.server = True
@@ -55,8 +55,8 @@ class Lamp(object):
         if self.in_update["live"] != self.live:
             pass
 
-        if self.in_update["fade"] != self.fade:
-            self.fade = self.in_update["fade"]
+        if self.in_update["rate"] != self.rate:
+            self.rate = self.in_update["fade"]
 
         if self.in_update["peak"] != self.peak:
             self.peak = self.in_update["peak"]
@@ -168,7 +168,3 @@ if __name__ == "__main__":
                 change = False
             else:
                 change = False
-
-        if not lamp.live:
-            streamer.start(2)
-            lamp.is_live = True
