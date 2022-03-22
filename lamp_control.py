@@ -53,6 +53,21 @@ class LampProxy(object):
             self.backend.send_json(self.message)
             print("SEND: " + str(self.message))
 
+    def statusIn(self):
+        while self.running:
+            self.receive = self.frontend.recv_json()
+            self.receive = json.loads(self.receive)
+            print("STATUS IN: " + str(self.receive))
+
+    def updateOut(self):
+        while self.running:
+            for lamp_id in range(number_of_lamps):
+                self.message = json.dumps({"lamp": lamp_id, "rate": self.rate, "peak": self.peak, "live": self.live, "state": self.state[lamp_id], "stream": self.listeners[lamp_id]})
+                self.backend.send_json(self.message)
+                print("UPDATE OUT: " + str(self.message))
+            sleep(1)
+
+
     def setup(self):
         while self.live != 1:
             self.receive = self.frontend.recv_json()
@@ -70,5 +85,28 @@ class LampProxy(object):
                 self.live = 1
                 self.running = True
 
-proxy = LampProxy(6)
-proxy.start()
+lamps = LampProxy(6)
+
+if __name__ == "__main__":
+    print("")
+    print("--------------------------------------------")
+    print("LAMP CONTROL")
+    print("")
+
+    subscriber = Thread(target=lamps.statusIn, args=())
+    subscriber.start()
+    publisher = Thread(target=lamps.updateOut, args=())
+    publisher.start()
+
+    while True:
+        lamps.listeners[0] = -1
+        lamps.listeners[1] = -1
+        lamps.listeners[2] = 0
+
+        sleep(30)
+
+        lamps.listeners[0] = -1
+        lamps.listeners[1] = -1
+        lamps.listeners[2] = 1
+
+        sleep(30)

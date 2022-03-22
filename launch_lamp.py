@@ -29,10 +29,11 @@ class Lamp(object):
         self.peak = 1.5
         self.fade_rate = 0.05
         self.id = lamp_num
-        self.stream = 0
+        self.stream = -1
         self.server = True
+        self.change = False
         self.fade = "in"
-        self.state = "listening"
+        self.state = "?"
         self.in_update = ""
         self.out_status = ""
         self.report = True
@@ -50,19 +51,39 @@ class Lamp(object):
         self.subscribe.setsockopt(zmq.SUBSCRIBE, b'')
         self.subscribe.set_hwm(1)
 
-    def status(self):
+    def compare(self):
+        if self.in_update["live"] != self.live:
+            pass
+
+        if self.in_update["fade"] != self.fade:
+            self.fade = self.in_update["fade"]
+
+        if self.in_update["peak"] != self.peak:
+            self.peak = self.in_update["peak"]
+
+        if self.in_update["stream"] != self.stream:
+            self.stream = self.in_update["stream"]
+            self.change = True
+            if self.stream != -1:
+                self.state = "broadcasting"
+            else:
+                self.state = "streaming"
+
+    def statusOut(self):
         while self.report:
             self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state})
             self.publish.send_json(self.out_status)
             sleep(1)
 
-    def update(self):
+    def updateIn(self):
         while self.report:
             update = self.subscribe.recv_json()
             update = json.loads(update)
             if update["lamp"] == self.id:
-                self.in_update = update
+                if self.in_update != update
+                    self.in_update = update
                 print("RECEIVE: " + str(update))
+                update["lamp"]
 
 class Streamer(object):
     def __init__(self):
@@ -129,18 +150,25 @@ if __name__ == "__main__":
     print("MAIN")
     print("")
 
-    publisher = Thread(target=lamp.status, args=())
+    publisher = Thread(target=lamp.statusOut, args=())
     publisher.start()
-    subscriber = Thread(target=lamp.update, args=())
+    subscriber = Thread(target=lamp.updateIn, args=())
     subscriber.start()
 
+    while lamp.state == "?":
+        pass
+
     while True:
+        if change:
+            print("SWITCH TO " + lamp.state + " TO " + str(lamp.stream))
+            fadeOut()
+            if lamp.state == "listening":
+                lamp.start(lamp.stream)
+                fadeIn()
+                change = False
+            else:
+                change = False
+
         if not lamp.live:
             streamer.start(2)
             lamp.is_live = True
-
-        fadeIn()
-        sleep(15)
-        fadeOut()
-        sleep(5)
-        print("SWITCH!")
