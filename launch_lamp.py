@@ -133,13 +133,13 @@ lamp = Lamp(lamp_id)
 def fadeIn():
     while streamer.volume < lamp.peak:
         streamer.changeVolume(0.01)
-        sleep(lamp.fade_rate)
+        sleep(lamp.rate)
     lamp.fade = "in"
 
 def fadeOut():
     while streamer.volume > 0:
         streamer.changeVolume(-0.01)
-        sleep(lamp.fade_rate)
+        sleep(lamp.rate)
     lamp.fade = "out"
 
 if __name__ == "__main__":
@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
     while True:
         if lamp.change:
-            print("SWITCH TO " + lamp.state + " TO " + str(lamp.stream))
+            print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
             fadeOut()
             if lamp.state == "listening":
                 lamp.start(lamp.stream)
