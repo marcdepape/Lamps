@@ -161,7 +161,7 @@ if __name__ == "__main__":
             print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
             fadeOut()
             if lamp.state == "streaming":
-                lamp.start(lamp.stream)
+                streamer.start(lamp.stream)
                 fadeIn()
                 lamp.change = False
             else:
