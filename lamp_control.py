@@ -5,9 +5,11 @@ from time import sleep
 from threading import Thread
 
 class LampProxy(object):
-    def __init__(self, number_of_lamps):
+    def __init__(self, num):
         #SUB PUB
         context = zmq.Context()
+
+        self.number_of_lamps = num
 
         # SUB
         self.frontend = context.socket(zmq.SUB)
@@ -31,7 +33,7 @@ class LampProxy(object):
         self.state = []
         self.listeners = []
 
-        for i in range(number_of_lamps):
+        for i in range(self.number_of_lamps):
             self.state.append(-1)
             self.listeners.append(-1)
         self.receive = ""
@@ -53,7 +55,7 @@ class LampProxy(object):
 
     def updateOut(self):
         while self.running:
-            for lamp_id in range(number_of_lamps):
+            for lamp_id in range(self.number_of_lamps):
                 self.message = json.dumps({"lamp": lamp_id, "rate": self.rate, "peak": self.peak, "live": self.live, "stream": self.listeners[lamp_id]})
                 self.backend.send_json(self.message)
                 print("UPDATE OUT: " + str(self.message))
@@ -85,12 +87,12 @@ if __name__ == "__main__":
     print("LAMP CONTROL")
     print("")
 
+    lamps.running = True
+
     subscriber = Thread(target=lamps.statusIn, args=())
     subscriber.start()
     publisher = Thread(target=lamps.updateOut, args=())
     publisher.start()
-
-    lamps.running = True
 
     while True:
         lamps.listeners[0] = -1

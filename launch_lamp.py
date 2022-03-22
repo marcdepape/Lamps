@@ -79,10 +79,9 @@ class Lamp(object):
             update = self.subscribe.recv_json()
             update = json.loads(update)
             if update["lamp"] == self.id:
-                if self.in_update != update:
-                    self.in_update = update
+                self.in_update = update
+                compare()
                 print("RECEIVE: " + str(update))
-                update["lamp"]
 
 class Streamer(object):
     def __init__(self):
