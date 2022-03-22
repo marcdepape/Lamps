@@ -80,7 +80,7 @@ class Lamp(object):
             update = json.loads(update)
             if update["lamp"] == self.id:
                 self.in_update = update
-                compare()
+                self.compare()
                 print("RECEIVE: " + str(update))
 
 class Streamer(object):
