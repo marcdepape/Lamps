@@ -94,7 +94,7 @@ class Streamer(object):
         self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
         self.volume = 0
 
-        print("pipeline:", pipeline_string)
+        print("pipeline:", self.pipeline_string)
 
     def start(self, lamp_num):
         self.pipeline.set_state(Gst.State.READY)
