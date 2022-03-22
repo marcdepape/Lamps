@@ -30,7 +30,7 @@ class LampProxy(object):
         # MESSAGE KEYS
         self.rate = 0.05
         self.peak = 1.5
-        self.state = []
+        self.command = []
         self.listeners = []
 
         for i in range(self.number_of_lamps):
@@ -38,7 +38,7 @@ class LampProxy(object):
             self.listeners.append(-1)
         self.receive = ""
         self.live = 0
-        self.message = json.dumps({"rate": self.rate, "peak": self.peak, "live": -1, "stream": -1})
+        self.message = json.dumps({"rate": self.rate, "peak": self.peak, "live": -1, "command": -1, "stream": -1})
 
     def stop(self):
         self.running = False
@@ -56,7 +56,7 @@ class LampProxy(object):
     def updateOut(self):
         while self.running:
             for lamp_id in range(self.number_of_lamps):
-                self.message = json.dumps({"lamp": lamp_id, "rate": self.rate, "peak": self.peak, "live": self.live, "stream": self.listeners[lamp_id]})
+                self.message = json.dumps({"lamp": lamp_id, "rate": self.rate, "peak": self.peak, "live": self.live, "command": self.command[lamp_id], "stream": self.listeners[lamp_id]})
                 self.backend.send_json(self.message)
                 print("UPDATE OUT: " + str(self.message))
             sleep(1)
