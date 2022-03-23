@@ -119,7 +119,7 @@ class Streamer(object):
                 "vorbisdec ! "
                 "audioamplify name={} ! "
                 "audioconvert ! "
-                "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
+                "audio/x-raw,format=S16LE,rate=44100,channels=2 ! "
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
