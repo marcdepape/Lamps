@@ -43,7 +43,7 @@ class RTSP_Server:
 
         self.local.set_address(self.address)
         self.local.set_service(self.port)
-        self.launch_description = "( alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! audioconvert ! rtpL16pay name=pay1 pt=97 )"
+        self.launch_description = "( alsasrc ! audioconvert ! rtpL16pay name=pay1 pt=97 )"
 
         self.factory_local = GstRtspServer.RTSPMediaFactory.new()
         self.factory_local.set_launch(self.launch_description)
