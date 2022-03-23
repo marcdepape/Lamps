@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys
-
+import zmq
 import gi
 
 gi.require_version('GLib', '2.0')
@@ -8,6 +8,11 @@ gi.require_version('GObject', '2.0')
 gi.require_version('Gst', '1.0')
 
 from gi.repository import Gst, GObject, GLib
+
+context = zmq.Context()
+zmq_socket = context.socket(zmq.PUB)
+zmq_socket.bind("tcp://localhost:8103")
+zmq_socket.set_hwm(1)
 
 def message_callback(bus, message):
     if message.type == Gst.MessageType.ELEMENT:
@@ -17,7 +22,7 @@ def message_callback(bus, message):
         if name == "level":
             value = structure.get_value("rms")
             value = value[0]
-            print(100 + value)
+            zmq_socket.send(value)
 
 if __name__ == "__main__":
     Gst.init(None)

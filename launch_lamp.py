@@ -36,6 +36,7 @@ class Lamp(object):
         self.in_update = ""
         self.out_status = ""
         self.report = True
+        self.mic_signal = 0.0
 
         # SERVER
         server_context = zmq.Context()
@@ -49,6 +50,13 @@ class Lamp(object):
         self.subscribe.connect("tcp://armadillo.local:8102")
         self.subscribe.setsockopt(zmq.SUBSCRIBE, b'')
         self.subscribe.set_hwm(1)
+
+        # CLIENT
+        local_context = zmq.Context()
+        self.levels = local_context.socket(zmq.SUB)
+        self.levels.connect("tcp://localhost:8103")
+        self.levels.setsockopt(zmq.SUBSCRIBE, b'')
+        self.levels.set_hwm(1)
 
     def compare(self):
         if self.in_update["live"] != self.live:
@@ -82,6 +90,11 @@ class Lamp(object):
                 self.in_update = update
                 self.compare()
                 print("RECEIVE: " + str(update))
+
+    def micLevels(self):
+        while self.report:
+            self.mic_signal = self.levels.recv()
+            print("MIC: " + str(self.mic_signal))
 
 class Streamer(object):
     def __init__(self):
@@ -148,6 +161,8 @@ if __name__ == "__main__":
     publisher.start()
     subscriber = Thread(target=lamp.updateIn, args=())
     subscriber.start()
+    mic = Thread(target=lamp.micLevels, args=())
+    mic.start()
 
     while lamp.state == "?":
         pass
