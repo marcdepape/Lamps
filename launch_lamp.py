@@ -24,13 +24,6 @@ Gst.init(None)
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
 
-class Pixels(object):
-    def __init__(self, num):
-
-
-
-
-
 class Lamp(object):
     def __init__(self, lamp_num):
         self.live = False
