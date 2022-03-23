@@ -35,7 +35,7 @@ class RTSP_Server:
         self.mount_points.add_factory('/mic', self.factory)
 
         self.rtsp.attach(None)
-        print('Stream ready at: ' + str(self.server.get_address()))
+        print('Stream ready at: ' + str(self.rtsp.get_address()))
 
         self.local = GstRtspServer.RTSPServer.new()
         self.address = 'localhost'
