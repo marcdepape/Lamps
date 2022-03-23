@@ -109,8 +109,8 @@ class Lamp(object):
 
     def pulse(self, value):
         value = 100 + float(value)
-        value = self.constrain(value, 60, 90)
-        value = self.map_range(value, 60, 90, 0, 255)
+        value = self.constrain(value, 50, 90)
+        value = self.map_range(value, 50, 90, 0, 255)
         value = int(value)
         print(value)
         for i in range(self.num_pixels):
