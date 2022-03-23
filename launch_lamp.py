@@ -101,7 +101,7 @@ class Lamp(object):
                 self.compare()
                 print("RECEIVE: " + str(update))
 
-    def micLevels(self, neo):
+    def micLevels(self):
         while self.report:
             self.mic_signal = self.levels.recv_string()
             print("MIC: " + str(self.mic_signal))
@@ -186,7 +186,7 @@ if __name__ == "__main__":
     publisher.start()
     subscriber = Thread(target=lamp.updateIn, args=())
     subscriber.start()
-    mic = Thread(target=lamp.micLevels, args=(leds))
+    mic = Thread(target=lamp.micLevels, args=())
     mic.start()
 
     while lamp.state == "?":
