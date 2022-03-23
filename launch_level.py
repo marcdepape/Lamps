@@ -11,7 +11,7 @@ from gi.repository import Gst, GObject, GLib
 
 context = zmq.Context()
 zmq_socket = context.socket(zmq.PUB)
-zmq_socket.bind("tcp://localhost:8103")
+zmq_socket.bind("tcp://127.0.0.1:8103")
 zmq_socket.set_hwm(1)
 
 def message_callback(bus, message):
