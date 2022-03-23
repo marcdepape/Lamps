@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import sys
 import subprocess
 import gi
 gi.require_version('Gst', '1.0')
@@ -37,7 +36,6 @@ class RTSP_Server:
 
         self.server.attach(None)
         print('Stream ready at: ' + str(self.server.get_address()))
-
         GLib.MainLoop().run()
 
 server = RTSP_Server(lamp_id)
