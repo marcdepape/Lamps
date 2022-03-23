@@ -4,6 +4,9 @@ import json
 from threading import Thread
 from time import sleep
 import subprocess
+import board
+import neopixel
+import numpy as np
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
@@ -20,6 +23,31 @@ Gst.init(None)
 '''
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
+
+class Pixels(objects):
+    def __init__(self, num):
+        self.pixel_pin = board.D12
+        self.num_pixels = num
+        ORDER neopixel.GRB
+
+        self.neo = neopixel.NeoPixel(
+            self.pixel_pin, self.num_pixels, brightness=0.2, auto_write=False, pixel_order=ORDER
+        )
+
+    def update(self, value):
+        value = 100 - int(value)
+        value = self.constrain(value, 40, 80)
+        value = map_range(value, 40, 80, 0, 255)
+        for i in range(num_pixels):
+            self.neo[i] = (value,value,value);
+            neo.show()
+
+    def map_range(self, x, in_min, in_max, out_min, out_max):
+      return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
+
+    def constrain(self, val, min_val, max_val):
+        return min(max_val, max(min_val, val))
+
 
 class Lamp(object):
     def __init__(self, lamp_num):
@@ -91,10 +119,11 @@ class Lamp(object):
                 self.compare()
                 print("RECEIVE: " + str(update))
 
-    def micLevels(self):
+    def micLevels(self, neo):
         while self.report:
             self.mic_signal = self.levels.recv_string()
             print("MIC: " + str(self.mic_signal))
+            neo.update(self.mic_signal)
 
 class Streamer(object):
     def __init__(self):
