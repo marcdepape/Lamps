@@ -45,7 +45,7 @@ class Lamp(object):
         self.pixel_pin = board.D12
         self.num_pixels = 40
         self.neo = neopixel.NeoPixel(
-            self.pixel_pin, self.num_pixels, brightness=0.2, auto_write=False, pixel_order=neopixel.GRB
+            self.pixel_pin, self.num_pixels, brightness=1.0, auto_write=False, pixel_order=neopixel.GRB
         )
 
         # SERVER
