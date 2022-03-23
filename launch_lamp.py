@@ -26,25 +26,9 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue
 
 class Pixels(object):
     def __init__(self, num):
-        self.pixel_pin = board.D12
-        self.num_pixels = num
-        self.neo = neopixel.NeoPixel(
-            self.pixel_pin, self.num_pixels, brightness=0.2, auto_write=False, pixel_order=neopixel.GRB
-        )
 
-    def update(self, value):
-        value = 100 - int(value)
-        value = self.constrain(value, 40, 80)
-        value = map_range(value, 40, 80, 0, 255)
-        for i in range(num_pixels):
-            self.neo[i] = (value,value,value);
-            neo.show()
 
-    def map_range(self, x, in_min, in_max, out_min, out_max):
-      return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
 
-    def constrain(self, val, min_val, max_val):
-        return min(max_val, max(min_val, val))
 
 
 class Lamp(object):
@@ -63,6 +47,13 @@ class Lamp(object):
         self.out_status = ""
         self.report = True
         self.mic_signal = 0.0
+
+        # NeoPixel
+        self.pixel_pin = board.D12
+        self.num_pixels = 40
+        self.neo = neopixel.NeoPixel(
+            self.pixel_pin, self.num_pixels, brightness=0.2, auto_write=False, pixel_order=neopixel.GRB
+        )
 
         # SERVER
         server_context = zmq.Context()
@@ -121,7 +112,21 @@ class Lamp(object):
         while self.report:
             self.mic_signal = self.levels.recv_string()
             print("MIC: " + str(self.mic_signal))
-            neo.update(self.mic_signal)
+            self.pulse(self.mic_signal)
+
+    def pulse(self, value):
+        value = 100 - int(value)
+        value = self.constrain(value, 40, 80)
+        value = map_range(value, 40, 80, 0, 255)
+        for i in range(num_pixels):
+            self.neo[i] = (value,value,value);
+            neo.show()
+
+    def map_range(self, x, in_min, in_max, out_min, out_max):
+      return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
+
+    def constrain(self, val, min_val, max_val):
+        return min(max_val, max(min_val, val))
 
 class Streamer(object):
     def __init__(self):
@@ -165,7 +170,6 @@ class Streamer(object):
 
 streamer = Streamer()
 lamp = Lamp(lamp_id)
-leds = Pixels(40)
 
 def fadeIn():
     while streamer.volume < lamp.peak:
