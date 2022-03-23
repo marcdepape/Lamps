@@ -14,12 +14,9 @@ from gi.repository import Gst, GObject, GLib
 #message = None
 
 def message_callback(bus, message):
-    print(message)
-
     if message.type == Gst.MessageType.ELEMENT:
         structure = message.get_structure()
         name = structure.get_name()
-        print(name)
 
         if name == "level":
             value = structure.get_value("rms")
@@ -30,7 +27,7 @@ if __name__ == "__main__":
     Gst.init(None)
 
     pipeline = Gst.parse_launch(
-        "alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! falsesink"
+        "alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
     )
 
     bus = pipeline.get_bus()
