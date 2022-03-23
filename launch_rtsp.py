@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 import subprocess
 import gi
 gi.require_version('Gst', '1.0')
