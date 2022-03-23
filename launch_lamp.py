@@ -25,7 +25,7 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue
 '''
 
 class Pixels(object):
-    def __init__(self, num, order):
+    def __init__(self, num):
         self.pixel_pin = board.D12
         self.num_pixels = num
         self.neo = neopixel.NeoPixel(
