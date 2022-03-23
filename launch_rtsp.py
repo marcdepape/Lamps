@@ -37,14 +37,16 @@ class RTSP_Server:
         self.server.attach(None)
         print('Stream ready at: ' + str(self.server.get_address()))
 
+        '''
         pipeline = Gst.parse_launch(
-            "alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
+            "alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=1 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
         )
         bus = pipeline.get_bus()
         bus.add_signal_watch()
         bus.connect("message", self.message_callback)
 
         pipeline.set_state(Gst.State.PLAYING)
+        '''
 
         GLib.MainLoop().run()
 
