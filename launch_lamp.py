@@ -111,7 +111,7 @@ class Lamp(object):
         value = 100 + float(value)
         value = self.constrain(value, 40, 80)
         value = self.map_range(value, 40, 80, 0, 255)
-        print(value)
+        value = int(value)        
         for i in range(self.num_pixels):
             self.neo[i] = (value,value,value);
             neo.show()
