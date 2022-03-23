@@ -37,26 +37,6 @@ class RTSP_Server:
         self.server.attach(None)
         print('Stream ready at: ' + str(self.server.get_address()))
 
-        pipeline = Gst.parse_launch(
-            "alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=1 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
-        )
-        
-        bus = pipeline.get_bus()
-        bus.add_signal_watch()
-        bus.connect("message", self.message_callback)
-
-        pipeline.set_state(Gst.State.PLAYING)
-
         GLib.MainLoop().run()
-
-    def message_callback(self, bus, message):
-            if message.type == Gst.MessageType.ELEMENT:
-                structure = message.get_structure()
-                name = structure.get_name()
-
-                if name == "level":
-                    value = structure.get_value("rms")
-                    value = value[0]
-                    print(100 + value)
 
 server = RTSP_Server(lamp_id)
