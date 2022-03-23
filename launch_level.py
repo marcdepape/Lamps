@@ -31,7 +31,6 @@ if __name__ == "__main__":
         "rtspsrc location=rtsp://localhost:8105/levels ! queue ! rtpL16depay ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
     )
 
-
     bus = pipeline.get_bus()
     bus.add_signal_watch()
     bus.connect("message", message_callback)
