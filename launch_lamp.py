@@ -93,7 +93,7 @@ class Lamp(object):
 
     def micLevels(self):
         while self.report:
-            self.mic_signal = self.levels.recv()
+            self.mic_signal = self.levels.recv_string()
             print("MIC: " + str(self.mic_signal))
 
 class Streamer(object):
