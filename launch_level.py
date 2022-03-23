@@ -27,8 +27,10 @@ if __name__ == "__main__":
     Gst.init(None)
 
     pipeline = Gst.parse_launch(
-        "alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
+        #"alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
+        "gst-launch-1.0 rtspsrc location=rtsp://lamp2.local:8100/levels ! queue ! rtpL16depay ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! fakesink"
     )
+
 
     bus = pipeline.get_bus()
     bus.add_signal_watch()
