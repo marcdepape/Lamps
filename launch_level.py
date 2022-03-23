@@ -9,10 +9,6 @@ gi.require_version('Gst', '1.0')
 
 from gi.repository import Gst, GObject, GLib
 
-#pipeline = None
-#bus = None
-#message = None
-
 def message_callback(bus, message):
     if message.type == Gst.MessageType.ELEMENT:
         structure = message.get_structure()
