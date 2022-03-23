@@ -25,13 +25,11 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue
 '''
 
 class Pixels(objects):
-    def __init__(self, num):
+    def __init__(self, num, order):
         self.pixel_pin = board.D12
         self.num_pixels = num
-        ORDER neopixel.GRB
-
         self.neo = neopixel.NeoPixel(
-            self.pixel_pin, self.num_pixels, brightness=0.2, auto_write=False, pixel_order=ORDER
+            self.pixel_pin, self.num_pixels, brightness=0.2, auto_write=False, pixel_order=neopixel.GRB
         )
 
     def update(self, value):
@@ -167,6 +165,7 @@ class Streamer(object):
 
 streamer = Streamer()
 lamp = Lamp(lamp_id)
+leds = Pixels(40)
 
 def fadeIn():
     while streamer.volume < lamp.peak:
@@ -190,7 +189,7 @@ if __name__ == "__main__":
     publisher.start()
     subscriber = Thread(target=lamp.updateIn, args=())
     subscriber.start()
-    mic = Thread(target=lamp.micLevels, args=())
+    mic = Thread(target=lamp.micLevels, args=(leds))
     mic.start()
 
     while lamp.state == "?":
