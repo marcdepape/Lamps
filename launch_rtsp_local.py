@@ -39,7 +39,7 @@ class RTSP_Server:
 
         self.local = GstRtspServer.RTSPServer.new()
         self.address = 'localhost'
-        self.port = '8100'
+        self.port = '8105'
 
         self.local.set_address(self.address)
         self.local.set_service(self.port)
