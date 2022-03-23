@@ -111,10 +111,11 @@ class Lamp(object):
         value = 100 + float(value)
         value = self.constrain(value, 40, 80)
         value = self.map_range(value, 40, 80, 0, 255)
-        value = int(value)        
+        value = int(value)
+        print(value)
         for i in range(self.num_pixels):
             self.neo[i] = (value,value,value);
-            neo.show()
+            self.neo.show()
 
     def map_range(self, x, in_min, in_max, out_min, out_max):
       return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
