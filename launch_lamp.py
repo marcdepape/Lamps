@@ -108,7 +108,7 @@ class Lamp(object):
             self.pulse(self.mic_signal)
 
     def pulse(self, value):
-        value = 100 - int(value)
+        value = 100 + float(value)
         value = self.constrain(value, 40, 80)
         value = map_range(value, 40, 80, 0, 255)
         for i in range(num_pixels):
