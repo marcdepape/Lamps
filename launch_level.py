@@ -28,7 +28,6 @@ if __name__ == "__main__":
 
     pipeline = Gst.parse_launch(
         "alsasrc ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=100000000 post-messages=TRUE ! fakesink"
-        #"rtspsrc location=rtsp://localhost:8105/levels ! queue ! rtpL16depay ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=100000000 post-messages=TRUE ! fakesink"
     )
 
     bus = pipeline.get_bus()
