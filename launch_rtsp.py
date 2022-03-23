@@ -25,7 +25,7 @@ class RTSP_Server:
 
         self.server.set_address(self.address)
         self.server.set_service(self.port)
-        self.launch_description = "( alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! levels post-messages=TRUE ! audioconvert ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96 )"
+        self.launch_description = "( alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! audioconvert ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96 )"
 
         self.factory = GstRtspServer.RTSPMediaFactory.new()
         self.factory.set_launch(self.launch_description)
@@ -36,6 +36,26 @@ class RTSP_Server:
 
         self.server.attach(None)
         print('Stream ready at: ' + str(self.server.get_address()))
+
+        pipeline = Gst.parse_launch(
+            "alsasrc ! queue ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level name=wavelevel interval=10000000 post-messages=TRUE ! falsesink"
+        )
+        bus = pipeline.get_bus()
+        bus.add_signal_watch()
+        bus.connect("message", message_callback)
+
+        pipeline.set_state(Gst.State.PLAYING)
+
         GLib.MainLoop().run()
+
+    def message_callback(self, bus, message):
+            if message.type == Gst.MessageType.ELEMENT:
+                structure = message.get_structure()
+                name = structure.get_name()
+
+                if name == "level":
+                    value = structure.get_value("rms")
+                    value = value[0]
+                    print(100 + value)
 
 server = RTSP_Server(lamp_id)

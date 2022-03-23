@@ -6,7 +6,7 @@ gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 '''
-gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+gst-launch-1.0 rtspsrc location=rtsp://localhost:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! level post-messages=TRUE ! alsasink
 '''
 
 
