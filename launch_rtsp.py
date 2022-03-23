@@ -42,7 +42,7 @@ class RTSP_Server:
         )
         bus = pipeline.get_bus()
         bus.add_signal_watch()
-        bus.connect("message", message_callback)
+        bus.connect("message", self.message_callback)
 
         pipeline.set_state(Gst.State.PLAYING)
 
