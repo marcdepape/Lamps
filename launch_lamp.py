@@ -31,7 +31,7 @@ class Lamp(object):
         self.peak = 1.5
         self.rate = 0.05
         self.id = lamp_num
-        self.stream = -1
+        self.stream = 255
         self.server = True
         self.change = False
         self.fade = "in"
