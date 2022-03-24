@@ -104,19 +104,27 @@ class Lamp(object):
     def micLevels(self):
         while self.report:
             self.mic_signal = self.levels.recv_string()
-            self.pulse(self.mic_signal)
+            if self.state == "broadcasting":
+                self.pulse(self.mic_signal)
 
-    def pulse(self, value):
-        value = 100 + float(value)
-        value = self.constrain(value, 55, 90)
-        value = self.map_range(value, 55, 90, 0, 255)
-        value = int(value)
-        print(value)
-        for i in range(self.num_pixels):
-            self.neo[i] = (value,value,value);
+    def pulse(self, rms):
+        self.bright = 100 + float(rms)
+        self.bright = self.constrain(self.bright, 55, 90)
+        self.bright = self.map_range(self.bright, 55, 90, 0, 255)
+        self.bright = int(self.bright)
+        print(self.bright)
+        for i in range(16, self.num_pixels):
+            self.neo[i] = (self.bright,self.bright,self.bright);
         self.neo.show()
 
-    def map_range(self, x, in_min, in_max, out_min, out_max):
+    def setBulb(self, value):
+        value = self.mapRange(value, 0, 100, 0, 255)
+        self.bright = self.bright + value
+        for i in range(16):
+            self.neo[i] = (self.bright,self.bright,self.bright);
+        self.neo.show()
+
+    def mapRange(self, x, in_min, in_max, out_min, out_max):
       return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
 
     def constrain(self, val, min_val, max_val):
@@ -166,14 +174,20 @@ streamer = Streamer()
 lamp = Lamp(lamp_id)
 
 def fadeIn():
-    while streamer.volume < lamp.peak:
-        streamer.changeVolume(0.01)
+    while streamer.volume < lamp.peak && lamp.bright < 255:
+        if streamer.volume < lamp.peak:
+            streamer.changeVolume(0.01)
+        if lamp.bright < 255:
+            lamp.setBulb(1)
         sleep(lamp.rate)
     lamp.fade = "in"
 
 def fadeOut():
-    while streamer.volume > 0:
-        streamer.changeVolume(-0.01)
+    while streamer.volume > 0 and lamp.bright > 0:
+        if streamer.volume > 0:
+            streamer.changeVolume(-0.01)
+        if lamp.bright > 0:
+            lamp.setBulb(-1)
         sleep(lamp.rate)
     lamp.fade = "out"
 
