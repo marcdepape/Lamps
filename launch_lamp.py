@@ -114,7 +114,6 @@ class Lamp(object):
         self.bottom_bright = self.constrain(self.bottom_bright, 55, 90)
         self.bottom_bright = self.mapRange(self.bottom_bright, 55, 90, 0, 255)
         self.bottom_bright = int(self.bottom_bright)
-        print(self.bottom_bright)
         self.setBase(self.bottom_bright)
 
     def setBase(self, value):
