@@ -176,6 +176,9 @@ class Streamer(object):
         self.volume = self.volume + change
         self.audioamplify.set_property('amplification', self.volume)
 
+    def mute(self):
+        self.audioamplify.set_property('amplification', 0)
+
     def pipeline_template(self):
         return ("rtspsrc latency=500 name={} ! "
                 "queue ! "
@@ -234,4 +237,5 @@ if __name__ == "__main__":
                 fadeIn()
                 lamp.change = False
             else:
+                streamer.mute()
                 lamp.change = False
