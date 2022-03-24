@@ -231,7 +231,7 @@ if __name__ == "__main__":
             fadeOut()
             if lamp.state == "streaming":
                 streamer.change(lamp.stream)
-                setBase(0)
+                lamp.setBase(0)
                 fadeIn()
                 lamp.change = False
             else:
