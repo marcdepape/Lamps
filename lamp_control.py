@@ -34,7 +34,7 @@ class LampProxy(object):
         self.listeners = []
 
         for i in range(self.number_of_lamps):
-            self.state.append(-1)
+            self.command.append(-1)
             self.listeners.append(-1)
         self.receive = ""
         self.live = 0

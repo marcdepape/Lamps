@@ -174,7 +174,7 @@ streamer = Streamer()
 lamp = Lamp(lamp_id)
 
 def fadeIn():
-    while streamer.volume < lamp.peak && lamp.bright < 255:
+    while streamer.volume < lamp.peak and lamp.bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
         if lamp.bright < 255:
