@@ -40,7 +40,8 @@ class Lamp(object):
         self.out_status = ""
         self.report = True
         self.mic_signal = 0.0
-        self.bright = 0
+        self.top_bright = 0
+        self.bottom_bright = 0
 
         # NeoPixel
         self.pixel_pin = board.D12
@@ -109,20 +110,36 @@ class Lamp(object):
                 self.pulse(self.mic_signal)
 
     def pulse(self, rms):
-        self.bright = 100 + float(rms)
-        self.bright = self.constrain(self.bright, 55, 90)
-        self.bright = self.map_range(self.bright, 55, 90, 0, 255)
-        self.bright = int(self.bright)
-        print(self.bright)
+        self.bottom_bright = 100 + float(rms)
+        self.bottom_bright = self.constrain(self.bottom_bright, 55, 90)
+        self.bottom_bright = self.map_range(self.bottom_bright, 55, 90, 0, 255)
+        self.bottom_bright = int(self.bottom_bright)
+        print(self.bottom_bright)
+        self.setBase(self.bottom_bright)
+
+    def setBase(self, value):
+        self.bottom_bright = value
+
+        if self.bottom_bright < 0:
+            self.bottom_bright = 0
+        if self.bottom_bright > 255:
+            self.bottom_bright = 255
+
         for i in range(16, self.num_pixels):
-            self.neo[i] = (self.bright,self.bright,self.bright);
+            self.neo[i] = (self.bottom_bright,self.bottom_bright,self.bottom_bright);
         self.neo.show()
 
     def setBulb(self, value):
         value = self.mapRange(value, 0, 100, 0, 255)
-        self.bright = self.bright + value
+        self.top_bright = self.top_bright + value
+
+        if self.top_bright < 0:
+            self.top_bright = 0
+        if self.top_bright > 255:
+            self.top_bright = 255
+
         for i in range(16):
-            self.neo[i] = (self.bright,self.bright,self.bright);
+            self.neo[i] = (self.top_bright,self.top_bright,self.top_bright);
         self.neo.show()
 
     def mapRange(self, x, in_min, in_max, out_min, out_max):
@@ -178,7 +195,7 @@ def fadeIn():
     while streamer.volume < lamp.peak and lamp.bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
-        if lamp.bright < 255:
+        if lamp.top_bright < 255:
             lamp.setBulb(1)
         sleep(lamp.rate)
     lamp.fade = "in"
@@ -187,7 +204,7 @@ def fadeOut():
     while streamer.volume > 0 and lamp.bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
-        if lamp.bright > 0:
+        if lamp.top_bright > 0:
             lamp.setBulb(-1)
         sleep(lamp.rate)
     lamp.fade = "out"
@@ -214,6 +231,7 @@ if __name__ == "__main__":
             fadeOut()
             if lamp.state == "streaming":
                 streamer.change(lamp.stream)
+                setBase(0)
                 fadeIn()
                 lamp.change = False
             else:

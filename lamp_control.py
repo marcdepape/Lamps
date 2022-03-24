@@ -106,3 +106,9 @@ if __name__ == "__main__":
         lamps.listeners[2] = 1
 
         sleep(30)
+
+        lamps.listeners[0] = -1
+        lamps.listeners[1] = 2
+        lamps.listeners[2] = -1
+
+        sleep(30)
