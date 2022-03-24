@@ -112,7 +112,7 @@ class Lamp(object):
     def pulse(self, rms):
         self.bottom_bright = 100 + float(rms)
         self.bottom_bright = self.constrain(self.bottom_bright, 55, 90)
-        self.bottom_bright = self.map_range(self.bottom_bright, 55, 90, 0, 255)
+        self.bottom_bright = self.mapRange(self.bottom_bright, 55, 90, 0, 255)
         self.bottom_bright = int(self.bottom_bright)
         print(self.bottom_bright)
         self.setBase(self.bottom_bright)
@@ -192,7 +192,7 @@ streamer = Streamer()
 lamp = Lamp(lamp_id)
 
 def fadeIn():
-    while streamer.volume < lamp.peak and lamp.bright < 255:
+    while streamer.volume < lamp.peak and lamp.top_bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
         if lamp.top_bright < 255:
@@ -201,7 +201,7 @@ def fadeIn():
     lamp.fade = "in"
 
 def fadeOut():
-    while streamer.volume > 0 and lamp.bright > 0:
+    while streamer.volume > 0 and lamp.top_bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
         if lamp.top_bright > 0:
