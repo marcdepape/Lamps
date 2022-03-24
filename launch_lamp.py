@@ -40,6 +40,7 @@ class Lamp(object):
         self.out_status = ""
         self.report = True
         self.mic_signal = 0.0
+        self.bright = 0
 
         # NeoPixel
         self.pixel_pin = board.D12
