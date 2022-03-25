@@ -86,12 +86,12 @@ class Dashboard(GridLayout):
 
         self.active_dial = False
         self.set_shuffle = 600
-        self.flip_trigger = Clock.create_trigger(self.dial_flip, 30)
         self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.set_shuffle)
         self.set_peak = 1.0
         self.set_fade = 3
         self.set_hue = 0
         self.set_saturation = 0
+        self.unassigned = 255
 
         self.listen_ids = [[0 for i in range(self.number_of_lamps)] for i in range(self.number_of_lamps)]
         self.broadcast_ids = [0 for i in range(self.number_of_lamps)]
@@ -169,7 +169,7 @@ class Dashboard(GridLayout):
 
     def set_peak(self, peak):
         self.proxy.peak = str(peak)
-        listeners = ["x" for i in range(self.number_of_lamps)]
+        listeners = [self.unassigned for i in range(self.number_of_lamps)]
         broadcasters = 0
         self.assign_listeners(listeners, broadcasters)
 
@@ -185,48 +185,17 @@ class Dashboard(GridLayout):
 
     def shuffle(self, rt):
         self.reset_shuffle()
-        listeners = ["x" for i in range(self.number_of_lamps)]
+        listeners = [self.unassigned for i in range(self.number_of_lamps)]
         broadcasters = 0
         self.assign_listeners(listeners, broadcasters)
 
-    def dial_trigger(self, lamp, position):
-        if self.active_dial == True:
-            if self.proxy.listeners[lamp] == -1 and position > 160:
-                self.dial_listen(lamp)
-                self.active_dial = False
-            elif self.proxy.listeners[lamp] > -1 and position < 20:
-                self.manual_broadcast(lamp)
-                self.active_dial = False
-            else:
-                pass
-        else:
-            pass
-
-    def dial_flip(self, rt):
-        self.active_dial = True
-        print ("DIAL IS ACTIVE")
-
     def reset_shuffle(self):
-        self.active_dial = False
         self.shuffle_trigger.cancel()
-        self.flip_trigger.cancel()
         self.shuffle_trigger()
-        self.flip_trigger()
-
-    def dial_listen(self, lamp):
-        self.reset_shuffle()
-        listeners = ["x" for i in range(self.number_of_lamps)]
-        to_lamp = lamp
-        while to_lamp == lamp:
-            to_lamp = random.choice(range(self.number_of_lamps))
-        listeners[lamp] = to_lamp
-        listeners[to_lamp] = -1
-        broadcasters = 1
-        self.assign_listeners(listeners, broadcasters)
 
     def manual_listen(self, lamp, to_lamp):
         self.reset_shuffle()
-        listeners = ["x" for i in range(self.number_of_lamps)]
+        listeners = [self.unassigned for i in range(self.number_of_lamps)]
         listeners[lamp] = to_lamp
         listeners[to_lamp] = -1
         broadcasters = 1
@@ -234,24 +203,24 @@ class Dashboard(GridLayout):
 
     def manual_broadcast(self, lamp):
         self.reset_shuffle()
-        listeners = ["x" for i in range(self.number_of_lamps)]
+        listeners = [self.unassigned for i in range(self.number_of_lamps)]
         listeners[lamp] = -1
         broadcasters = 1
         self.assign_listeners(listeners, broadcasters)
 
     def assign_listeners(self, listeners, broadcasters):
-        print (listeners)
+        print (str(listeners) + " | " + str(broadcasters))
         broadcast_lamps = []
         while broadcasters < int(self.number_of_lamps/2):
             assignment = random.randint(0, self.number_of_lamps-1)
-            if listeners[assignment] == "x":
+            if listeners[assignment] == self.unassigned:
                 listeners[assignment] = -1
                 broadcasters += 1
                 broadcast_lamps.append(assignment)
 
         for i in range(self.number_of_lamps):
-            if listeners[i] == "x":
-                while listeners[i] == "x":
+            if listeners[i] == self.unassigned:
+                while listeners[i] == self.unassigned:
                     if not broadcast_lamps:
                         listeners[i] = assignment
                     else:

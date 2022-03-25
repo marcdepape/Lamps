@@ -79,6 +79,10 @@
 					text: "4"
 					background_color: 1.0, 0.0, 0.0, 1.0
 					on_press: root.reset_lamp(4)
+				Button:
+					text: "5"
+					background_color: 1.0, 0.0, 0.0, 1.0
+					on_press: root.reset_lamp(5)
 
 		# SETTINGS ROW 2
 
@@ -312,9 +316,9 @@
 			ToggleButton
 				id: listen_0_to_5
                 text: '5'
-				group: 'listen5'
+				group: 'listen0'
 				state: 'normal'
-                on_press: root.assign_listeners(0,5)
+                on_press: root.manual_listen(0,5)
 
 #-------------------------------------------------------------------------
 
@@ -403,9 +407,9 @@
 			ToggleButton
 				id: listen_1_to_5
                 text: '5'
-				group: 'listen5'
+				group: 'listen1'
 				state: 'normal'
-                on_press: root.assign_listeners(1,5)
+                on_press: root.manual_listen(1,5)
 #-------------------------------------------------------------------------
 		#Lamp2
 		Label:
@@ -492,9 +496,9 @@
 			ToggleButton
 				id: listen_2_to_5
                 text: '5'
-				group: 'listen5'
+				group: 'listen2'
 				state: 'normal'
-                on_press: root.assign_listeners(2,5)
+                on_press: root.manual_listen(2,5)
 #-------------------------------------------------------------------------
 		#Lamp3
 		Label:
@@ -581,9 +585,9 @@
 			ToggleButton
 				id: listen_3_to_5
                 text: '5'
-				group: 'listen5'
+				group: 'listen3'
 				state: 'normal'
-                on_press: root.assign_listeners(3,5)
+                on_press: root.manual_listen(3,5)
 #-------------------------------------------------------------------------
 		#Lamp4
 		Label:
@@ -667,9 +671,9 @@
 			ToggleButton
 				id: listen_4_to_5
                 text: '5'
-				group: 'listen5'
+				group: 'listen4'
 				state: 'normal'
-                on_press: root.assign_listeners(4,5)
+                on_press: root.manual_listen(4,5)
 			Label:
 				id: listen_4_to_4
                 text: '4'
@@ -735,31 +739,31 @@
                 text: '0'
 				group: 'listen5'
 				state: 'normal'
-                on_press: root.assign_listeners(5,0)
+                on_press: root.manual_listen(5,0)
             ToggleButton
 				id: listen_5_to_1
                 text: '1'
 				group: 'listen5'
 				state: 'normal'
-                on_press: root.assign_listeners(5,1)
+                on_press: root.manual_listen(5,1)
             ToggleButton
 				id: listen_5_to_2
                 text: '2'
 				group: 'listen5'
 				state: 'normal'
-                on_press: root.assign_listeners(5,2)
+                on_press: root.manual_listen(5,2)
             ToggleButton
 				id: listen_5_to_3
                 text: '3'
 				group: 'listen5'
 				state: 'normal'
-                on_press: root.assign_listeners(5,3)
+                on_press: root.manual_listen(5,3)
 			ToggleButton
 				id: listen_5_to_4
                 text: '4'
 				group: 'listen5'
 				state: 'normal'
-                on_press: root.assign_listeners(5,4)
+                on_press: root.manual_listen(5,4)
 			Label:
 				id: listen_5_to_5
                 text: '5'
