@@ -38,6 +38,7 @@ class Lamp(object):
         self.state = "?"
         self.in_update = ""
         self.out_status = ""
+        self.console = ""
         self.report = True
         self.mic_signal = 0.0
         self.top_bright = 0
@@ -90,7 +91,7 @@ class Lamp(object):
 
     def statusOut(self):
         while self.report:
-            self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state})
+            self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state, "console": self.console})
             self.publish.send_json(self.out_status)
             sleep(1)
 
