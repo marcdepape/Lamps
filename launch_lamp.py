@@ -88,10 +88,8 @@ class Lamp(object):
             self.change = True
             if self.stream == -1:
                 self.state = "broadcasting"
-                self.console = "Broadcasting..."
             else:
                 self.state = "streaming"
-                self.console = "Streaming..."
 
     def statusOut(self):
         while self.report:
@@ -241,6 +239,8 @@ if __name__ == "__main__":
                 lamp.setBase(0)
                 fadeIn()
                 lamp.change = False
+                self.console = "Streaming..."
             else:
                 streamer.mute()
                 lamp.change = False
+                self.console = "Broadcasting..."

@@ -25,7 +25,7 @@ class LampProxy(object):
         self.frontend.set_hwm(1)
 
         # control variables
-        self.running = False
+        self.running = True
 
         # MESSAGE KEYS
         self.fade_rate = 0.05
@@ -41,16 +41,9 @@ class LampProxy(object):
         self.live = 0
         self.message = json.dumps({"rate": self.fade_rate, "peak": self.peak, "saturation": self.saturation, "live": -1, "command": -1, "stream": -1})
 
-    def stop(self):
-        self.running = False
-
-    def start(self):
-        self.running = True
-
     def statusIn(self):
         while self.running:
             self.receive = self.frontend.recv_json()
-            self.receive = json.loads(self.receive)
 
     def updateOut(self):
         while self.running:
