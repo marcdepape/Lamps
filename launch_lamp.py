@@ -122,28 +122,32 @@ class Lamp(object):
         self.setBase(self.bottom_bright)
 
     def setBase(self, value):
-        self.bottom_bright = int(value * self.saturation)
+        self.bottom_bright = value
 
         if self.bottom_bright < 0:
             self.bottom_bright = 0
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
+        intensity = int(self.bright_bright * self.saturation)
+
         for i in range(16, self.num_pixels):
-            self.neo[i] = (self.bottom_bright,self.bottom_bright,self.bottom_bright);
+            self.neo[i] = (intensity,intensity,intensity);
         self.neo.show()
 
     def setBulb(self, value):
         value = self.mapRange(value, 0, 100, 0, 255)
-        self.top_bright = int((self.top_bright + value) * self.saturation)
+        self.top_bright = self.top_bright + value
 
         if self.top_bright < 0:
             self.top_bright = 0
         if self.top_bright > 255:
             self.top_bright = 255
 
+        intensity = int(self.top_bright * self.saturation)
+
         for i in range(16):
-            self.neo[i] = (self.top_bright,self.top_bright,self.top_bright);
+            self.neo[i] = (intensity,intensity,intensity);
         self.neo.show()
 
     def mapRange(self, x, in_min, in_max, out_min, out_max):
