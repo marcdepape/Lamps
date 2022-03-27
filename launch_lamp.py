@@ -106,6 +106,7 @@ class Lamp(object):
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
+                print(self.in_update)
 
     def micLevels(self):
         while self.report:
