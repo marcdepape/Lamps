@@ -24,11 +24,11 @@ neo = neopixel.NeoPixel(
 
 try:
     for i in range(0, 16):
-        neo[i] = (0,0,0);
+        neo[i] = (255,255,255);
         neo.show()
 
     for i in range(16, 40):
-        neo[i] = (255,255,255);
+        neo[i] = (0,0,0);
         neo.show()
 
     while True:
