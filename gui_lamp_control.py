@@ -43,7 +43,7 @@ class Dashboard(GridLayout):
 
         self.shuffle_time = 60
         self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle_time)
-        self.peak = 1.0
+        self.peak = 1.5
         self.fade_rate = 0.05
         self.saturation = 1.0
         self.unassigned = 255
