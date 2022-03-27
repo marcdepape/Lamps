@@ -21,14 +21,13 @@ neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
 
-
 try:
     for i in range(0, 16):
-        neo[i] = (255,255,255);
+        neo[i] = (0,0,0);
         neo.show()
 
     for i in range(16, 40):
-        neo[i] = (0,0,0);
+        neo[i] = (255,255,255);
         neo.show()
 
     while True:
