@@ -37,7 +37,7 @@ class LampProxy(object):
         for i in range(self.number_of_lamps):
             self.command.append(-1)
             self.listeners.append(-1)
-        self.receive = json.dumps({"id": "ID", "live": "LIVE", "fade": "FADE", "saturation": "SATURATION", "stream": "STREAM", "state": "STATE", "console": "CONSOLE"})
+        self.receive = json.dumps({"id": "ALL", "live": "LIVE", "fade": "FADE", "saturation": "SATURATION", "stream": "STREAM", "state": "STATE", "console": "Waiting..."})
         self.live = 0
         self.message = json.dumps({"rate": self.fade_rate, "peak": self.peak, "saturation": self.saturation, "live": -1, "command": -1, "stream": -1})
 

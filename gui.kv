@@ -92,6 +92,10 @@
 
 			# SETTINGS ROW 2
 
+			Label:
+
+			Label:
+
 			GridLayout:
 				cols: 2
 				id: shuffle
@@ -107,11 +111,11 @@
 					Button:
 						id: shuffle_up
 						text: "+"
-						on_press: root.shuffle += 30
+						on_press: root.setShuffleTime(30)
 					Button:
 						id: shuffle_down
 						text: "-"
-						on_press: root.shuffle -= 30
+						on_press: root.setShuffleTime(-30)
 
 			GridLayout:
 				cols: 2
@@ -128,11 +132,11 @@
 					Button:
 						id: peak_up
 						text: "+"
-						on_press: root.peak += 0.1
+						on_press: root.setPeak(0.1)
 					Button:
 						id: peak_down
 						text: "-"
-						on_press: root.peak -= 0.1
+						on_press: root.setPeak(-0.1)
 
 			GridLayout:
 				cols: 2
@@ -143,17 +147,17 @@
 			            text: "FADE"
 						font_size: 12
 					Label:
-				        text: root.display_fade
+				        text: root.display_fade_rate
 				GridLayout:
 					rows: 2
 					Button:
 						id: fade_up
 						text: "+"
-						on_press: setFadeRate(0.01)
+						on_press: root.setFadeRate(0.01)
 					Button:
 						id: fade_down
 						text: "-"
-						on_press: setFadeRate(-0.01)
+						on_press: root.setFadeRate(-0.01)
 
 			GridLayout:
 				cols: 2
@@ -175,10 +179,6 @@
 						id: saturation_down
 						text: "-"
 						on_press: root.setSaturation(-0.1)
-
-			Label:
-
-			Label:
 
 		#-------------------------------------------------------------------
 		#Lamp0
@@ -236,7 +236,7 @@
 					on_press: root.manual_listen(0,5)
 
 				Label:
-					text: root.display_time
+					text: root.display_console_0
 
 
 	#-------------------------------------------------------------------------
@@ -293,7 +293,7 @@
 					on_press: root.manual_listen(1,5)
 
 				Label:
-					text: root.display_time
+					text: root.display_console_1
 
 	#-------------------------------------------------------------------------
 			#Lamp2
@@ -348,7 +348,7 @@
 					on_press: root.manual_listen(2,5)
 
 				Label:
-					text: root.display_time
+					text: root.display_console_2
 	#-------------------------------------------------------------------------
 			#Lamp3
 			GridLayout:
@@ -402,7 +402,7 @@
 					on_press: root.manual_listen(3,5)
 
 				Label:
-					text: root.display_time
+					text: root.display_console_3
 
 	#-------------------------------------------------------------------------
 			#Lamp4
@@ -457,7 +457,7 @@
 					on_press: root.manual_listen(4,5)
 
 				Label:
-					text: root.display_time
+					text: root.display_console_4
 
 	#-------------------------------------------------------------------------
 			#lamp5
@@ -512,4 +512,4 @@
 					id: listen_5_to_5
 
 				Label:
-					text: root.display_time
+					text: root.display_console_5

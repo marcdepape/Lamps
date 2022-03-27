@@ -23,9 +23,7 @@ class Dashboard(GridLayout):
     start_time = time()
     display_time = StringProperty()
     display_peak = StringProperty()
-    display_rate = StringProperty()
-    display_fade = StringProperty()
-    display_hue = StringProperty()
+    display_fade_rate = StringProperty()
     display_saturation = StringProperty()
     display_shuffle = StringProperty()
 
@@ -49,11 +47,15 @@ class Dashboard(GridLayout):
         self.fade_rate = 0.05
         self.saturation = 1.0
         self.unassigned = 255
-        self.state = "Launching..."
 
         self.proxy.peak = self.peak
         self.proxy.fade_rate = self.fade_rate
         self.proxy.saturation = self.saturation
+
+        self.display_shuffle = str(self.shuffle_time)
+        self.display_peak = str(self.peak)
+        self.display_fade_rate = str(self.fade_rate)
+        self.display_saturation = str(self.saturation)
 
         self.listen_ids = [[0 for i in range(self.number_of_lamps)] for i in range(self.number_of_lamps)]
         self.broadcast_ids = [0 for i in range(self.number_of_lamps)]
@@ -75,32 +77,37 @@ class Dashboard(GridLayout):
     def update_GUI(self, rt):
         update = json.loads(self.proxy.receive)
         lamp = update["id"]
-        logs = update["console"]
         state = update["state"]
-
-        self.display_shuffle = str(self.shuffle)
 
         m, s = divmod((int(time()) - int(self.start_time)), 60)
         h, m = divmod(m, 60)
         self.display_time = "%d:%02d:%02d" % (h, m, s)
 
         if lamp == 0:
-            self.display_console_0 = logs[0]
+            self.display_console_0 = update["console"]
 
         elif lamp == 1:
-            self.display_console_1 = logs[1]
+            self.display_console_1 = update["console"]
 
         elif lamp == 2:
-            self.display_console_2 = logs[2]
+            self.display_console_2 = update["console"]
 
         elif lamp == 3:
-            self.display_console_3 = logs[3]
+            self.display_console_3 = update["console"]
 
         elif lamp == 4:
-            self.display_console_4 = logs[4]
+            self.display_console_4 = update["console"]
 
         elif lamp == 5:
-            self.display_console_5 = logs[5]
+            self.display_console_5 = update["console"]
+
+        elif lamp == "ALL":
+            self.display_console_0 = update["console"]
+            self.display_console_1 = update["console"]
+            self.display_console_2 = update["console"]
+            self.display_console_3 = update["console"]
+            self.display_console_4 = update["console"]
+            self.display_console_5 = update["console"]
 
     def reset(self, lamp):
         if lamp != -1:
@@ -112,20 +119,24 @@ class Dashboard(GridLayout):
     def constrain(self, val, min_val, max_val):
         return min(max_val, max(min_val, val))
 
+    def setShuffleTime(self, change):
+        self.shuffle_time = self.constrain(self.shuffle_time + change, 30, 1200)
+        self.display_shuffle = str(self.shuffle_time)
+
     def setFadeRate(self, change):
         self.fade_rate = self.constrain(self.fade_rate + change, 0.01, 1.00)
         self.proxy.fade_rate = self.fade_rate
-        self.display_fade = str(self.fade_rate)
+        self.display_fade_rate = "{:.2f}".format(self.fade_rate)
 
     def setPeak(self, change):
         self.peak = self.constrain(self.peak + change, 0.10, 2.00)
         self.proxy.peak = self.peak
-        self.display_peak = str(self.peak)
+        self.display_peak = "{:.2f}".format(self.peak)
 
     def setSaturation(self, change):
         self.saturation = self.constrain(self.saturation + change, 0.00, 1.0)
         self.proxy.saturation = self.saturation
-        self.display_saturation = str(self.saturation)
+        self.display_saturation = "{:.2f}".format(self.saturation)
 
     def all_streaming_one(self, lamp):
         self.reshuffle()
