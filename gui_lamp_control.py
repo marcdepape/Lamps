@@ -43,8 +43,8 @@ class Dashboard(GridLayout):
         self.proxy = LampProxy(self.number_of_lamps)
         self.start_proxy()
 
-        self.shuffle = 60
-        self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle)
+        self.shuffle_time = 60
+        self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle_time)
         self.peak = 1.0
         self.fade_rate = 0.05
         self.saturation = 1.0
