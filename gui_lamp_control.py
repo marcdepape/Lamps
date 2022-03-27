@@ -85,7 +85,7 @@ class Dashboard(GridLayout):
         self.start_proxy()
 
         self.active_dial = False
-        self.set_shuffle = 600
+        self.set_shuffle = 60
         self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.set_shuffle)
         self.set_peak = 1.0
         self.set_fade = 3
@@ -99,10 +99,8 @@ class Dashboard(GridLayout):
         self.get_ids()
         self.shuffle(0)
 
-        Clock.schedule_interval(self.update_GUI, 0.5)
-        Clock.schedule_once(self.shuffle, 10)
+        Clock.schedule_interval(self.update_GUI, 0.1)
         Clock.schedule_once(self.shuffle, 30)
-        Clock.schedule_once(self.shuffle, 60)
 
     def start_proxy(self):
         subscriber = Thread(target=self.proxy.statusIn, args=())
@@ -228,7 +226,7 @@ class Dashboard(GridLayout):
                         listeners[i] = assignment
                         broadcast_lamps.remove(assignment)
         print ("LISTENERS {}".format(listeners))
-        #self.update_button_state(listeners)
+        self.update_button_state(listeners)
 
     def update_button_state(self, listeners):
         for i in range(self.number_of_lamps):
