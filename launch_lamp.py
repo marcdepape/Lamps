@@ -26,19 +26,18 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue
 
 class Lamp(object):
     def __init__(self, lamp_num):
+        self.id = lamp_num
         self.live = False
         self.volume = 0
         self.peak = 1.5
-        self.rate = 0.05
-        self.id = lamp_num
+        self.fade_rate = 0.05
+        self.saturation = 1.0
         self.stream = 255
-        self.server = True
         self.change = False
-        self.fade = "in"
         self.state = "?"
         self.in_update = ""
         self.out_status = ""
-        self.console = ""
+        self.console = "Launching..."
         self.report = True
         self.mic_signal = 0.0
         self.top_bright = 0
@@ -75,23 +74,28 @@ class Lamp(object):
         if self.in_update["live"] != self.live:
             pass
 
-        if self.in_update["rate"] != self.rate:
-            self.rate = self.in_update["fade"]
+        if self.in_update["rate"] != self.fade_rate:
+            self.fade_rate = self.in_update["fade"]
 
         if self.in_update["peak"] != self.peak:
             self.peak = self.in_update["peak"]
+
+        if self.in_update["saturation"] != self.saturation:
+            self.saturation = self.in_update["saturation"]
 
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
             self.change = True
             if self.stream == -1:
                 self.state = "broadcasting"
+                self.console = "Broadcasting..."
             else:
                 self.state = "streaming"
+                self.console = "Streaming..."
 
     def statusOut(self):
         while self.report:
-            self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade, "server": self.server, "stream": self.stream, "state": self.state, "console": self.console})
+            self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade_rate, "saturation": self.saturation, "stream": self.stream, "state": self.state, "console": self.console})
             self.publish.send_json(self.out_status)
             sleep(1)
 
@@ -102,7 +106,6 @@ class Lamp(object):
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
-                print("RECEIVE: " + str(update))
 
     def micLevels(self):
         while self.report:
@@ -114,11 +117,11 @@ class Lamp(object):
         self.bottom_bright = 100 + float(rms)
         self.bottom_bright = self.constrain(self.bottom_bright, 55, 90)
         self.bottom_bright = self.mapRange(self.bottom_bright, 55, 90, 0, 255)
-        self.bottom_bright = int(self.bottom_bright)
+        self.bottom_bright = int(self.bottom_bright * self.saturation)
         self.setBase(self.bottom_bright)
 
     def setBase(self, value):
-        self.bottom_bright = value
+        self.bottom_bright = int(value * self.saturation)
 
         if self.bottom_bright < 0:
             self.bottom_bright = 0
@@ -131,7 +134,7 @@ class Lamp(object):
 
     def setBulb(self, value):
         value = self.mapRange(value, 0, 100, 0, 255)
-        self.top_bright = self.top_bright + value
+        self.top_bright = int((self.top_bright + value) * self.saturation)
 
         if self.top_bright < 0:
             self.top_bright = 0
@@ -195,22 +198,22 @@ streamer = Streamer()
 lamp = Lamp(lamp_id)
 
 def fadeIn():
+    self.console = "Fading in..."
     while streamer.volume < lamp.peak and lamp.top_bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
         if lamp.top_bright < 255:
             lamp.setBulb(1)
-        sleep(lamp.rate)
-    lamp.fade = "in"
+        sleep(lamp.fade_rate)
 
 def fadeOut():
+    self.console = "Fading out..."
     while streamer.volume > 0 and lamp.top_bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
         if lamp.top_bright > 0:
             lamp.setBulb(-1)
-        sleep(lamp.rate)
-    lamp.fade = "out"
+        sleep(lamp.fade_rate)
 
 if __name__ == "__main__":
     print("")

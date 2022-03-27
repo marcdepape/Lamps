@@ -28,23 +28,23 @@ class LampProxy(object):
         self.running = False
 
         # MESSAGE KEYS
-        self.rate = 0.05
+        self.fade_rate = 0.05
         self.peak = 1.5
+        self.saturation = 1.0
         self.command = []
         self.listeners = []
 
         for i in range(self.number_of_lamps):
             self.command.append(-1)
             self.listeners.append(-1)
-        self.receive = json.dumps({"id": "ID", "live": "LIVE", "fade": "FADE", "server": "SERVER", "stream": "STREAM", "state": "STATE", "console": "CONSOLE"})
+        self.receive = json.dumps({"id": "ID", "live": "LIVE", "fade": "FADE", "saturation": "SATURATION", "stream": "STREAM", "state": "STATE", "console": "CONSOLE"})
         self.live = 0
-        self.message = json.dumps({"rate": self.rate, "peak": self.peak, "live": -1, "command": -1, "stream": -1})
+        self.message = json.dumps({"rate": self.fade_rate, "peak": self.peak, "saturation": self.saturation, "live": -1, "command": -1, "stream": -1})
 
     def stop(self):
         self.running = False
 
     def start(self):
-        #self.setup()
         self.running = True
 
     def statusIn(self):
@@ -55,23 +55,6 @@ class LampProxy(object):
     def updateOut(self):
         while self.running:
             for lamp_id in range(self.number_of_lamps):
-                self.message = json.dumps({"lamp": lamp_id, "rate": self.rate, "peak": self.peak, "live": self.live, "command": self.command[lamp_id], "stream": self.listeners[lamp_id]})
+                self.message = json.dumps({"lamp": lamp_id, "rate": self.fade_rate, "peak": self.peak, "saturation": self.saturation, "live": self.live, "command": self.command[lamp_id], "stream": self.listeners[lamp_id]})
                 self.backend.send_json(self.message)
             sleep(1)
-
-    def setup(self):
-        while self.live != 1:
-            self.receive = self.frontend.recv_json()
-            self.receive = json.loads(self.receive)
-            self.lamp_ip[self.receive["lamp"]] = self.receive["ip"]
-
-            num = 0
-            for l in range(0,len(self.lamp_ip)):
-                if self.lamp_ip[l] == -1:
-                    num = num
-                else:
-                    num = num + 1
-
-            if num == len(self.lamp_ip):
-                self.live = 1
-                self.running = True

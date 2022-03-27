@@ -20,62 +20,21 @@ from kivy.clock import Clock
 # kivy
 
 class Dashboard(GridLayout):
-    lamp0_position = StringProperty()
-    lamp0_ip = StringProperty()
-    lamp0_log_0 = StringProperty()
-    lamp0_log_1 = StringProperty()
-    lamp0_log_2 = StringProperty()
-    lamp0_log_3 = StringProperty()
-    lamp0_log_4 = StringProperty()
-
-    lamp1_position = StringProperty()
-    lamp1_ip = StringProperty()
-    lamp1_log_0 = StringProperty()
-    lamp1_log_1 = StringProperty()
-    lamp1_log_2 = StringProperty()
-    lamp1_log_3 = StringProperty()
-    lamp1_log_4 = StringProperty()
-
-    lamp2_position = StringProperty()
-    lamp2_ip = StringProperty()
-    lamp2_log_0 = StringProperty()
-    lamp2_log_1 = StringProperty()
-    lamp2_log_2 = StringProperty()
-    lamp2_log_3 = StringProperty()
-    lamp2_log_4 = StringProperty()
-
-    lamp3_position = StringProperty()
-    lamp3_ip = StringProperty()
-    lamp3_log_0 = StringProperty()
-    lamp3_log_1 = StringProperty()
-    lamp3_log_2 = StringProperty()
-    lamp3_log_3 = StringProperty()
-    lamp3_log_4 = StringProperty()
-
-    lamp4_position = StringProperty()
-    lamp4_ip = StringProperty()
-    lamp4_log_0 = StringProperty()
-    lamp4_log_1 = StringProperty()
-    lamp4_log_2 = StringProperty()
-    lamp4_log_3 = StringProperty()
-    lamp4_log_4 = StringProperty()
-
-    lamp5_position = StringProperty()
-    lamp5_ip = StringProperty()
-    lamp5_log_0 = StringProperty()
-    lamp5_log_1 = StringProperty()
-    lamp5_log_2 = StringProperty()
-    lamp5_log_3 = StringProperty()
-    lamp5_log_4 = StringProperty()
-
     start_time = time()
-    current_time = StringProperty()
-    current_peak = StringProperty()
-    current_turn = StringProperty()
-    current_fade = StringProperty()
-    current_hue = StringProperty()
-    current_saturation = StringProperty()
-    current_shuffle = StringProperty()
+    display_time = StringProperty()
+    display_peak = StringProperty()
+    display_rate = StringProperty()
+    display_fade = StringProperty()
+    display_hue = StringProperty()
+    display_saturation = StringProperty()
+    display_shuffle = StringProperty()
+
+    display_console_0 = StringProperty()
+    display_console_1 = StringProperty()
+    display_console_2 = StringProperty()
+    display_console_3 = StringProperty()
+    display_console_4 = StringProperty()
+    display_console_5 = StringProperty()
 
     def __init__(self, num, **kwargs):
         super(Dashboard, self).__init__(**kwargs)
@@ -84,14 +43,17 @@ class Dashboard(GridLayout):
         self.proxy = LampProxy(self.number_of_lamps)
         self.start_proxy()
 
-        self.active_dial = False
-        self.set_shuffle = 60
-        self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.set_shuffle)
-        self.set_peak = 1.0
-        self.set_fade = 3
-        self.set_hue = 0
-        self.set_saturation = 0
+        self.shuffle = 60
+        self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle)
+        self.peak = 1.0
+        self.fade_rate = 0.05
+        self.saturation = 1.0
         self.unassigned = 255
+        self.state = "Launching..."
+
+        self.proxy.peak = self.peak
+        self.proxy.fade_rate = self.fade_rate
+        self.proxy.saturation = self.saturation
 
         self.listen_ids = [[0 for i in range(self.number_of_lamps)] for i in range(self.number_of_lamps)]
         self.broadcast_ids = [0 for i in range(self.number_of_lamps)]
@@ -112,67 +74,61 @@ class Dashboard(GridLayout):
 
     def update_GUI(self, rt):
         update = json.loads(self.proxy.receive)
-        #print update
         lamp = update["id"]
         logs = update["console"]
         state = update["state"]
 
-        self.current_shuffle = str(self.set_shuffle)
-        self.proxy.peak = self.set_peak
-        self.current_peak = str(round(self.proxy.peak,1))
-
-        self.proxy.fade = self.set_fade
-        self.current_fade = str(self.proxy.fade)
-        self.proxy.hue = self.set_hue
-        self.current_hue = str(self.proxy.hue)
-        self.proxy.saturation = self.set_saturation
-        self.current_saturation = str(self.proxy.saturation)
+        self.display_shuffle = str(self.shuffle)
 
         m, s = divmod((int(time()) - int(self.start_time)), 60)
         h, m = divmod(m, 60)
-        self.current_time = "%d:%02d:%02d" % (h, m, s)
-
-        #self.dial_trigger(lamp, position)
+        self.display_time = "%d:%02d:%02d" % (h, m, s)
 
         if lamp == 0:
-            self.lamp0_position = str(position)
-            self.lamp0_ip = "lamp0.local"
+            self.display_console_0 = logs[0]
 
         elif lamp == 1:
-            self.lamp1_position = str(position)
-            self.lamp1_ip = "lamp1.local"
+            self.display_console_1 = logs[1]
 
         elif lamp == 2:
-            self.lamp2_position = str(position)
-            self.lamp2_ip = "lamp2.local"
+            self.display_console_2 = logs[2]
 
         elif lamp == 3:
-            self.lamp3_position = str(position)
-            self.lamp3_ip = "lamp3.local"
+            self.display_console_3 = logs[3]
 
         elif lamp == 4:
-            self.lamp4_position = str(position)
-            self.lamp4_ip = "lamp4.local"
+            self.display_console_4 = logs[4]
 
         elif lamp == 5:
-            self.lamp5_position = str(position)
-            self.lamp5_ip = "lamp5.local"
+            self.display_console_5 = logs[5]
 
-    def reset_lamp(self, lamp):
+    def reset(self, lamp):
         if lamp != -1:
             self.proxy.exit[lamp] = 1
         else:
             for i in range(self.number_of_lamps):
                 self.proxy.exit[i] = 1
 
-    def set_peak(self, peak):
-        self.proxy.peak = str(peak)
-        listeners = [self.unassigned for i in range(self.number_of_lamps)]
-        broadcasters = 0
-        self.assign_listeners(listeners, broadcasters)
+    def constrain(self, val, min_val, max_val):
+        return min(max_val, max(min_val, val))
+
+    def setFadeRate(self, change):
+        self.fade_rate = self.constrain(self.fade_rate + change, 0.01, 1.00)
+        self.proxy.fade_rate = self.fade_rate
+        self.display_fade = str(self.fade_rate)
+
+    def setPeak(self, change):
+        self.peak = self.constrain(self.peak + change, 0.10, 2.00)
+        self.proxy.peak = self.peak
+        self.display_peak = str(self.peak)
+
+    def setSaturation(self, change):
+        self.saturation = self.constrain(self.saturation + change, 0.00, 1.0)
+        self.proxy.saturation = self.saturation
+        self.display_saturation = str(self.saturation)
 
     def all_streaming_one(self, lamp):
-        self.reset_shuffle()
+        self.reshuffle()
         listeners = []
         for i in range(self.number_of_lamps):
             if i != lamp:
@@ -182,17 +138,17 @@ class Dashboard(GridLayout):
         self.update_button_state(listeners)
 
     def shuffle(self, rt):
-        self.reset_shuffle()
+        self.reshuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
         broadcasters = 0
         self.assign_listeners(listeners, broadcasters)
 
-    def reset_shuffle(self):
+    def reshuffle(self):
         self.shuffle_trigger.cancel()
         self.shuffle_trigger()
 
     def manual_listen(self, lamp, to_lamp):
-        self.reset_shuffle()
+        self.reshuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
         listeners[lamp] = to_lamp
         listeners[to_lamp] = -1
@@ -200,7 +156,7 @@ class Dashboard(GridLayout):
         self.assign_listeners(listeners, broadcasters)
 
     def manual_broadcast(self, lamp):
-        self.reset_shuffle()
+        self.reshuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
         listeners[lamp] = -1
         broadcasters = 1

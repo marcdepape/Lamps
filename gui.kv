@@ -14,7 +14,7 @@
 				text: "BOTH HERE AND \nSOMEWHERE ELSE"
 
 			Label
-				text: root.current_time
+				text: root.display_time
 
 			Label
 				text: ""
@@ -59,36 +59,36 @@
 			GridLayout:
 	            cols: 2
 				Button:
-					id: reset_all
+					id: reall
 					text: "ALL"
 					background_color: 1.0, 0.0, 0.0, 1.0
-					on_press: root.reset_lamp(-1)
+					on_press: root.reset(-1)
 				GridLayout:
 					cols: 2
 					Button:
 						text: "0"
 						background_color: 1.0, 0.0, 0.0, 1.0
-						on_press: root.reset_lamp(0)
+						on_press: root.reset(0)
 					Button:
 						text: "1"
 						background_color: 1.0, 0.0, 0.0, 1.0
-						on_press: root.reset_lamp(1)
+						on_press: root.reset(1)
 					Button:
 						text: "2"
 						background_color: 1.0, 0.0, 0.0, 1.0
-						on_press: root.reset_lamp(2)
+						on_press: root.reset(2)
 					Button:
 						text: "3"
 						background_color: 1.0, 0.0, 0.0, 1.0
-						on_press: root.reset_lamp(3)
+						on_press: root.reset(3)
 					Button:
 						text: "4"
 						background_color: 1.0, 0.0, 0.0, 1.0
-						on_press: root.reset_lamp(4)
+						on_press: root.reset(4)
 					Button:
 						text: "5"
 						background_color: 1.0, 0.0, 0.0, 1.0
-						on_press: root.reset_lamp(5)
+						on_press: root.reset(5)
 
 			# SETTINGS ROW 2
 
@@ -101,17 +101,17 @@
 			            text: "SHUFFLE"
 						font_size: 12
 					Label:
-				        text: root.current_shuffle
+				        text: root.display_shuffle
 				GridLayout:
 					rows: 2
 					Button:
 						id: shuffle_up
 						text: "+"
-						on_press: root.set_shuffle += 10
+						on_press: root.shuffle += 30
 					Button:
 						id: shuffle_down
 						text: "-"
-						on_press: root.set_shuffle -= 10
+						on_press: root.shuffle -= 30
 
 			GridLayout:
 				cols: 2
@@ -122,38 +122,17 @@
 			            text: "PEAK"
 						font_size: 12
 					Label:
-				        text: root.current_peak
+				        text: root.display_peak
 				GridLayout:
 					rows: 2
 					Button:
 						id: peak_up
 						text: "+"
-						on_press: root.set_peak += 0.1
+						on_press: root.peak += 0.1
 					Button:
 						id: peak_down
 						text: "-"
-						on_press: root.set_peak -= 0.1
-
-			GridLayout:
-				cols: 2
-				id: turn
-				GridLayout:
-					rows: 2
-					Label:
-			            text: "TURN"
-						font_size: 12
-					Label:
-				        text: root.current_turn
-				GridLayout:
-					rows: 2
-					Button:
-						id: turn_up
-						text: "+"
-						on_press: root.set_turn += 1
-					Button:
-						id: turn_down
-						text: "-"
-						on_press: root.set_turn -= 1
+						on_press: root.peak -= 0.1
 
 			GridLayout:
 				cols: 2
@@ -164,38 +143,17 @@
 			            text: "FADE"
 						font_size: 12
 					Label:
-				        text: root.current_fade
+				        text: root.display_fade
 				GridLayout:
 					rows: 2
 					Button:
 						id: fade_up
 						text: "+"
-						on_press: root.set_fade += 1
+						on_press: setFadeRate(0.01)
 					Button:
 						id: fade_down
 						text: "-"
-						on_press: root.set_fade -= 1
-
-			GridLayout:
-				cols: 2
-				id: hue
-				GridLayout:
-					rows: 2
-					Label:
-			            text: "HUE"
-						font_size: 12
-					Label:
-				        text: root.current_hue
-				GridLayout:
-					rows: 2
-					Button:
-						id: hue_up
-						text: "+"
-						on_press: root.set_hue += 1
-					Button:
-						id: hue_down
-						text: "-"
-						on_press: root.set_hue -= 1
+						on_press: setFadeRate(-0.01)
 
 			GridLayout:
 				cols: 2
@@ -206,17 +164,21 @@
 			            text: "SAT"
 						font_size: 12
 					Label:
-				        text: root.current_saturation
+				        text: root.display_saturation
 				GridLayout:
 					rows: 2
 					Button:
 						id: saturation_up
 						text: "+"
-						on_press: root.set_saturation += 1
+						on_press: root.setSaturation(0.1)
 					Button:
 						id: saturation_down
 						text: "-"
-						on_press: root.set_saturation -= 1
+						on_press: root.setSaturation(-0.1)
+
+			Label:
+
+			Label:
 
 		#-------------------------------------------------------------------
 		#Lamp0
@@ -274,7 +236,7 @@
 					on_press: root.manual_listen(0,5)
 
 				Label:
-					text: root.current_time
+					text: root.display_time
 
 
 	#-------------------------------------------------------------------------
@@ -331,7 +293,7 @@
 					on_press: root.manual_listen(1,5)
 
 				Label:
-					text: root.current_time
+					text: root.display_time
 
 	#-------------------------------------------------------------------------
 			#Lamp2
@@ -386,7 +348,7 @@
 					on_press: root.manual_listen(2,5)
 
 				Label:
-					text: root.current_time
+					text: root.display_time
 	#-------------------------------------------------------------------------
 			#Lamp3
 			GridLayout:
@@ -440,7 +402,7 @@
 					on_press: root.manual_listen(3,5)
 
 				Label:
-					text: root.current_time
+					text: root.display_time
 
 	#-------------------------------------------------------------------------
 			#Lamp4
@@ -495,7 +457,7 @@
 					on_press: root.manual_listen(4,5)
 
 				Label:
-					text: root.current_time
+					text: root.display_time
 
 	#-------------------------------------------------------------------------
 			#lamp5
@@ -550,4 +512,4 @@
 					id: listen_5_to_5
 
 				Label:
-					text: root.current_time
+					text: root.display_time
