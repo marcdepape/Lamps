@@ -83,7 +83,7 @@ class Lamp(object):
         if self.in_update["saturation"] != self.saturation:
             self.saturation = self.in_update["saturation"]
             if self.state == "streaming":
-                setBulb(100)
+                self.setBulb(100)
 
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
