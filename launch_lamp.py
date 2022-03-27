@@ -129,7 +129,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        intensity = int(self.bright_bright * self.saturation)
+        intensity = int(self.bottom_bright * self.saturation)
 
         for i in range(16, self.num_pixels):
             self.neo[i] = (intensity,intensity,intensity);
