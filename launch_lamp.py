@@ -197,7 +197,7 @@ streamer = Streamer()
 lamp = Lamp(lamp_id)
 
 def fadeIn():
-    self.console = "Fading in..."
+    lamp.console = "Fading in..."
     while streamer.volume < lamp.peak and lamp.top_bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
@@ -206,7 +206,7 @@ def fadeIn():
         sleep(lamp.fade_rate)
 
 def fadeOut():
-    self.console = "Fading out..."
+    lamp.console = "Fading out..."
     while streamer.volume > 0 and lamp.top_bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
@@ -239,8 +239,8 @@ if __name__ == "__main__":
                 lamp.setBase(0)
                 fadeIn()
                 lamp.change = False
-                self.console = "Streaming..."
+                lamp.console = "Streaming..."
             else:
                 streamer.mute()
                 lamp.change = False
-                self.console = "Broadcasting..."
+                lamp.console = "Broadcasting..."
