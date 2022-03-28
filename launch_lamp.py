@@ -34,6 +34,7 @@ class Lamp(object):
         self.saturation = 1.0
         self.stream = 255
         self.change = False
+        self.changing = 0
         self.state = "?"
         self.in_update = ""
         self.out_status = ""
@@ -89,6 +90,7 @@ class Lamp(object):
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
             self.change = True
+            self.changing = 1
             if self.stream == -1:
                 self.state = "broadcasting"
             else:
@@ -243,18 +245,18 @@ def fadeOut():
 
 def changeListener():
     lamp.console = "Connecting..."
-    changing = 0
+    lamp.changing = 0
     tries = 0
-    while changing <= 0:
-        changing = streamer.change(lamp.stream)
-        tries = tries + changing
+    while self.changing <= 0:
+        self.changing = streamer.change(lamp.stream)
+        tries = tries + self.changing
         print("TRIES: " + str(tries))
         if tries == -3:
             lamp.setError()
             lamp.console = "Error..."
             lamp.state = "error"
             lamp.change = False
-            changing = 1
+            self.changing = 1
 
     if lamp.state != "error":
         lamp.setBase(0)
