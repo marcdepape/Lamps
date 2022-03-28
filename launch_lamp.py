@@ -264,7 +264,11 @@ if __name__ == "__main__":
                     if tries == -3:
                         lamp.setError()
                         lamp.console = "Error..."
-                        
+                        lamp.state = "error"
+                        print("ERROR!")
+                        while lamp.state == "error":
+                            pass
+
                 lamp.setBase(0)
                 fadeIn()
                 lamp.change = False
