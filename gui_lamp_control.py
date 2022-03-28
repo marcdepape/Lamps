@@ -80,6 +80,9 @@ class Dashboard(GridLayout):
         self.get_ids()
         self.shuffle(0)
 
+        for i in range(self.number_of_lamps):
+            self.proxy.command[i] = "start"
+
         Clock.schedule_interval(self.update_GUI, 0.1)
 
     def start_proxy(self):
@@ -156,10 +159,10 @@ class Dashboard(GridLayout):
 
     def reset(self, lamp):
         if lamp != -1:
-            self.proxy.exit[lamp] = 1
+            self.proxy.command[lamp] = "reboot"
         else:
             for i in range(self.number_of_lamps):
-                self.proxy.exit[i] = 1
+                self.proxy.command[i] = "reboot"
 
     def constrain(self, val, min_val, max_val):
         return min(max_val, max(min_val, val))

@@ -6,6 +6,7 @@ from time import sleep
 import subprocess
 import board
 import neopixel
+import os
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -43,6 +44,7 @@ class Lamp(object):
         self.mic_signal = 0.0
         self.top_bright = 0
         self.bottom_bright = 0
+        self.command = "null"
 
         # NeoPixel
         self.pixel_pin = board.D12
@@ -73,8 +75,11 @@ class Lamp(object):
         self.levels.set_hwm(1)
 
     def compare(self):
-        if self.in_update["live"] != self.live:
-            pass
+        if self.in_update["command"] != self.command:
+            self.command = self.in_update["command"]
+            if self.command = "reboot":
+                print("REBOOT!")
+                #os.system("reboot now")
 
         if self.in_update["rate"] != self.fade_rate:
             self.fade_rate = self.in_update["fade"]
@@ -98,7 +103,7 @@ class Lamp(object):
 
     def statusOut(self):
         while self.report:
-            self.out_status = json.dumps({"id": self.id, "live": self.live, "fade": self.fade_rate, "saturation": self.saturation, "stream": self.stream, "state": self.state, "console": self.console})
+            self.out_status = json.dumps({"id": self.id, "fade": self.fade_rate, "saturation": self.saturation, "stream": self.stream, "state": self.state, "console": self.console})
             self.publish.send_json(self.out_status)
             sleep(1)
 
