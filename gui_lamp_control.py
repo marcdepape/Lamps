@@ -52,20 +52,14 @@ class Dashboard(GridLayout):
 
         self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle_time)
 
-        self.connection_time = 10
-        self.lamp0_connection = Clock.create_trigger(self.lostConnection(0), self.connection_time)
-        self.lamp1_connection = Clock.create_trigger(self.lostConnection(1), self.connection_time)
-        self.lamp2_connection = Clock.create_trigger(self.lostConnection(2), self.connection_time)
-        self.lamp3_connection = Clock.create_trigger(self.lostConnection(3), self.connection_time)
-        self.lamp4_connection = Clock.create_trigger(self.lostConnection(4), self.connection_time)
-        self.lamp5_connection = Clock.create_trigger(self.lostConnection(5), self.connection_time)
+        self.display_connection_0 = ""
+        self.display_connection_1 = ""
+        self.display_connection_2 = ""
+        self.display_connection_3 = ""
+        self.display_connection_4 = ""
+        self.display_connection_5 = ""
 
-        self.display_connection_0 = "OFFLINE"
-        self.display_connection_1 = "OFFLINE"
-        self.display_connection_2 = "OFFLINE"
-        self.display_connection_3 = "OFFLINE"
-        self.display_connection_4 = "OFFLINE"
-        self.display_connection_5 = "OFFLINE"
+        self.connection_times
 
         self.peak = 1.5
         self.fade_rate = 0.05
@@ -81,6 +75,7 @@ class Dashboard(GridLayout):
         self.display_fade_rate = str(self.fade_rate)
         self.display_saturation = str(self.saturation)
 
+        self.connection_times = [0 for i in range(self.number_of_lamps)]
         self.listen_ids = [[0 for i in range(self.number_of_lamps)] for i in range(self.number_of_lamps)]
         self.broadcast_ids = [0 for i in range(self.number_of_lamps)]
         self.status_ids = [[0 for i in range(self.number_of_lamps)] for i in range(5)]
@@ -106,41 +101,38 @@ class Dashboard(GridLayout):
         h, m = divmod(m, 60)
         self.display_time = "%d:%02d:%02d" % (h, m, s)
 
+        for i in range(self.number_of_lamps):
+            self.connection_times[i]++
+
         if lamp == 0:
             self.display_console_0 = update["console"]
             self.display_connection_0 = "CONNECTED"
-            self.lamp0_connection.clear()
-            self.lamp0_connection()
+            self.connection_times[0] = 0
 
         elif lamp == 1:
             self.display_console_1 = update["console"]
             self.display_connection_1 = "CONNECTED"
-            self.lamp1_connection.clear()
-            self.lamp1_connection()
+            self.connection_times[1] = 0
 
         elif lamp == 2:
             self.display_console_2 = update["console"]
             self.display_connection_2 = "CONNECTED"
-            self.lamp2_connection.clear()
-            self.lamp2_connection()
+            self.connection_times[2] = 0
 
         elif lamp == 3:
             self.display_console_3 = update["console"]
             self.display_connection_3 = "CONNECTED"
-            self.lamp3_connection.clear()
-            self.lamp3_connection()
+            self.connection_times[3] = 0
 
         elif lamp == 4:
             self.display_console_4 = update["console"]
             self.display_connection_4 = "CONNECTED"
-            self.lamp4_connection.clear()
-            self.lamp4_connection()
+            self.connection_times[4] = 0
 
         elif lamp == 5:
             self.display_console_5 = update["console"]
             self.display_connection_5 = "CONNECTED"
-            self.lamp5_connection.clear()
-            self.lamp5_connection()
+            self.connection_times[5] = 0
 
         elif lamp == "ALL":
             self.display_console_0 = update["console"]
@@ -150,18 +142,19 @@ class Dashboard(GridLayout):
             self.display_console_4 = update["console"]
             self.display_console_5 = update["console"]
 
-    def lostConnection(self, lamp):
-        if lamp == 0:
-
-        elif lamp == 1:
-
-        elif lamp == 2:
-
-        elif lamp == 3:
-
-        elif lamp == 4:
-
-        elif lamp == 5:
+        pings = 100
+        if self.connection_times[0] > pings:
+            self.display_connection_0 = "OFFLINE"
+        if self.connection_times[1] > pings:
+            self.display_connection_1 = "OFFLINE"
+        if self.connection_times[2] > pings:
+            self.display_connection_2 = "OFFLINE"
+        if self.connection_times[3] > pings:
+            self.display_connection_3 = "OFFLINE"
+        if self.connection_times[4] > pings:
+            self.display_connection_4 = "OFFLINE"
+        if self.connection_times[5] > pings:
+            self.display_connection_5 = "OFFLINE"
 
     def reset(self, lamp):
         if lamp != -1:
