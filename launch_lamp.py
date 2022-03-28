@@ -49,6 +49,7 @@ class Lamp(object):
         self.neo = neopixel.NeoPixel(
             self.pixel_pin, self.num_pixels, brightness=1.0, auto_write=False, pixel_order=neopixel.GRB
         )
+        self.setOff()
 
         # SERVER
         server_context = zmq.Context()
@@ -153,6 +154,11 @@ class Lamp(object):
     def setError(self):
         for i in range(40):
             self.neo[i] = (255,0,0);
+        self.neo.show()
+
+    def setOff(self):
+        for i in range(40):
+            self.neo[i] = (0,0,0);
         self.neo.show()
 
     def mapRange(self, x, in_min, in_max, out_min, out_max):
