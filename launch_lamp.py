@@ -258,8 +258,8 @@ if __name__ == "__main__":
             if lamp.state == "streaming":
                 lamp.console = "Connecting..."
                 changing = 0
+                tries = 0
                 while changing <= 0:
-                    tries = 0
                     changing = streamer.change(lamp.stream)
                     tries = tries + changing
                     print("TRIES: " + str(tries))
