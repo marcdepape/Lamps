@@ -274,12 +274,12 @@ if __name__ == "__main__":
                         lamp.console = "Error..."
                         lamp.state = "error"
                         lamp.change = False
-                        return
 
-                lamp.setBase(0)
-                fadeIn()
-                lamp.change = False
-                lamp.console = "Streaming..."
+                if changing:
+                    lamp.setBase(0)
+                    fadeIn()
+                    lamp.change = False
+                    lamp.console = "Streaming..."
             else:
                 streamer.mute()
                 lamp.change = False
