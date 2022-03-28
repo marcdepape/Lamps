@@ -182,7 +182,7 @@ class Streamer(object):
         self.pipeline.set_state(Gst.State.PLAYING)
         status = self.pipeline.get_state()
         while status == Gst.StateChangeReturn.ASYNC:
-            status =self.pipeline.get_state()
+            status =self.pipeline.get_state(Gst.State.PLAYING)
             sleep(0.01)
         print(status)
 
