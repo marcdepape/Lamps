@@ -64,7 +64,6 @@ class Dashboard(GridLayout):
         self.shuffle(0)
 
         Clock.schedule_interval(self.update_GUI, 0.1)
-        Clock.schedule_once(self.shuffle, 30)
 
     def start_proxy(self):
         subscriber = Thread(target=self.proxy.statusIn, args=())
@@ -138,8 +137,8 @@ class Dashboard(GridLayout):
         self.proxy.saturation = self.saturation
         self.display_saturation = "{:.2f}".format(self.saturation)
 
-    def all_streaming_one(self, lamp):
-        self.reshuffle()
+    def allStreamingOne(self, lamp):
+        self.resetShuffle()
         listeners = []
         for i in range(self.number_of_lamps):
             if i != lamp:
@@ -149,31 +148,34 @@ class Dashboard(GridLayout):
         self.update_button_state(listeners)
 
     def shuffle(self, rt):
-        self.reshuffle()
+        print("SHUFFLE!")
+        self.resetShuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
         broadcasters = 0
-        self.assign_listeners(listeners, broadcasters)
+        self.assignListeners(listeners, broadcasters)
 
-    def reshuffle(self):
+    def resetShuffle(self):
         self.shuffle_trigger.cancel()
         self.shuffle_trigger()
 
-    def manual_listen(self, lamp, to_lamp):
-        self.reshuffle()
+    def manualListen(self, lamp, to_lamp):
+        print("MANUAL LISTEN! " + str(lamp) + " : " + str(to_lamp))
+        self.resetShuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
         listeners[lamp] = to_lamp
         listeners[to_lamp] = -1
         broadcasters = 1
-        self.assign_listeners(listeners, broadcasters)
+        self.assignListeners(listeners, broadcasters)
 
-    def manual_broadcast(self, lamp):
-        self.reshuffle()
+    def manualBroadcast(self, lamp):
+        print("MANUAL BROADCAST! " + str(lamp))
+        self.resetShuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
         listeners[lamp] = -1
         broadcasters = 1
-        self.assign_listeners(listeners, broadcasters)
+        self.assignListeners(listeners, broadcasters)
 
-    def assign_listeners(self, listeners, broadcasters):
+    def assignListeners(self, listeners, broadcasters):
         print (str(listeners) + " | " + str(broadcasters))
         broadcast_lamps = []
         while broadcasters < int(self.number_of_lamps/2):

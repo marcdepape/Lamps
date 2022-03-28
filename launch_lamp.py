@@ -150,6 +150,11 @@ class Lamp(object):
             self.neo[i] = (intensity,intensity,intensity);
         self.neo.show()
 
+    def setError():
+        for i in range(40):
+            self.neo[i] = (255,0,0);
+        self.neo.show()
+
     def mapRange(self, x, in_min, in_max, out_min, out_max):
       return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
 
@@ -170,7 +175,6 @@ class Streamer(object):
         print("pipeline:", self.pipeline_string)
 
     def change(self, lamp_num):
-        self.console = "Connecting..."
         self.pipeline.set_state(Gst.State.NULL)
         self.pipeline_string = self.pipeline_template()
         self.pipeline = Gst.parse_launch(self.pipeline_string)
@@ -187,8 +191,9 @@ class Streamer(object):
             sleep(0.01)
         if status.state == Gst.State.PLAYING:
             print("SUCCESS!")
+            return 1
         else:
-            print("FAILURE!")
+            return -1
 
     def changeVolume(self, change):
         self.volume = self.volume + change
@@ -250,7 +255,16 @@ if __name__ == "__main__":
             print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
             fadeOut()
             if lamp.state == "streaming":
-                streamer.change(lamp.stream)
+                lamp.console = "Connecting..."
+                changing = 0
+                while changing <= 0:
+                    tries = 0
+                    changing = streamer.change(lamp.stream)
+                    tries = tries + changing
+                    if tries == -3:
+                        lamp.setError()
+                        lamp.console = "Error..."
+                        
                 lamp.setBase(0)
                 fadeIn()
                 lamp.change = False

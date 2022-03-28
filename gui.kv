@@ -30,31 +30,31 @@
 	                text: '0'
 					group: 'all0'
 					state: 'normal'
-	                on_press: root.all_streaming_one(0)
+	                on_press: root.allStreamingOne(0)
 				Button:
 					id: all_1
 	                text: '1'
 					group: 'all1'
 					state: 'normal'
-	                on_press: root.all_streaming_one(1)
+	                on_press: root.allStreamingOne(1)
 				Button:
 					id: all_2
 	                text: '2'
 					group: 'all2'
 					state: 'normal'
-	                on_press: root.all_streaming_one(2)
+	                on_press: root.allStreamingOne(2)
 				Button:
 					id: all_3
 	                text: '3'
 					group: 'all3'
 					state: 'normal'
-	                on_press: root.all_streaming_one(3)
+	                on_press: root.allStreamingOne(3)
 				Button:
 					id: all_4
 	                text: '4'
 					group: 'all4'
 					state: 'normal'
-	                on_press: root.all_streaming_one(4)
+	                on_press: root.allStreamingOne(4)
 
 			GridLayout:
 	            cols: 2
@@ -191,7 +191,6 @@
 				row_default_height: 40
 
 				Label:
-					text: ""
 
 				Label:
 					text: "Lamp 0"
@@ -200,40 +199,41 @@
 					id: broadcast_0
 					state: 'normal'
 					background_color: [0,1,0.3,1]
-					on_press: root.manual_broadcast(0)
+					on_press: root.manualBroadcast(0)
 
 				Label:
 					id: listen_0_to_0
+
 				ToggleButton
 					id: listen_0_to_1
 					text: '1'
 					group: 'listen0'
 					state: 'normal'
-					on_press: root.manual_listen(0,1)
+					on_press: root.manualListen(0,1)
 				ToggleButton
 					id: listen_0_to_2
 					text: '2'
 					group: 'listen0'
 					state: 'normal'
-					on_press: root.manual_listen(0,2)
+					on_press: root.manualListen(0,2)
 				ToggleButton
 					id: listen_0_to_3
 					text: '3'
 					group: 'listen0'
 					state: 'normal'
-					on_press: root.manual_listen(0,3)
+					on_press: root.manualListen(0,3)
 				ToggleButton
 					id: listen_0_to_4
 					text: '4'
 					group: 'listen0'
 					state: 'normal'
-					on_press: root.manual_listen(0,4)
+					on_press: root.manualListen(0,4)
 				ToggleButton
 					id: listen_0_to_5
 					text: '5'
 					group: 'listen0'
 					state: 'normal'
-					on_press: root.manual_listen(0,5)
+					on_press: root.manualListen(0,5)
 
 				Label:
 					text: root.display_console_0
@@ -248,7 +248,6 @@
 				row_default_height: 40
 
 				Label:
-					text: ""
 
 				Label:
 					text: "Lamp 1"
@@ -257,40 +256,41 @@
 					id: broadcast_1
 					state: 'normal'
 					background_color: [0,1,0.3,1]
-					on_press: root.manual_broadcast(1)
+					on_press: root.manualBroadcast(1)
 
 				ToggleButton
 					id: listen_1_to_0
 					text: '0'
 					group: 'listen1'
 					state: 'normal'
-					on_press: root.manual_listen(1,0)
+					on_press: root.manualListen(1,0)
 				Label:
 					id: listen_1_to_1
+
 				ToggleButton
 					id: listen_1_to_2
 					text: '2'
 					group: 'listen1'
 					state: 'normal'
-					on_press: root.manual_listen(1,2)
+					on_press: root.manualListen(1,2)
 				ToggleButton
 					id: listen_1_to_3
 					text: '3'
 					group: 'listen1'
 					state: 'normal'
-					on_press: root.manual_listen(1,3)
+					on_press: root.manualListen(1,3)
 				ToggleButton
 					id: listen_1_to_4
 					text: '4'
 					group: 'listen1'
 					state: 'normal'
-					on_press: root.manual_listen(1,4)
+					on_press: root.manualListen(1,4)
 				ToggleButton
 					id: listen_1_to_5
 					text: '5'
 					group: 'listen1'
 					state: 'normal'
-					on_press: root.manual_listen(1,5)
+					on_press: root.manualListen(1,5)
 
 				Label:
 					text: root.display_console_1
@@ -303,7 +303,6 @@
 				row_default_height: 40
 
 				Label:
-					text: ""
 
 				Label:
 					text: "Lamp 2"
@@ -312,40 +311,41 @@
 					id: broadcast_2
 					state: 'normal'
 					background_color: [0,1,0.3,1]
-					on_press: root.manual_broadcast(2)
+					on_press: root.manualBroadcast(2)
 
 				ToggleButton
 					id: listen_2_to_0
 					text: '0'
 					group: 'listen2'
 					state: 'normal'
-					on_press: root.manual_listen(2,0)
+					on_press: root.manualListen(2,0)
 				ToggleButton
 					id: listen_2_to_1
 					text: '1'
 					group: 'listen2'
 					state: 'normal'
-					on_press: root.manual_listen(2,1)
+					on_press: root.manualListen(2,1)
 				Label:
 					id: listen_2_to_2
+
 				ToggleButton
 					id: listen_2_to_3
 					text: '3'
 					group: 'listen2'
 					state: 'normal'
-					on_press: root.manual_listen(2,3)
+					on_press: root.manualListen(2,3)
 				ToggleButton
 					id: listen_2_to_4
 					text: '4'
 					group: 'listen2'
 					state: 'normal'
-					on_press: root.manual_listen(2,4)
+					on_press: root.manualListen(2,4)
 				ToggleButton
 					id: listen_2_to_5
 					text: '5'
 					group: 'listen2'
 					state: 'normal'
-					on_press: root.manual_listen(2,5)
+					on_press: root.manualListen(2,5)
 
 				Label:
 					text: root.display_console_2
@@ -357,7 +357,6 @@
 				row_default_height: 40
 
 				Label:
-					text: ""
 
 				Label:
 					text: "Lamp 3"
@@ -366,40 +365,41 @@
 					id: broadcast_3
 					state: 'normal'
 					background_color: [0,1,0.3,1]
-					on_press: root.manual_broadcast(3)
+					on_press: root.manualBroadcast(3)
 
 				ToggleButton
 					id: listen_3_to_0
 					text: '0'
 					group: 'listen3'
 					state: 'normal'
-					on_press: root.manual_listen(3,0)
+					on_press: root.manualListen(3,0)
 				ToggleButton
 					id: listen_3_to_1
 					text: '1'
 					group: 'listen3'
 					state: 'normal'
-					on_press: root.manual_listen(3,1)
+					on_press: root.manualListen(3,1)
 				ToggleButton
 					id: listen_3_to_2
 					text: '2'
 					group: 'listen3'
 					state: 'normal'
-					on_press: root.manual_listen(3,2)
+					on_press: root.manualListen(3,2)
 				Label:
 					id: listen_3_to_3
+
 				ToggleButton
 					id: listen_3_to_4
 					text: '4'
 					group: 'listen3'
 					state: 'normal'
-					on_press: root.manual_listen(3,4)
+					on_press: root.manualListen(3,4)
 				ToggleButton
 					id: listen_3_to_5
 					text: '5'
 					group: 'listen3'
 					state: 'normal'
-					on_press: root.manual_listen(3,5)
+					on_press: root.manualListen(3,5)
 
 				Label:
 					text: root.display_console_3
@@ -412,7 +412,6 @@
 				row_default_height: 40
 
 				Label:
-					text: ""
 
 				Label:
 					text: "Lamp 4"
@@ -421,40 +420,41 @@
 					id: broadcast_4
 					state: 'normal'
 					background_color: [0,1,0.3,1]
-					on_press: root.manual_broadcast(4)
+					on_press: root.manualBroadcast(4)
 
 				ToggleButton
 					id: listen_4_to_0
 					text: '0'
 					group: 'listen4'
 					state: 'normal'
-					on_press: root.manual_listen(4,0)
+					on_press: root.manualListen(4,0)
 				ToggleButton
 					id: listen_4_to_1
 					text: '1'
 					group: 'listen4'
 					state: 'normal'
-					on_press: root.manual_listen(4,1)
+					on_press: root.manualListen(4,1)
 				ToggleButton
 					id: listen_4_to_2
 					text: '2'
 					group: 'listen4'
 					state: 'normal'
-					on_press: root.manual_listen(4,2)
+					on_press: root.manualListen(4,2)
 				ToggleButton
 					id: listen_4_to_3
 					text: '3'
 					group: 'listen4'
 					state: 'normal'
-					on_press: root.manual_listen(4,3)
+					on_press: root.manualListen(4,3)
 				Label:
 					id: listen_4_to_4
+
 				ToggleButton
 					id: listen_4_to_5
 					text: '5'
 					group: 'listen4'
 					state: 'normal'
-					on_press: root.manual_listen(4,5)
+					on_press: root.manualListen(4,5)
 
 				Label:
 					text: root.display_console_4
@@ -467,7 +467,6 @@
 				row_default_height: 40
 
 				Label:
-					text: ""
 
 				Label:
 					text: "Lamp 5"
@@ -476,38 +475,38 @@
 					id: broadcast_5
 					state: 'normal'
 					background_color: [0,1,0.3,1]
-					on_press: root.manual_broadcast(5)
+					on_press: root.manualBroadcast(5)
 
 				ToggleButton
 					id: listen_5_to_0
 					text: '0'
 					group: 'listen5'
 					state: 'normal'
-					on_press: root.manual_listen(5,0)
+					on_press: root.manualListen(5,0)
 				ToggleButton
 					id: listen_5_to_1
 					text: '1'
 					group: 'listen5'
 					state: 'normal'
-					on_press: root.manual_listen(5,1)
+					on_press: root.manualListen(5,1)
 				ToggleButton
 					id: listen_5_to_2
 					text: '2'
 					group: 'listen5'
 					state: 'normal'
-					on_press: root.manual_listen(5,2)
+					on_press: root.manualListen(5,2)
 				ToggleButton
 					id: listen_5_to_3
 					text: '3'
 					group: 'listen5'
 					state: 'normal'
-					on_press: root.manual_listen(5,3)
+					on_press: root.manualListen(5,3)
 				ToggleButton
 					id: listen_5_to_4
 					text: '4'
 					group: 'listen5'
 					state: 'normal'
-					on_press: root.manual_listen(5,4)
+					on_press: root.manualListen(5,4)
 				Label:
 					id: listen_5_to_5
 
