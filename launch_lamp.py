@@ -193,6 +193,7 @@ class Streamer(object):
             print("SUCCESS!")
             return 1
         else:
+            print("FAILURE!")
             return -1
 
     def changeVolume(self, change):
@@ -261,6 +262,7 @@ if __name__ == "__main__":
                     tries = 0
                     changing = streamer.change(lamp.stream)
                     tries = tries + changing
+                    print("TRIES: " + str(tries))
                     if tries == -3:
                         lamp.setError()
                         lamp.console = "Error..."
