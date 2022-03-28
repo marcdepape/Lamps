@@ -258,7 +258,7 @@ if __name__ == "__main__":
         pass
 
     while True:
-        if lamp.change:
+        while lamp.change:
             print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
             fadeOut()
             if lamp.state == "streaming":
@@ -273,9 +273,8 @@ if __name__ == "__main__":
                         lamp.setError()
                         lamp.console = "Error..."
                         lamp.state = "error"
-                        print("ERROR!")
-                        while lamp.state == "error":
-                            pass
+                        lamp.change = False
+                        return
 
                 lamp.setBase(0)
                 fadeIn()
