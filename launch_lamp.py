@@ -282,6 +282,7 @@ if __name__ == "__main__":
                     lamp.change = False
                     lamp.console = "Streaming..."
             else:
+                lamp.setBulb(0)
                 streamer.mute()
                 lamp.change = False
                 lamp.console = "Broadcasting..."
