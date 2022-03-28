@@ -185,7 +185,7 @@ class Streamer(object):
             status = self.pipeline.get_state(Gst.CLOCK_TIME_NONE)
             sleep(0.01)
         print(status.state)
-        if status.state == "GST_STATE_PLAYING":
+        if status.state == Gst.State.PLAYING:
             print("SUCCESS!")
         else:
             print("FAILURE!")
