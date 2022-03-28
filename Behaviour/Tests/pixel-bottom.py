@@ -27,7 +27,7 @@ try:
         neo.show()
 
     for i in range(16, 40):
-        neo[i] = (255,255,255);
+        neo[i] = (255,255,225);
         neo.show()
 
     while True:
