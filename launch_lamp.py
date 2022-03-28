@@ -180,7 +180,11 @@ class Streamer(object):
         self.rtspsrc.set_property('location', url)
         self.audioamplify.set_property('amplification', 0)
         self.pipeline.set_state(Gst.State.PLAYING)
-        print(status[0])
+        status = self.pipeline.get_state()
+        while status == Gst.StateChangeReturn.ASYNC:
+            status =self.pipeline.get_state()
+            sleep(0.01)
+        print(status)
 
     def changeVolume(self, change):
         self.volume = self.volume + change
