@@ -150,7 +150,7 @@ class Lamp(object):
             self.neo[i] = (intensity,intensity,intensity);
         self.neo.show()
 
-    def setError():
+    def setError(self):
         for i in range(40):
             self.neo[i] = (255,0,0);
         self.neo.show()
