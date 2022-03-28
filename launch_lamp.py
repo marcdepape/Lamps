@@ -77,7 +77,7 @@ class Lamp(object):
     def compare(self):
         if self.in_update["command"] != self.command:
             self.command = self.in_update["command"]
-            if self.command = "reboot":
+            if self.command == "reboot":
                 print("REBOOT!")
                 #os.system("reboot now")
 
