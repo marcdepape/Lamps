@@ -247,16 +247,16 @@ def changeListener():
     lamp.console = "Connecting..."
     lamp.changing = 0
     tries = 0
-    while self.changing <= 0:
-        self.changing = streamer.change(lamp.stream)
-        tries = tries + self.changing
+    while lamp.changing <= 0:
+        lamp.changing = streamer.change(lamp.stream)
+        tries = tries + lamp.changing
         print("TRIES: " + str(tries))
         if tries == -3:
             lamp.setError()
             lamp.console = "Error..."
             lamp.state = "error"
             lamp.change = False
-            self.changing = 1
+            lamp.changing = 1
 
     if lamp.state != "error":
         lamp.setBase(0)
