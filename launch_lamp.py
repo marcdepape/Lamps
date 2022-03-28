@@ -184,7 +184,7 @@ class Streamer(object):
         while status == Gst.StateChangeReturn.ASYNC:
             status = self.pipeline.get_state(Gst.CLOCK_TIME_NONE)
             sleep(0.01)
-        print(status.State)
+        print(status.state)
         if status == Gst.StateChangeReturn.SUCCESS:
             print("SUCCESS!")
         else:
