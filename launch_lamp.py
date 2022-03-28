@@ -78,14 +78,7 @@ class Lamp(object):
         if self.in_update["command"] != self.command:
             self.command = self.in_update["command"]
             if self.command == "reboot":
-                for i in range(4):
-                    self.setBase(0)
-                    self.setBulb(255)
-                    self.sleep(0.25)
-                    self.setBase(255)
-                    self.setBulb(0)
-                    sleep(0.25)
-
+                self.setReboot()
                 print("REBOOT!")
                 #os.system("reboot now")
 
@@ -169,6 +162,11 @@ class Lamp(object):
     def setError(self):
         for i in range(40):
             self.neo[i] = (255,0,0);
+        self.neo.show()
+
+    def setReboot(self):
+        for i in range(40):
+            self.neo[i] = (0,0,255);
         self.neo.show()
 
     def setOff(self):
