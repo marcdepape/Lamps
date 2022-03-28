@@ -34,6 +34,13 @@ class Dashboard(GridLayout):
     display_console_4 = StringProperty()
     display_console_5 = StringProperty()
 
+    display_connection_0 = StringProperty()
+    display_connection_1 = StringProperty()
+    display_connection_2 = StringProperty()
+    display_connection_3 = StringProperty()
+    display_connection_4 = StringProperty()
+    display_connection_5 = StringProperty()
+
     def __init__(self, num, **kwargs):
         super(Dashboard, self).__init__(**kwargs)
 
@@ -42,7 +49,24 @@ class Dashboard(GridLayout):
         self.start_proxy()
 
         self.shuffle_time = 60
+
         self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle_time)
+
+        self.connection_time = 10
+        self.lamp0_connection = Clock.create_trigger(self.lostConnection(0), self.connection_time)
+        self.lamp1_connection = Clock.create_trigger(self.lostConnection(1), self.connection_time)
+        self.lamp2_connection = Clock.create_trigger(self.lostConnection(2), self.connection_time)
+        self.lamp3_connection = Clock.create_trigger(self.lostConnection(3), self.connection_time)
+        self.lamp4_connection = Clock.create_trigger(self.lostConnection(4), self.connection_time)
+        self.lamp5_connection = Clock.create_trigger(self.lostConnection(5), self.connection_time)
+
+        self.display_connection_0 = "OFFLINE"
+        self.display_connection_1 = "OFFLINE"
+        self.display_connection_2 = "OFFLINE"
+        self.display_connection_3 = "OFFLINE"
+        self.display_connection_4 = "OFFLINE"
+        self.display_connection_5 = "OFFLINE"
+
         self.peak = 1.5
         self.fade_rate = 0.05
         self.saturation = 1.0
@@ -84,21 +108,39 @@ class Dashboard(GridLayout):
 
         if lamp == 0:
             self.display_console_0 = update["console"]
+            self.display_connection_0 = "CONNECTED"
+            self.lamp0_connection.clear()
+            self.lamp0_connection()
 
         elif lamp == 1:
             self.display_console_1 = update["console"]
+            self.display_connection_1 = "CONNECTED"
+            self.lamp1_connection.clear()
+            self.lamp1_connection()
 
         elif lamp == 2:
             self.display_console_2 = update["console"]
+            self.display_connection_2 = "CONNECTED"
+            self.lamp2_connection.clear()
+            self.lamp2_connection()
 
         elif lamp == 3:
             self.display_console_3 = update["console"]
+            self.display_connection_3 = "CONNECTED"
+            self.lamp3_connection.clear()
+            self.lamp3_connection()
 
         elif lamp == 4:
             self.display_console_4 = update["console"]
+            self.display_connection_4 = "CONNECTED"
+            self.lamp4_connection.clear()
+            self.lamp4_connection()
 
         elif lamp == 5:
             self.display_console_5 = update["console"]
+            self.display_connection_5 = "CONNECTED"
+            self.lamp5_connection.clear()
+            self.lamp5_connection()
 
         elif lamp == "ALL":
             self.display_console_0 = update["console"]
@@ -107,6 +149,19 @@ class Dashboard(GridLayout):
             self.display_console_3 = update["console"]
             self.display_console_4 = update["console"]
             self.display_console_5 = update["console"]
+
+    def lostConnection(self, lamp):
+        if lamp == 0:
+
+        elif lamp == 1:
+
+        elif lamp == 2:
+
+        elif lamp == 3:
+
+        elif lamp == 4:
+
+        elif lamp == 5:
 
     def reset(self, lamp):
         if lamp != -1:
