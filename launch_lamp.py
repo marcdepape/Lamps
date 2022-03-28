@@ -170,6 +170,7 @@ class Streamer(object):
         print("pipeline:", self.pipeline_string)
 
     def change(self, lamp_num):
+        self.console = "Connecting..."
         self.pipeline.set_state(Gst.State.NULL)
         self.pipeline_string = self.pipeline_template()
         self.pipeline = Gst.parse_launch(self.pipeline_string)
@@ -180,7 +181,6 @@ class Streamer(object):
         self.rtspsrc.set_property('location', url)
         self.audioamplify.set_property('amplification', 0)
         self.pipeline.set_state(Gst.State.PLAYING)
-        self.console = "Connecting..."
         status = self.pipeline.get_state(Gst.CLOCK_TIME_NONE)
         while status == Gst.StateChangeReturn.ASYNC:
             status = self.pipeline.get_state(Gst.CLOCK_TIME_NONE)
