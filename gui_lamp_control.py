@@ -94,9 +94,15 @@ class Dashboard(GridLayout):
         publisher.start()
 
     def update_GUI(self, rt):
-        update = json.loads(self.proxy.receive)
-        lamp = update["id"]
-        state = update["state"]
+        update = None
+        lamp = None
+        state = None
+
+        if self.proxy.new:
+            update = json.loads(self.proxy.receive)
+            lamp = update["id"]
+            state = update["state"]
+            self.proxy.new = False
 
         m, s = divmod((int(time()) - int(self.start_time)), 60)
         h, m = divmod(m, 60)
