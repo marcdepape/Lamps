@@ -59,8 +59,6 @@ class Dashboard(GridLayout):
         self.display_connection_4 = ""
         self.display_connection_5 = ""
 
-        self.connection_times
-
         self.peak = 1.5
         self.fade_rate = 0.05
         self.saturation = 1.0
@@ -102,7 +100,7 @@ class Dashboard(GridLayout):
         self.display_time = "%d:%02d:%02d" % (h, m, s)
 
         for i in range(self.number_of_lamps):
-            self.connection_times[i]++
+            self.connection_times[i]+=1
 
         if lamp == 0:
             self.display_console_0 = update["console"]
