@@ -274,8 +274,9 @@ if __name__ == "__main__":
                         lamp.console = "Error..."
                         lamp.state = "error"
                         lamp.change = False
+                        changing = 1
 
-                if changing:
+                if lamp.state != "error":
                     lamp.setBase(0)
                     fadeIn()
                     lamp.change = False
