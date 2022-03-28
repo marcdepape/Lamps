@@ -101,6 +101,7 @@ class Dashboard(GridLayout):
         if self.proxy.new:
             update = json.loads(self.proxy.receive)
             lamp = update["id"]
+            print(lamp)
             state = update["state"]
             self.proxy.new = False
 
