@@ -79,11 +79,11 @@ class Lamp(object):
             self.command = self.in_update["command"]
             if self.command == "reboot":
                 for i in range(4):
-                    setBase(0)
-                    setBulb(255)
-                    sleep(0.25)
-                    setBase(255)
-                    setBulb(0)
+                    self.setBase(0)
+                    self.setBulb(255)
+                    self.sleep(0.25)
+                    self.setBase(255)
+                    self.setBulb(0)
                     sleep(0.25)
 
                 print("REBOOT!")
