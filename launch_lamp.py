@@ -220,7 +220,7 @@ class Streamer(object):
             print("SUCCESS!")
             return 1
         else:
-            print("FAILURE!")
+            print(status)
             return -1
 
     def changeVolume(self, change):
