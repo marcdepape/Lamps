@@ -99,7 +99,6 @@ class Lamp(object):
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
             self.change = True
-            self.changing = 1
             if self.stream == -1:
                 self.state = "broadcasting"
             else:
@@ -124,7 +123,7 @@ class Lamp(object):
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
-                print("IN UPDATE: " + str(self.in_update))
+                print("IN UPDATE: " + str(self.in_update) + " | " + str(self.change))
 
     def micLevels(self):
         while self.report:
