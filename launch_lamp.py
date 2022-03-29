@@ -106,7 +106,12 @@ class Lamp(object):
 
     def statusOut(self):
         while self.report:
-            self.out_status = json.dumps({"id": self.id, "fade": self.fade_rate, "saturation": self.saturation, "stream": self.stream, "state": self.state, "console": self.console})
+            self.out_status = json.dumps({"id": self.id,
+                                        "fade": self.fade_rate,
+                                        "saturation": self.saturation,
+                                        "stream": self.stream,
+                                        "state": self.state,
+                                        "console": self.console})
             self.publish.send_json(self.out_status)
             sleep(1)
 
@@ -114,10 +119,10 @@ class Lamp(object):
         while self.report:
             update = self.subscribe.recv_json()
             update = json.loads(update)
+            print(self.in_update)
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
-                print(self.in_update)
 
     def micLevels(self):
         while self.report:
