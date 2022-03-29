@@ -105,6 +105,7 @@ class Lamp(object):
                 self.state = "broadcasting"
             else:
                 self.state = "streaming"
+            print(self.state)
 
     def statusOut(self):
         while self.report:
@@ -125,7 +126,7 @@ class Lamp(object):
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
-                print(self.in_update)
+                print("IN UPDATE" + str(self.in_update))
 
     def micLevels(self):
         while self.report:
