@@ -264,7 +264,7 @@ def fadeOut():
 
 def changeListener():
     lamp.console = "Connecting..."
-    lamp.changing = 0
+    changing = 0
     tries = 0
     while changing <= 0:
         changing = streamer.change(lamp.stream)
