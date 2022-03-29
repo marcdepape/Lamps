@@ -81,6 +81,8 @@ class Lamp(object):
                 self.setReboot()
                 print("REBOOT!")
                 os.system("reboot now")
+            if self.command == "start":
+                self.state = ""
 
         if self.in_update["rate"] != self.fade_rate:
             self.fade_rate = self.in_update["fade"]
