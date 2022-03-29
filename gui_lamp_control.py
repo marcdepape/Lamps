@@ -120,6 +120,9 @@ class Dashboard(GridLayout):
             self.display_console_0 = update["console"]
             self.display_connection_0 = "CONNECTED"
             self.connection_times[0] = 0
+            if update["state"] == "error":
+                if update['stream'] > 0:
+                    self.reset(update['stream'])
 
         elif lamp == 1:
             self.display_console_1 = update["console"]

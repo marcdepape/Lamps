@@ -290,6 +290,9 @@ if __name__ == "__main__":
     print("LAUNCH LAMP")
     print("")
 
+    os.system("sudo python3 launch_level.py &")
+    os.system("sudo python3 launch_rtsp.py &")
+
     publisher = Thread(target=lamp.statusOut, args=())
     publisher.start()
     subscriber = Thread(target=lamp.updateIn, args=())
