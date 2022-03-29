@@ -104,7 +104,7 @@ class Dashboard(GridLayout):
             self.inbound = update
             lamp = update["id"]
             state = update["state"]
-            self.proxy.command[lamp] = update["command"]
+            self.proxy.command[int(lamp)] = update["command"]
         else:
             lamp = -1
 
