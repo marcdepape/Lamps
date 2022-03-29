@@ -35,7 +35,6 @@ class Lamp(object):
         self.saturation = 1.0
         self.stream = 255
         self.change = False
-        self.changing = 0
         self.state = "?"
         self.in_update = ""
         self.out_status = ""
@@ -105,7 +104,6 @@ class Lamp(object):
                 self.state = "broadcasting"
             else:
                 self.state = "streaming"
-            print(self.state)
 
     def statusOut(self):
         while self.report:
@@ -126,7 +124,7 @@ class Lamp(object):
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
-                print("IN UPDATE" + str(self.in_update))
+                print("IN UPDATE: " + str(self.in_update))
 
     def micLevels(self):
         while self.report:
@@ -269,16 +267,16 @@ def changeListener():
     lamp.console = "Connecting..."
     lamp.changing = 0
     tries = 0
-    while lamp.changing <= 0:
-        lamp.changing = streamer.change(lamp.stream)
-        tries = tries + lamp.changing
+    while changing <= 0:
+        changing = streamer.change(lamp.stream)
+        tries = tries + changing
         print("TRIES: " + str(tries))
         if tries == -3:
             lamp.setError()
             lamp.console = "Error..."
             lamp.state = "error"
             lamp.change = False
-            lamp.changing = 1
+            return
 
     if lamp.state != "error":
         lamp.setBase(0)
