@@ -290,7 +290,8 @@ if __name__ == "__main__":
     mic.start()
 
     while lamp.state == "?":
-        pass
+        print("?")
+        sleep(1)
 
     while True:
         while lamp.change:

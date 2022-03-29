@@ -46,6 +46,7 @@ class Dashboard(GridLayout):
 
         self.number_of_lamps = num
         self.proxy = LampProxy(self.number_of_lamps)
+        self.inbound = None
         self.start_proxy()
 
         self.shuffle_time = 60
@@ -98,12 +99,13 @@ class Dashboard(GridLayout):
         lamp = None
         state = None
 
-        if self.proxy.new:
-            update = json.loads(self.proxy.receive)
+        update = json.loads(self.proxy.receive)
+        if update != self.inbound:
+            self.inbound = update
             lamp = update["id"]
-            print(lamp)
             state = update["state"]
-            self.proxy.new = False
+        else:
+            lamp = -1
 
         m, s = divmod((int(time()) - int(self.start_time)), 60)
         h, m = divmod(m, 60)

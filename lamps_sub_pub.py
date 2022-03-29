@@ -44,10 +44,7 @@ class LampProxy(object):
 
     def statusIn(self):
         while self.running:
-            status = self.frontend.recv_json()
-            if self.receive != status:
-                self.receive = status
-                self.new = True
+            self.receive = self.frontend.recv_json()
 
     def updateOut(self):
         while self.running:
