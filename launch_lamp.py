@@ -78,11 +78,13 @@ class Lamp(object):
         if self.in_update["command"] != self.command:
             self.command = self.in_update["command"]
             if self.command == "reboot":
+                self.proxy.command[self.id] = "complete"
                 self.setReboot()
                 print("REBOOT!")
                 os.system("reboot now")
             if self.command == "start":
-                self.state = ""
+                self.state = "start"
+                self.proxy.command[self.id] = "complete"
 
         if self.in_update["rate"] != self.fade_rate:
             self.fade_rate = self.in_update["fade"]
@@ -111,6 +113,7 @@ class Lamp(object):
                                         "saturation": self.saturation,
                                         "stream": self.stream,
                                         "state": self.state,
+                                        "command": self.command,
                                         "console": self.console})
             self.publish.send_json(self.out_status)
             sleep(1)
@@ -296,7 +299,7 @@ if __name__ == "__main__":
     mic = Thread(target=lamp.micLevels, args=())
     mic.start()
 
-    while lamp.state == "?":
+    while lamp.state != "start":
         pass
 
     while True:

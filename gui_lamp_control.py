@@ -83,6 +83,7 @@ class Dashboard(GridLayout):
 
         for i in range(self.number_of_lamps):
             self.proxy.command[i] = "start"
+            self.command[i] = "start"
 
         Clock.schedule_interval(self.update_GUI, 0.1)
 
@@ -104,6 +105,7 @@ class Dashboard(GridLayout):
             self.inbound = update
             lamp = update["id"]
             state = update["state"]
+            self.proxy.command[self.id] = update["command"]
         else:
             lamp = -1
 

@@ -43,6 +43,7 @@ class LampProxy(object):
                                 "saturation": "SATURATION",
                                 "stream": "STREAM",
                                 "state": "STATE",
+                                "command": "COMMAND",
                                 "console": "Waiting..."})
 
         self.message = json.dumps({"rate": self.fade_rate,
@@ -61,7 +62,7 @@ class LampProxy(object):
                 self.message = json.dumps({"lamp": lamp_id,
                                         "rate": self.fade_rate,
                                         "peak": self.peak,
-                                        "saturation": self.saturation, 
+                                        "saturation": self.saturation,
                                         "command": self.command[lamp_id],
                                         "stream": self.listeners[lamp_id]})
                 self.backend.send_json(self.message)
