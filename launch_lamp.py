@@ -81,7 +81,7 @@ class Lamp(object):
                 self.proxy.command[self.id] = "complete"
                 self.setReboot()
                 print("REBOOT!")
-                os.system("reboot now")
+                #os.system("reboot now")
             if self.command == "start":
                 self.state = "start"
                 self.proxy.command[self.id] = "complete"
