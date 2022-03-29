@@ -39,7 +39,7 @@ class LampProxy(object):
             self.listeners.append(-1)
             self.command.append("none")
 
-        self.receive = json.dumps({"id": "ALL",
+        self.receive = json.dumps({"id": -1,
                                 "fade": "FADE",
                                 "saturation": "SATURATION",
                                 "stream": "STREAM",

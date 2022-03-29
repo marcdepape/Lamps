@@ -104,7 +104,8 @@ class Dashboard(GridLayout):
             self.inbound = update
             lamp = update["id"]
             state = update["state"]
-            self.proxy.command[int(lamp)] = update["command"]
+            if lamp >=0:
+                self.proxy.command[lamp] = update["command"]
         else:
             lamp = -1
 
@@ -144,14 +145,6 @@ class Dashboard(GridLayout):
             self.display_console_5 = update["console"]
             self.display_connection_5 = "CONNECTED"
             self.connection_times[5] = 0
-
-        elif lamp == "ALL":
-            self.display_console_0 = update["console"]
-            self.display_console_1 = update["console"]
-            self.display_console_2 = update["console"]
-            self.display_console_3 = update["console"]
-            self.display_console_4 = update["console"]
-            self.display_console_5 = update["console"]
 
         pings = 100
         if self.connection_times[0] > pings:
