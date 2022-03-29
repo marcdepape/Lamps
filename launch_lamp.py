@@ -78,13 +78,13 @@ class Lamp(object):
         if self.in_update["command"] != self.command:
             self.command = self.in_update["command"]
             if self.command == "reboot":
-                self.proxy.command[self.id] = "complete"
+                self.command = "complete"
                 self.setReboot()
                 print("REBOOT!")
                 #os.system("reboot now")
             if self.command == "start":
                 self.state = "start"
-                self.proxy.command[self.id] = "complete"
+                self.command = "complete"
 
         if self.in_update["rate"] != self.fade_rate:
             self.fade_rate = self.in_update["fade"]
