@@ -297,7 +297,7 @@ if __name__ == "__main__":
     mic = Thread(target=lamp.micLevels, args=())
     mic.start()
 
-    while lamp.state != "start":
+    while lamp.state == "?":
         pass
 
     while True:
