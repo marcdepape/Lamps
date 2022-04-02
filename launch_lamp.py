@@ -303,6 +303,9 @@ if __name__ == "__main__":
     mic = Thread(target=lamp.micLevels, args=())
     mic.start()
 
+    lamp.setBulb(0)
+    lamp.setBase(0)
+
     while lamp.state == "?":
         pass
 
