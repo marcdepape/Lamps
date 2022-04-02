@@ -123,7 +123,7 @@ class Lamp(object):
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
-                print("IN UPDATE: " + str(self.in_update) + " | " + str(self.change))
+                #print("IN UPDATE: " + str(self.in_update) + " | " + str(self.change))
 
     def micLevels(self):
         while self.report:
@@ -220,7 +220,7 @@ class Streamer(object):
             print("SUCCESS!")
             return 1
         else:
-            print(status)
+            print("FAILURE!")
             return -1
 
     def changeVolume(self, change):
