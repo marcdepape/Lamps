@@ -246,6 +246,9 @@ lamp = Lamp(lamp_id)
 
 def fadeIn():
     lamp.console = "Fading in..."
+    lamp.top_bright = 0
+    lamp.setBulb(lamp.top_bright)
+    lamp.setBase(0)
     while streamer.volume < lamp.peak and lamp.top_bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
@@ -255,6 +258,9 @@ def fadeIn():
 
 def fadeOut():
     lamp.console = "Fading out..."
+    lamp.top_bright = 255
+    lamp.setBulb(lamp.top_bright)
+    lamp.setBase(0)
     while streamer.volume > 0 and lamp.top_bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
