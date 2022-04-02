@@ -272,6 +272,10 @@ def changeListener():
     lamp.console = "Connecting..."
     changing = 0
     tries = 0
+    if lamp.stream == -1:
+        lamp.state ="broadcasting"
+        return
+        
     while changing <= 0:
         changing = streamer.change(lamp.stream)
         tries = tries + changing
