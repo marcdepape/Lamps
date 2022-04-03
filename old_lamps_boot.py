@@ -95,7 +95,7 @@ class Lamp(object):
         self.setOff()
 
         # SERVER
-        server_context = zmq.Context()
+        server_context = zmq.Context()Test
         self.publish = server_context.socket(zmq.PUB)
         self.publish.connect("tcp://armadillo.local:8101")
         self.publish.set_hwm(1)
