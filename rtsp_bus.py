@@ -23,6 +23,15 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.STATE_CHANGED:
             oldState, newState, pendingState = message.parse_state_changed()
             print ("State changed -> old:{}, new:{}, pending:{}".format(oldState,newState,pendingState))
+        elif message.type == Gst.MessageType.ELEMENT:
+            structure = message.get_structure()
+            name = structure.get_name()
+
+            if name == "level":
+                value = structure.get_value("rms")
+                mic = "LEVEL: {} | {}".format(value[0], value[1])
+                print(mic)
+                value = value[0]
         else :
             print("Some other message type: " + str(message.type))
 
@@ -35,7 +44,7 @@ class TestRtspMediaFactory(GstRtspServer.RTSPMediaFactory):
         GstRtspServer.RTSPMediaFactory.__init__(self)
 
     def do_create_element(self, url):
-        pipelineCmd = "alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! audioconvert ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96"
+        pipelineCmd = "alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! level name=wavelevel interval=100000000 post-messages=TRUE ! audioconvert ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96"
 
         self.pipeline = Gst.parse_launch(pipelineCmd)
         print ("Pipeline created: " + pipelineCmd)
