@@ -12,7 +12,7 @@ print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
 
 '''
-gst-launch-1.0 rtspsrc location=rtsp://lamp2.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+gst-launch-1.0 rtspsrc location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
 
 class RTSP_Server:
