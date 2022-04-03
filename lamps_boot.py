@@ -28,6 +28,7 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue
 
 class RTSP_Server:
     def __init__(self, lamp_number):
+        #https://stackoverflow.com/questions/61604103/where-are-gstreamer-bus-log-messages
         Gst.init(None)
 
         self.server = GstRtspServer.RTSPServer.new()
@@ -52,6 +53,18 @@ class RTSP_Server:
         m = Thread(name="mainloop", target=mainloop.run)
         m.daemon = True
         m.start()
+
+    def message_callback(self, bus, message):
+        if message.type == Gst.MessageType.ELEMENT:
+            structure = message.get_structure()
+            name = structure.get_name()
+
+            if name == "level":
+                value = structure.get_value("rms")
+                #mic = "LEVEL: {} | {}".format(value[0], value[1])
+                #print(mic)
+                value = value[0]
+                zmq_socket.send_string(str(value))
 
 class Lamp(object):
     def __init__(self, lamp_num):
