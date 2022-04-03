@@ -2,7 +2,6 @@
 import zmq
 import sys
 import gi
-import subprocess
 from threading import Thread
 
 gi.require_version('Gst', '1.0')
@@ -17,14 +16,13 @@ lamp_id = int(this_lamp)
 
 Gst.init(None)
 
+context = zmq.Context()
+local = context.socket(zmq.PUB)
+local.bind("tcp://127.0.0.1:8103")
+local.set_hwm(1)
+
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
-    def __init__(self,message):
-        context = zmq.Context()
-        self.zmq_socket = context.socket(zmq.PUB)
-        self.zmq_socket.bind("tcp://127.0.0.1:8103")
-        self.zmq_socket.set_hwm(1)
-
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
@@ -43,7 +41,7 @@ class ExtendedBin(Gst.Bin):
 
             if name == "level":
                 value = structure.get_value("rms")
-                self.zmq_socket.send_string(str(value[0]))
+                local.send_string(str(value[0]))
                 #level = value[0]
         else :
             print("Some other message type: " + str(message.type))
