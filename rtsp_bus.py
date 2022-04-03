@@ -53,7 +53,7 @@ class TestRtspMediaFactory(GstRtspServer.RTSPMediaFactory):
         return self.extendedPipeline
 
 class GstreamerRtspServer(GstRtspServer.RTSPServer):
-    def __init__(self):
+    def __init__(self, lamp_number):
         self.rtspServer = GstRtspServer.RTSPServer()
 
         self.address = 'lamp{}.local'.format(lamp_number)
@@ -71,5 +71,5 @@ class GstreamerRtspServer(GstRtspServer.RTSPServer):
         print ("RTSP server is ready")
 
 if __name__ == '__main__':
-    s = GstreamerRtspServer()
+    s = GstreamerRtspServer(3)
     loop.run()
