@@ -8,6 +8,12 @@ gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GstRtspServer, GObject, GLib
 
+this_lamp = subprocess.check_output('hostname')
+this_lamp = this_lamp.decode("utf-8")
+this_lamp = this_lamp.replace('lamp','',1)
+print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
+lamp_id = int(this_lamp)
+
 Gst.init(None)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
@@ -88,3 +94,9 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m = Thread(name="mainloop", target=mainloop.run)
         m.daemon = True
         m.start()
+
+if __name__ == '__main__':
+    s = RTSP_Server(3)
+
+    while True:
+        pass
