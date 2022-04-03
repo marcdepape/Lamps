@@ -2,6 +2,7 @@
 import zmq
 import sys
 import gi
+import subprocess
 from threading import Thread
 
 gi.require_version('Gst', '1.0')
