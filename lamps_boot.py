@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import zmq
 import json
+import alsaaudio as alsa
 from threading import Thread
 from time import sleep
 import subprocess
@@ -35,7 +36,7 @@ class RTSP_Server:
 
         self.server.set_address(self.address)
         self.server.set_service(self.port)
-        self.launch_description = "( alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! audioconvert ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96 )"
+        self.launch_description = "( alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=2 ! tee name=t ! level name=wavelevel interval=100000000 post-messages=TRUE ! fakesink t. ! audioconvert ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96 )"
 
         self.factory = GstRtspServer.RTSPMediaFactory.new()
         self.factory.set_launch(self.launch_description)
