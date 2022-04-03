@@ -22,7 +22,7 @@ lamp_id = int(this_lamp)
 Gst.init(None)
 
 '''
-gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp2.local:8554/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
 
 class Lamp(object):
@@ -129,6 +129,7 @@ class Lamp(object):
         while self.report:
             self.mic_signal = self.levels.recv_string()
             if self.state == "broadcasting":
+                print(self.mic_signal)
                 self.pulse(self.mic_signal)
 
     def pulse(self, rms):
@@ -275,7 +276,7 @@ def changeListener():
     if lamp.stream == -1:
         lamp.state ="broadcasting"
         return
-        
+
     while changing <= 0:
         changing = streamer.change(lamp.stream)
         tries = tries + changing
