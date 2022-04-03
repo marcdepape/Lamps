@@ -193,6 +193,7 @@ if __name__ == "__main__":
     print("LAUNCH LAMP")
     print("")
 
+    lamp = Lamp()
     stream = RTSP_Server(this_lamp)
     sleep(3)
 
