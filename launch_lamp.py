@@ -115,7 +115,6 @@ class Lamp(object):
 
     def updateIn(self):
         while self.report:
-stream = RTSP_Server(this_lamp)
             update = self.subscribe.recv_json()
             update = json.loads(update)
             if update["lamp"] == self.id:
