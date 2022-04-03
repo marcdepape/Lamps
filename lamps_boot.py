@@ -330,10 +330,10 @@ if __name__ == "__main__":
     print("LAUNCH LAMP")
     print("")
 
-    os.system("python3 launch_mic.py")
+    rtsp = RTSP_Server(lamp_id)
     sleep(5)
 
-    rtsp = RTSP_Server(lamp_id)
+    os.system("python3 launch_mic.py")
     sleep(5)
 
     publisher = Thread(target=lamp.statusOut, args=())
