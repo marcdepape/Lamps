@@ -1,14 +1,12 @@
+#!/usr/bin/env python
 import zmq
 import json
-import alsaaudio as alsa
 from threading import Thread
 from time import sleep
 import subprocess
 import board
 import neopixel
 import os
-
-from lamp_rtsp import RTSPserver
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -20,6 +18,12 @@ this_lamp = this_lamp.decode("utf-8")
 this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
+
+Gst.init(None)
+
+'''
+gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+'''
 
 class Lamp(object):
     def __init__(self, lamp_num):
@@ -50,7 +54,7 @@ class Lamp(object):
         self.setOff()
 
         # SERVER
-        server_context = zmq.Context()Test
+        server_context = zmq.Context()
         self.publish = server_context.socket(zmq.PUB)
         self.publish.connect("tcp://armadillo.local:8101")
         self.publish.set_hwm(1)
@@ -94,7 +98,7 @@ class Lamp(object):
 
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
-            self.change = True
+            self.change = True                
             if self.stream == -1:
                 self.state = "broadcasting"
             else:
@@ -115,7 +119,6 @@ class Lamp(object):
 
     def updateIn(self):
         while self.report:
-stream = RTSP_Server(this_lamp)
             update = self.subscribe.recv_json()
             update = json.loads(update)
             if update["lamp"] == self.id:
@@ -187,15 +190,118 @@ stream = RTSP_Server(this_lamp)
     def constrain(self, val, min_val, max_val):
         return min(max_val, max(min_val, val))
 
+class Streamer(object):
+    def __init__(self):
+        self.AMP_ELEMENT_NAME = 'lamp-audio-amplify'
+        self.RTSP_ELEMENT_NAME = 'lamp-rtsp-source'
+        self.pipeline_string = self.pipeline_template()
+
+        self.pipeline = Gst.parse_launch(self.pipeline_string)
+        self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
+        self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
+        self.volume = 0
+
+        print("pipeline:", self.pipeline_string)
+
+    def change(self, lamp_num):
+        self.pipeline.set_state(Gst.State.NULL)
+        self.pipeline_string = self.pipeline_template()
+        self.pipeline = Gst.parse_launch(self.pipeline_string)
+        self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
+        self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
+        url = "rtsp://lamp{}.local:8100/mic".format(lamp_num)
+        print(url)
+        self.rtspsrc.set_property('location', url)
+        self.audioamplify.set_property('amplification', 0)
+        self.pipeline.set_state(Gst.State.PLAYING)
+        status = self.pipeline.get_state(Gst.CLOCK_TIME_NONE)
+        while status == Gst.StateChangeReturn.ASYNC:
+            status = self.pipeline.get_state(Gst.CLOCK_TIME_NONE)
+            sleep(0.01)
+        if status.state == Gst.State.PLAYING:
+            print("SUCCESS!")
+            return 1
+        else:
+            print("FAILURE!")
+            return -1
+
+    def changeVolume(self, change):
+        self.volume = self.volume + change
+        self.audioamplify.set_property('amplification', self.volume)
+
+    def mute(self):
+        self.audioamplify.set_property('amplification', 0)
+
+    def pipeline_template(self):
+        return ("rtspsrc latency=500 name={} ! "
+                "queue ! "
+                "rtpvorbisdepay ! "
+                "vorbisdec ! "
+                "audioamplify name={} ! "
+                "audioconvert ! "
+                "audio/x-raw,format=S16LE,rate=44100,channels=2 ! "
+                "alsasink"
+                ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
+
+streamer = Streamer()
+lamp = Lamp(lamp_id)
+
+def fadeIn():
+    lamp.console = "Fading in..."
+    lamp.top_bright = 0
+    lamp.setBulb(lamp.top_bright)
+    lamp.setBase(0)
+    while streamer.volume < lamp.peak and lamp.top_bright < 255:
+        if streamer.volume < lamp.peak:
+            streamer.changeVolume(0.01)
+        if lamp.top_bright < 255:
+            lamp.setBulb(1)
+        sleep(lamp.fade_rate)
+
+def fadeOut():
+    lamp.console = "Fading out..."
+    lamp.top_bright = 255
+    lamp.setBulb(lamp.top_bright)
+    lamp.setBase(0)
+    while streamer.volume > 0 and lamp.top_bright > 0:
+        if streamer.volume > 0:
+            streamer.changeVolume(-0.01)
+        if lamp.top_bright > 0:
+            lamp.setBulb(-1)
+        sleep(lamp.fade_rate)
+
+def changeListener():
+    lamp.console = "Connecting..."
+    changing = 0
+    tries = 0
+    if lamp.stream == -1:
+        lamp.state ="broadcasting"
+        return
+
+    while changing <= 0:
+        changing = streamer.change(lamp.stream)
+        tries = tries + changing
+        print("TRIES: " + str(tries))
+        if tries == -5:
+            lamp.setError()
+            lamp.console = "Error..."
+            lamp.state = "error"
+            lamp.change = False
+            return
+        sleep(1)
+
+    if lamp.state != "error":
+        lamp.setBase(0)
+        fadeIn()
+        lamp.change = False
+        lamp.console = "Streaming..."
+
 
 if __name__ == "__main__":
     print("")
     print("--------------------------------------------")
     print("LAUNCH LAMP")
     print("")
-
-    stream = RTSP_Server(this_lamp)
-    sleep(3)
 
     publisher = Thread(target=lamp.statusOut, args=())
     publisher.start()
@@ -207,5 +313,17 @@ if __name__ == "__main__":
     lamp.setBulb(0)
     lamp.setBase(0)
 
-    while True:
+    while lamp.state == "?":
         pass
+
+    while True:
+        while lamp.change:
+            print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
+            fadeOut()
+            if lamp.state == "streaming":
+                changeListener()
+            else:
+                lamp.setBulb(0)
+                streamer.mute()
+                lamp.change = False
+                lamp.console = "Broadcasting..."

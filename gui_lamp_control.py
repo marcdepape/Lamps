@@ -4,7 +4,7 @@ import json
 import random
 from time import sleep, process_time, time, strftime
 from threading import Thread
-from lamps_sub_pub import LampProxy
+from gui_sub_pub import LampProxy
 
 # KIVY setup
 import kivy
