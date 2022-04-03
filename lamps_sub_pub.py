@@ -45,6 +45,7 @@ class LampProxy(object):
                                 "stream": "STREAM",
                                 "state": "STATE",
                                 "command": "none",
+                                "mic": 0,
                                 "console": "Waiting..."})
 
         self.message = json.dumps({"rate": self.fade_rate,

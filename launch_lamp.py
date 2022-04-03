@@ -112,6 +112,7 @@ class Lamp(object):
                                         "stream": self.stream,
                                         "state": self.state,
                                         "command": self.command,
+                                        "mic": self.mic_signal,
                                         "console": self.console})
             self.publish.send_json(self.out_status)
             sleep(1)
