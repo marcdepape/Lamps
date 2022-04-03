@@ -19,10 +19,11 @@ Gst.init(None)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
-    self.context = zmq.Context()
-    self.zmq_socket = context.socket(zmq.PUB)
-    self.zmq_socket.bind("tcp://127.0.0.1:8103")
-    self.zmq_socket.set_hwm(1)
+    def __init__(self):
+        self.context = zmq.Context()
+        self.zmq_socket = context.socket(zmq.PUB)
+        self.zmq_socket.bind("tcp://127.0.0.1:8103")
+        self.zmq_socket.set_hwm(1)
 
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
