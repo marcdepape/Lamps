@@ -22,6 +22,7 @@ def message_callback(bus, message):
         if name == "level":
             value = structure.get_value("rms")
             value = value[0]
+            print(value)
             zmq_socket.send_string(str(value))
 
 if __name__ == "__main__":
