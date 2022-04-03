@@ -29,9 +29,8 @@ class ExtendedBin(Gst.Bin):
 
             if name == "level":
                 value = structure.get_value("rms")
-                mic = "LEVEL: {} | {}".format(value[0], value[1])
+                mic = "LEVEL: {} | {}".format(value)
                 print(mic)
-                value = value[0]
         else :
             print("Some other message type: " + str(message.type))
 
