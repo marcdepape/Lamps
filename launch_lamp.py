@@ -8,7 +8,7 @@ import board
 import neopixel
 import os
 
-from lamp_rtsp import RTSPserver
+from lamp_rtsp import RTSP_Server
 
 import gi
 gi.require_version('Gst', '1.0')
