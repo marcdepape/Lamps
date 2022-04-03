@@ -17,7 +17,7 @@ class ExtendedBin(Gst.Bin):
     zmq_socket.bind("tcp://127.0.0.1:8103")
     zmq_socket.set_hwm(1)
 
-    def do_handle_message(self,message, level):
+    def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
             print("ERROR:", message.src.get_name(), ":", error.message)
@@ -55,7 +55,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory):
         print ("Pipeline created: " + pipelineCmd)
 
         # creates extended Gst.Bin with message debugging enabled
-        extendedBin = ExtendedBin("extendedBin",level)
+        extendedBin = ExtendedBin("extendedBin")
 
         # Gst.pipeline inherits Gst.Bin and Gst.Element so following is possible
         extendedBin.add(self.pipeline)
