@@ -339,6 +339,7 @@ def fadeIn():
 #------------------------------------------------------------------------------
 
 def fadeOut():
+    print("FADING OUT!")
     lamp.console = "Fading out..."
     lamp.top_bright = 255
     lamp.setBulb(lamp.top_bright)
@@ -363,7 +364,7 @@ def changeListener():
         changing = streamer.change(lamp.stream)
         tries = tries + changing
         print("TRIES: " + str(tries))
-        if tries == -5:
+        if tries == -3:
             lamp.setError()
             lamp.console = "Error..."
             lamp.state = "error"
