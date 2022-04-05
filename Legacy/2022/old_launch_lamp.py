@@ -243,9 +243,6 @@ class Streamer(object):
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
-streamer = Streamer()
-lamp = Lamp(lamp_id)
-
 def fadeIn():
     lamp.console = "Fading in..."
     lamp.top_bright = 0

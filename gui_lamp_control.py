@@ -282,10 +282,6 @@ class Dashboard(GridLayout):
                 self.broadcast_ids[int(this_id[1])] = key[1]
             if this_id[0] == "status":
                 self.status_ids[int(this_id[1])][int(this_id[3])] = key[1]
-'''
-// SSHPASS
-sshpass -p 'marcdepape' ssh -o StrictHostKeyChecking=no pi@lamp3.local sudo ./purple.sh
-'''
 
 class guiApp(App):
     def build(self):
