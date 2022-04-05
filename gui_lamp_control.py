@@ -2,6 +2,7 @@
 import zmq
 import json
 import random
+import os
 from time import sleep, process_time, time, strftime
 from threading import Thread
 from gui_sub_pub import LampProxy
@@ -15,6 +16,8 @@ from kivy.uix.button import Button
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.gridlayout import GridLayout
 from kivy.clock import Clock
+
+os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp3.local sudo ./launch.sh &")
 
 #-------------------------------------------------------------------------------------------------------------
 # kivy
@@ -43,6 +46,8 @@ class Dashboard(GridLayout):
 
     def __init__(self, num, **kwargs):
         super(Dashboard, self).__init__(**kwargs)
+
+
 
         self.number_of_lamps = num
         self.proxy = LampProxy(self.number_of_lamps)

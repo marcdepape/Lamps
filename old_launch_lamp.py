@@ -67,8 +67,8 @@ class Lamp(object):
         self.subscribe.set_hwm(1)
 
         # CLIENT
-        local_context = zmq.Context()
-        self.levels = local_context.socket(zmq.SUB)
+        levels_context = zmq.Context()
+        self.levels = levels_context.socket(zmq.SUB)
         self.levels.connect("tcp://localhost:8103")
         self.levels.setsockopt(zmq.SUBSCRIBE, b'')
         self.levels.set_hwm(1)
@@ -98,7 +98,7 @@ class Lamp(object):
 
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
-            self.change = True                
+            self.change = True
             if self.stream == -1:
                 self.state = "broadcasting"
             else:
