@@ -323,6 +323,60 @@ class Lamp(object):
     def constrain(self, val, min_val, max_val):
         return min(max_val, max(min_val, val))
 
+def fadeIn():
+    lamp.console = "Fading in..."
+    lamp.top_bright = 0
+    lamp.setBulb(lamp.top_bright)
+    lamp.setBase(0)
+    while streamer.volume < lamp.peak and lamp.top_bright < 255:
+        if streamer.volume < lamp.peak:
+            streamer.changeVolume(0.01)
+        if lamp.top_bright < 255:
+            lamp.setBulb(1)
+        sleep(lamp.fade_rate)
+
+#------------------------------------------------------------------------------
+
+def fadeOut():
+    lamp.console = "Fading out..."
+    lamp.top_bright = 255
+    lamp.setBulb(lamp.top_bright)
+    lamp.setBase(0)
+    while streamer.volume > 0 and lamp.top_bright > 0:
+        if streamer.volume > 0:
+            streamer.changeVolume(-0.01)
+        if lamp.top_bright > 0:
+            lamp.setBulb(-1)
+        sleep(lamp.fade_rate)
+
+def changeListener():
+    lamp.console = "Connecting..."
+    changing = 0
+    tries = 0
+    if lamp.stream == -1:
+        lamp.state ="broadcasting"
+        return
+
+    while changing <= 0:
+        changing = streamer.change(lamp.stream)
+        tries = tries + changing
+        print("TRIES: " + str(tries))
+        if tries == -5:
+            lamp.setError()
+            lamp.console = "Error..."
+            lamp.state = "error"
+            lamp.change = False
+            return
+        sleep(1)
+
+    if lamp.state != "error":
+        lamp.setBase(0)
+        fadeIn()
+        lamp.change = False
+        lamp.console = "Streaming..."
+
+#------------------------------------------------------------------------------
+
 if __name__ == '__main__':
     print("")
     print("--------------------------------------------")
