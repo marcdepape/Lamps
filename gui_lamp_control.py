@@ -140,7 +140,7 @@ class Dashboard(GridLayout):
             self.connection_times[2] = 0
 
         elif lamp == 3:
-            self.display_console_3 = str(update["mic"])
+            self.display_console_3 = update["console"]
             self.display_connection_3 = "CONNECTED"
             self.connection_times[3] = 0
 

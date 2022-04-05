@@ -232,6 +232,7 @@ class Lamp(object):
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
             self.change = True
+            self.console = "Switching..."
             if self.stream == -1:
                 self.state = "broadcasting"
             else:
@@ -248,7 +249,7 @@ class Lamp(object):
                                         "mic": self.mic_signal,
                                         "console": self.console})
             self.publish.send_json(self.out_status)
-            sleep(1)
+            sleep(0.5)
 
     def updateIn(self):
         while self.report:
