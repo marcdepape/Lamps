@@ -344,7 +344,7 @@ def fadeOut():
     lamp.top_bright = 255
     lamp.setBulb(lamp.top_bright)
     lamp.setBase(0)
-    while streamer.volume > 0 and lamp.top_bright > 0:
+    while streamer.volume > 0 or lamp.top_bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
         if lamp.top_bright > 0:
