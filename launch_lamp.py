@@ -349,6 +349,7 @@ def fadeOut():
             streamer.changeVolume(-0.01)
         if lamp.top_bright > 0:
             lamp.setBulb(-1)
+            print(lamp.top_bright)
         sleep(lamp.fade_rate)
 
 def changeListener():
