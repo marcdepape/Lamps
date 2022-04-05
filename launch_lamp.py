@@ -351,12 +351,13 @@ def fadeOut():
         sleep(lamp.fade_rate)
 
 def changeListener():
-    lamp.console = "Connecting..."
     changing = 0
     tries = 0
     if lamp.stream == -1:
         lamp.state ="broadcasting"
         return
+
+    lamp.console = "Connecting...{}".format(lamp.state)
 
     while changing <= 0:
         changing = streamer.change(lamp.stream)
@@ -403,12 +404,14 @@ if __name__ == '__main__':
     while True:
         while lamp.change:
             print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
-            lamp.console = "CHANGE! {}".format(lamp.state)
+            lamp.console = "CHANGE! {}".format(lamp.stream)
             fadeOut()
             if lamp.state == "streaming":
+                lamp.console = "CHANGE! {}".format(lamp.state)
                 changeListener()
             else:
+                lamp.console = "CHANGE! {}".format(lamp.state)
                 lamp.setBulb(0)
                 streamer.mute()
                 lamp.change = False
-                lamp.console = "Broadcasting..."
+                #lamp.console = "Broadcasting..."
