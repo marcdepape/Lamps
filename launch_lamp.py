@@ -236,8 +236,7 @@ class Lamp(object):
                 self.state = "broadcasting"
             else:
                 self.state = "streaming"
-            self.console = "Switching to {} | {}".format(self.state, self.stream)
-
+            self.console = "Switching to {} {}".format(self.state, self.stream)
 
     def statusOut(self):
         while self.report:
@@ -404,6 +403,7 @@ if __name__ == '__main__':
     while True:
         while lamp.change:
             print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
+            lamp.console = "CHANGE! {}".format(lamp.state)
             fadeOut()
             if lamp.state == "streaming":
                 changeListener()
