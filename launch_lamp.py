@@ -232,7 +232,7 @@ class Lamp(object):
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
             self.change = True
-            self.console = "Switching..."
+            self.console = "Switching... {}".format(self.stream)
             if self.stream == -1:
                 self.state = "broadcasting"
             else:
