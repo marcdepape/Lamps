@@ -28,7 +28,7 @@ try:
                         print(counter)
 
                 if btnState != btnLastState:
-                    print(btnState)
+                    print("BTN: {} | CLK: {} | DT: {}").format(btnState, clkState, dtState)
 
                 clkLastState = clkState
                 btnLastState = btnState
