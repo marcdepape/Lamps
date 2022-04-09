@@ -264,7 +264,6 @@ class Lamp(object):
         while self.report:
             self.mic_signal = self.levels.recv_string()
             if self.state == "broadcasting":
-                print(self.mic_signal)
                 self.pulse(self.mic_signal)
 
     def pulse(self, rms):
