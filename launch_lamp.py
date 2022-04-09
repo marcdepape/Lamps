@@ -30,7 +30,6 @@ local.set_hwm(1)
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
 
-
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
     def do_handle_message(self,message):
@@ -348,7 +347,6 @@ def fadeOut():
             streamer.changeVolume(-0.01)
         if lamp.top_bright > 0:
             lamp.setBulb(-1)
-            print(lamp.top_bright)
         sleep(lamp.fade_rate)
 
 def changeListener():
