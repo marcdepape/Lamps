@@ -309,16 +309,17 @@ class Lamp(object):
             self.writeBulb(self.top_rotation,)
             self.writeBase(self.bottom_rotation)
 
-            if self.top_rotation > 200 and self.command != "LISTEN":
+            if self.top_rotation > 140 and self.command != "LISTEN":
                 print("MANUAL LISTEN!")
                 self.command = "LISTEN"
-            elif self.bottom_rotation > 200 and self.command != "BROADCAST":
+            elif self.bottom_rotation > 140 and self.command != "BROADCAST":
+                print("MANUAL BROADCAST!")
                 self.command = "BROADCAST"
 
         self.last_clk = clk_state
         #self.last_btn = btn_state
 
-        if self.counter > 50:
+        if self.counter > 25:
             if self.top_rotation > 0:
                 self.top_rotation -= 1
             if self.bottom_rotation > 0:
