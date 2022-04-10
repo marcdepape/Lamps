@@ -284,20 +284,20 @@ class Lamp(object):
         if clk_state != self.last_clk:
             if dt_state != clk_state:
                 if self.bottom_rotation > 0:
-                    self.bottom_rotation -= 3
+                    self.bottom_rotation -= 5
                     if self.bottom_rotation < 0:
                         self.bottom_rotation = 0
                 elif self.top_rotation < 255:
-                    self.top_rotation += 3
+                    self.top_rotation += 5
                     if self.top_rotation > 255:
                         self.top_rotation = 255
             else:
                 if self.top_rotation > 0:
-                    self.top_rotation -= 3
+                    self.top_rotation -= 5
                     if self.top_rotation < 0:
                         self.top_rotation = 0
                 elif self.bottom_rotation < 255:
-                    self.bottom_rotation += 3
+                    self.bottom_rotation += 5
                     if self.bottom_rotation > 255:
                         self.bottom_rotation = 255
 
