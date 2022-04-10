@@ -324,13 +324,11 @@ class Lamp(object):
                 self.top_rotation -= 1
                 self.writeBulb(self.top_rotation)
                 self.writeBase(self.bottom_rotation)
-            if self.bottom_rotation > 0 and self.command != "broadcast"
+            if self.bottom_rotation > 0 and self.command != "broadcast":
                 self.bottom_rotation -= 1
                 self.writeBulb(self.top_rotation)
                 self.writeBase(self.bottom_rotation)
             self.counter = 0
-
-
 
     def micLevels(self):
         while self.report:
