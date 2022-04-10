@@ -280,7 +280,7 @@ class Lamp(object):
             dt_state = GPIO.input(dt)
             #btn_state = GPIO.input(btn)
 
-            if clk_state !- self.last_clk:
+            if clk_state != self.last_clk:
                 if dt_state != clk_state:
                     if self.bottom_bright > 0:
                         self.setBase(-1)
