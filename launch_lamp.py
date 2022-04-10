@@ -305,21 +305,21 @@ class Lamp(object):
                     if self.bottom_rotation > 255:
                         self.bottom_rotation = 255
 
-            self.writeBulb(self.top_rotation, "ENCODER")
-            self.writeBase(self.bottom_rotation, "ENCODER")
+            self.writeBulb(self.top_rotation,)
+            self.writeBase(self.bottom_rotation)
 
         self.last_clk = clk_state
         #self.last_btn = btn_state
 
-        if self.counter > 100:
+        if self.counter > 50:
             if self.top_rotation > 0:
                 self.top_rotation -= 1
             if self.bottom_rotation > 0:
                 self.bottom_rotation -= 1
             self.counter = 0
 
-            self.writeBulb(self.top_rotation, "ENCODER")
-            self.writeBase(self.bottom_rotation, "ENCODER")
+            self.writeBulb(self.top_rotation)
+            self.writeBase(self.bottom_rotation)
 
     def micLevels(self):
         while self.report:
@@ -337,7 +337,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        self.writeBase(self.bottom_bright, "MIC LEVELS")
+        self.writeBase(self.bottom_bright)
 
     def changeBase(self, value):
         value = self.mapRange(value, 0, 100, 0, 255)
@@ -348,10 +348,9 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        self.writeBase(self.bottom_bright, "CHANGE BASE")
+        self.writeBase(self.bottom_bright)
 
-    def writeBase(self, value, source):
-        print("WRITE BASE: {} | {}".format(source, value))
+    def writeBase(self, value):
         self.top_bright = value
         intensity = int(self.top_bright * self.saturation)
         for i in range(16, self.num_pixels):
@@ -367,10 +366,9 @@ class Lamp(object):
         if self.top_bright > 255:
             self.top_bright = 255
 
-        self.writeBulb(self.top_bright, "CHANGE BULB")
+        self.writeBulb(self.top_bright)
 
-    def writeBulb(self, value, source):
-        print("WRITE BULB: {} | {}".format(source, value))
+    def writeBulb(self, value):
         self.top_bright = value
         intensity = int(self.top_bright * self.saturation)
         for i in range(16):
@@ -400,7 +398,7 @@ class Lamp(object):
 
 def fadeIn():
     lamp.console = "Fading in..."
-    lamp.writeBase(0, "FADE IN")
+    lamp.writeBase(0)
     while streamer.volume < lamp.peak or lamp.top_bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
@@ -413,7 +411,7 @@ def fadeIn():
 def fadeOut():
     print("FADING OUT!")
     lamp.console = "Fading out..."
-    lamp.writeBase(0, "FADE OUT")
+    lamp.writeBase(0)
     while streamer.volume > 0 or lamp.top_bright > 0 or lamp.bottom_bright < 255:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
@@ -469,8 +467,8 @@ if __name__ == '__main__':
     #rotary = Thread(target=lamp.encoder, args=())
     #rotary.start()
 
-    lamp.writeBulb(0, "SETUP")
-    lamp.writeBase(0, "SETUP")
+    lamp.writeBulb(0)
+    lamp.writeBase(0)
 
     #while lamp.state == "?":
         #pass
