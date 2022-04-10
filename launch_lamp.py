@@ -5,6 +5,7 @@ from threading import Thread
 from time import sleep
 import subprocess
 import board
+from RPi import GPIO
 import neopixel
 import os
 
@@ -164,7 +165,7 @@ class Lamp(object):
         self.volume = 0
         self.peak = 1.5
         self.fade_rate = 0.05
-        self.saturation = 1.0
+        self.saturation = 1from RPi import GPIO.0
         self.stream = 255
         self.change = False
         self.state = "?"
@@ -184,6 +185,20 @@ class Lamp(object):
             self.pixel_pin, self.num_pixels, brightness=1.0, auto_write=False, pixel_order=neopixel.GRB
         )
         self.setOff()
+
+        # ENCODER
+        self.btn = 16
+        self.dt = 23
+        self.clk = 24
+        self.rotation = 0
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+        self.last_clk = GPIO.input(self.clk)
+        self.last_btn = GPIO.input(self.btn)
 
         # SERVER
         server_context = zmq.Context()
@@ -258,6 +273,33 @@ class Lamp(object):
                 self.in_update = update
                 self.compare()
                 #print("IN UPDATE: " + str(self.in_update) + " | " + str(self.change))
+
+    def encoder(self):
+        while self.report:
+            clk_state = GPIO.input(clk)
+            dt_state = GPIO.input(dt)
+            #btn_state = GPIO.input(btn)
+
+            if clk_state !- self.last_clk:
+                if dt_state != clk_state:
+                    if self.bottom_bright > 0:
+                        self.setBase(-1)
+                        print("BASE -1")
+                    else if self.top_bright < 256
+                        self.setBulb(1)
+                        print("BULB +1")
+                else:
+                    if self.top_bright > 0:
+                        self.setBulb(-1)
+                        print("BULB -1")
+                    else if self.botton_bright < 256
+                        self.setBase(1)
+                        print("BASE +1")
+
+            self.last_clk = clk_state
+            #self.last_btn = btn_state
+
+            sleep(0.001)
 
     def micLevels(self):
         while self.report:
@@ -393,6 +435,8 @@ if __name__ == '__main__':
     subscriber.start()
     mic = Thread(target=lamp.micLevels, args=())
     mic.start()
+    rotary = Thread(target=lamp.encoder, args=())
+    rotary.start()
 
     lamp.setBulb(0)
     lamp.setBase(0)
