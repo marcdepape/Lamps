@@ -444,8 +444,9 @@ if __name__ == '__main__':
     lamp.writeBulb(0, "SETUP")
     lamp.writeBase(0, "SETUP")
 
-    while lamp.state == "?":
-        pass
+    #while lamp.state == "?":
+        #pass
+    lamp.change = False
 
     while True:
         while lamp.change:
