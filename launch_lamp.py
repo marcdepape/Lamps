@@ -192,6 +192,7 @@ class Lamp(object):
         self.clk = 24
         self.top_rotation = 0
         self.bottom_rotation = 0
+        self.counter
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -281,23 +282,26 @@ class Lamp(object):
         dt_state = GPIO.input(self.dt)
         #btn_state = GPIO.input(self.btn)
 
+        counter += 1
+
         if clk_state != self.last_clk:
+            counter = 0
             if dt_state != clk_state:
                 if self.bottom_rotation > 0:
-                    self.bottom_rotation -= 5
+                    self.bottom_rotation -= 3
                     if self.bottom_rotation < 0:
                         self.bottom_rotation = 0
                 elif self.top_rotation < 255:
-                    self.top_rotation += 5
+                    self.top_rotation += 3
                     if self.top_rotation > 255:
                         self.top_rotation = 255
             else:
                 if self.top_rotation > 0:
-                    self.top_rotation -= 5
+                    self.top_rotation -= 3
                     if self.top_rotation < 0:
                         self.top_rotation = 0
                 elif self.bottom_rotation < 255:
-                    self.bottom_rotation += 5
+                    self.bottom_rotation += 3
                     if self.bottom_rotation > 255:
                         self.bottom_rotation = 255
 
@@ -306,6 +310,16 @@ class Lamp(object):
 
         self.last_clk = clk_state
         #self.last_btn = btn_state
+
+        if counter > 100:
+            if self.top_rotation > 0:
+                self.top_rotation -= 1
+            if self.bottom_rotation > 0
+                self.bottom_rotation -= 1
+            counter = 0
+
+            self.writeBulb(self.top_rotation, "ENCODER")
+            self.writeBase(self.bottom_rotation, "ENCODER")
 
     def micLevels(self):
         while self.report:
