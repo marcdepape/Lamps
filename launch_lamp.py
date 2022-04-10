@@ -276,9 +276,9 @@ class Lamp(object):
 
     def encoder(self):
         while self.report:
-            clk_state = GPIO.input(clk)
-            dt_state = GPIO.input(dt)
-            #btn_state = GPIO.input(btn)
+            clk_state = GPIO.input(self.clk)
+            dt_state = GPIO.input(self.dt)
+            #btn_state = GPIO.input(self.btn)
 
             if clk_state != self.last_clk:
                 if dt_state != clk_state:
