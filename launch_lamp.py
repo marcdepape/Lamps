@@ -332,7 +332,7 @@ class Lamp(object):
         writeBase(self.bottom_bright)
 
     def writeBase(self, value):
-        self.top_bright = vale
+        self.top_bright = value
         intensity = int(self.top_bright * self.saturation)
         for i in range(16, self.num_pixels):
             self.neo[i] = (intensity,intensity,intensity);
