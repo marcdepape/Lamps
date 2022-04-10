@@ -241,7 +241,8 @@ class Lamp(object):
         if self.in_update["saturation"] != self.saturation:
             self.saturation = self.in_update["saturation"]
             if self.state == "streaming":
-                self.setBulb(100)
+                self.changeBulb(0)
+                self.changeBase(0)
 
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
@@ -283,17 +284,17 @@ class Lamp(object):
             if clk_state != self.last_clk:
                 if dt_state != clk_state:
                     if self.bottom_bright > 0:
-                        self.setBase(-1)
+                        self.changeBase(-1)
                         print("BASE -1 | {}".format(self.bottom_bright))
-                    elif self.top_bright < 256:
-                        self.setBulb(1)
+                    elif self.top_bright < 255:
+                        self.changeBulb(1)
                         print("BULB +1 | {}".format(self.top_bright))
                 else:
                     if self.top_bright > 0:
-                        self.setBulb(-1)
+                        self.changeBulb(-1)
                         print("BULB -1 | {}".format(self.top_bright))
-                    elif self.bottom_bright < 256:
-                        self.setBase(1)
+                    elif self.bottom_bright < 255:
+                        self.changeBase(1)
                         print("BASE +1 | {}".format(self.bottom_bright))
 
             self.last_clk = clk_state
@@ -311,24 +312,33 @@ class Lamp(object):
         self.bottom_bright = 100 + float(rms)
         self.bottom_bright = self.constrain(self.bottom_bright, 55, 90)
         self.bottom_bright = self.mapRange(self.bottom_bright, 55, 90, 0, 255)
-        self.bottom_bright = int(self.bottom_bright * self.saturation)
-        self.setBase(self.bottom_bright)
-
-    def setBase(self, value):
-        self.bottom_bright = value
 
         if self.bottom_bright < 0:
             self.bottom_bright = 0
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        intensity = int(self.bottom_bright * self.saturation)
+        writeBase(self.bottom_bright)
 
+    def changeBase(self, value):
+        value = self.mapRange(value, 0, 100, 0, 255)
+        self.bottom_bright = self.bottom_bright + value
+
+        if self.bottom_bright < 0:
+            self.bottom_bright = 0
+        if self.bottom_bright > 255:
+            self.bottom_bright = 255
+
+        writeBase(self.bottom_bright)
+
+    def writeBase(self, value):
+        self.top_bright = vale
+        intensity = int(self.top_bright * self.saturation)
         for i in range(16, self.num_pixels):
             self.neo[i] = (intensity,intensity,intensity);
         self.neo.show()
 
-    def setBulb(self, value):
+    def changeBulb(self, value):
         value = self.mapRange(value, 0, 100, 0, 255)
         self.top_bright = self.top_bright + value
 
@@ -337,8 +347,11 @@ class Lamp(object):
         if self.top_bright > 255:
             self.top_bright = 255
 
-        intensity = int(self.top_bright * self.saturation)
+        writeBulb(self.top_bright)
 
+    def writeBulb(self, value):
+        self.top_bright = value
+        intensity = int(self.top_bright * self.saturation)
         for i in range(16):
             self.neo[i] = (intensity,intensity,intensity);
         self.neo.show()
@@ -366,14 +379,12 @@ class Lamp(object):
 
 def fadeIn():
     lamp.console = "Fading in..."
-    lamp.top_bright = 0
-    lamp.setBulb(lamp.top_bright)
-    lamp.setBase(0)
+    lamp.writeBase(0)
     while streamer.volume < lamp.peak or lamp.top_bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
         if lamp.top_bright < 255:
-            lamp.setBulb(1)
+            lamp.changeBulb(1)
         sleep(lamp.fade_rate)
 
 #------------------------------------------------------------------------------
@@ -381,14 +392,14 @@ def fadeIn():
 def fadeOut():
     print("FADING OUT!")
     lamp.console = "Fading out..."
-    lamp.top_bright = 255
-    lamp.setBulb(lamp.top_bright)
-    lamp.setBase(0)
-    while streamer.volume > 0 or lamp.top_bright > 0:
+    lamp.writeBase(0)
+    while streamer.volume > 0 or lamp.top_bright > 0 or lamp.bottom_bright < 255:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
         if lamp.top_bright > 0:
-            lamp.setBulb(-1)
+            lamp.changeBulb(-1)
+        if lamp.bottom_bright < 255:
+            lamp.changeBase(1)
         sleep(lamp.fade_rate)
 
 def changeListener():
@@ -413,7 +424,6 @@ def changeListener():
         sleep(1)
 
     if lamp.state != "error":
-        lamp.setBase(0)
         fadeIn()
         lamp.change = False
         lamp.console = "Streaming..."
@@ -438,8 +448,8 @@ if __name__ == '__main__':
     rotary = Thread(target=lamp.encoder, args=())
     rotary.start()
 
-    lamp.setBulb(0)
-    lamp.setBase(0)
+    lamp.writeBulb(0)
+    lamp.writeBase(0)
 
     while lamp.state == "?":
         pass
@@ -454,7 +464,6 @@ if __name__ == '__main__':
                 changeListener()
             else:
                 lamp.console = "CHANGE! {}".format(lamp.state)
-                lamp.setBulb(0)
                 streamer.mute()
                 lamp.change = False
                 #lamp.console = "Broadcasting..."
