@@ -318,7 +318,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        writeBase(self.bottom_bright)
+        self.writeBase(self.bottom_bright)
 
     def changeBase(self, value):
         value = self.mapRange(value, 0, 100, 0, 255)
@@ -329,7 +329,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        writeBase(self.bottom_bright)
+        self.writeBase(self.bottom_bright)
 
     def writeBase(self, value):
         self.top_bright = value
@@ -347,7 +347,7 @@ class Lamp(object):
         if self.top_bright > 255:
             self.top_bright = 255
 
-        writeBulb(self.top_bright)
+        self.writeBulb(self.top_bright)
 
     def writeBulb(self, value):
         self.top_bright = value
