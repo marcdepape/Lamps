@@ -192,7 +192,7 @@ class Lamp(object):
         self.clk = 24
         self.top_rotation = 0
         self.bottom_rotation = 0
-        self.counter
+        self.counter = 0
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
