@@ -442,8 +442,8 @@ if __name__ == '__main__':
     subscriber.start()
     mic = Thread(target=lamp.micLevels, args=())
     mic.start()
-    rotary = Thread(target=lamp.encoder, args=())
-    rotary.start()
+    #rotary = Thread(target=lamp.encoder, args=())
+    #rotary.start()
 
     lamp.writeBulb(0, "SETUP")
     lamp.writeBase(0, "SETUP")
@@ -464,3 +464,5 @@ if __name__ == '__main__':
                 streamer.mute()
                 lamp.change = False
                 #lamp.console = "Broadcasting..."
+
+            lamp.encoder()
