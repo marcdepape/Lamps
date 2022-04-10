@@ -27,6 +27,8 @@ local = local_context.socket(zmq.PUB)
 local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
 
+counter = 0
+
 '''
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
