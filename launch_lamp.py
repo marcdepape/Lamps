@@ -165,7 +165,7 @@ class Lamp(object):
         self.volume = 0
         self.peak = 1.5
         self.fade_rate = 0.05
-        self.saturation = 1from RPi import GPIO.0
+        self.saturation = 1.0
         self.stream = 255
         self.change = False
         self.state = "?"
