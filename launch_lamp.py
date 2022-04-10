@@ -309,10 +309,10 @@ class Lamp(object):
             self.writeBulb(self.top_rotation,)
             self.writeBase(self.bottom_rotation)
 
-            if self.top_rotation > 140 and self.command != "listen":
+            if self.top_rotation > 150 and self.command != "listen":
                 print("MANUAL LISTEN!")
                 self.command = "listen"
-            elif self.bottom_rotation > 140 and self.command != "broadcast":
+            elif self.bottom_rotation > 150 and self.command != "broadcast":
                 print("MANUAL BROADCAST!")
                 self.command = "broadcast"
 
