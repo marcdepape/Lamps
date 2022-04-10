@@ -282,7 +282,7 @@ class Lamp(object):
         dt_state = GPIO.input(self.dt)
         #btn_state = GPIO.input(self.btn)
 
-        counter += 1
+        self.counter += 1
 
         if clk_state != self.last_clk:
             counter = 0
@@ -311,12 +311,12 @@ class Lamp(object):
         self.last_clk = clk_state
         #self.last_btn = btn_state
 
-        if counter > 100:
+        if self.counter > 100:
             if self.top_rotation > 0:
                 self.top_rotation -= 1
             if self.bottom_rotation > 0:
                 self.bottom_rotation -= 1
-            counter = 0
+            self.counter = 0
 
             self.writeBulb(self.top_rotation, "ENCODER")
             self.writeBase(self.bottom_rotation, "ENCODER")
