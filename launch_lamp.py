@@ -284,14 +284,22 @@ class Lamp(object):
         if clk_state != self.last_clk:
             if dt_state != clk_state:
                 if self.bottom_rotation > 0:
-                    self.bottom_rotation -= 1
+                    self.bottom_rotation -= 5
+                    if self.bottom_rotation < 0:
+                        self.bottom_rotation = 0
                 elif self.top_rotation < 255:
-                    self.top_rotation += 1
+                    self.top_rotation += 5
+                    if self.top_rotation > 255:
+                        self.top_rotation = 255
             else:
                 if self.top_rotation > 0:
-                    self.top_rotation -= 1
+                    self.top_rotation -= 5
+                    if self.top_rotation < 0:
+                        self.top_rotation = 0
                 elif self.bottom_rotation < 255:
-                    self.bottom_rotation += 1
+                    self.bottom_rotation += 5
+                    if self.bottom_rotation < 255:
+                        self.bottom_rotation = 255
 
             self.writeBulb(self.top_rotation, "ENCODER")
             self.writeBase(self.bottom_rotation, "ENCODER")
