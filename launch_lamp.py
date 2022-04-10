@@ -329,7 +329,7 @@ class Lamp(object):
         self.writeBase(self.bottom_bright, "CHANGE BASE")
 
     def writeBase(self, value, source):
-        print("WRITE BASE: {}".format(source))
+        print("WRITE BASE: {} | {}".format(source, value))
         self.top_bright = value
         intensity = int(self.top_bright * self.saturation)
         for i in range(16, self.num_pixels):
@@ -348,7 +348,7 @@ class Lamp(object):
         self.writeBulb(self.top_bright, "CHANGE BULB")
 
     def writeBulb(self, value, source):
-        print("WRITE BULB: {}".format(source))
+        print("WRITE BULB: {} | {}".format(source, value))
         self.top_bright = value
         intensity = int(self.top_bright * self.saturation)
         for i in range(16):
