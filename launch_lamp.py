@@ -193,9 +193,9 @@ class Lamp(object):
         self.rotation = 0
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(btn, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.btn, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
         self.last_clk = GPIO.input(self.clk)
         self.last_btn = GPIO.input(self.btn)
