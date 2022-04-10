@@ -319,7 +319,7 @@ class Lamp(object):
         self.last_clk = clk_state
         #self.last_btn = btn_state
 
-        if self.counter > 15:
+        if self.counter > 25:
             if self.top_rotation > 0 and self.command != "listen":
                 self.top_rotation -= 1
                 self.writeBulb(self.top_rotation)
