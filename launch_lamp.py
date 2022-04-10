@@ -309,25 +309,28 @@ class Lamp(object):
             self.writeBulb(self.top_rotation,)
             self.writeBase(self.bottom_rotation)
 
-            if self.top_rotation > 140 and self.command != "LISTEN":
+            if self.top_rotation > 140 and self.command != "listen":
                 print("MANUAL LISTEN!")
-                self.command = "LISTEN"
-            elif self.bottom_rotation > 140 and self.command != "BROADCAST":
+                self.command = "listen"
+            elif self.bottom_rotation > 140 and self.command != "broadcast":
                 print("MANUAL BROADCAST!")
-                self.command = "BROADCAST"
+                self.command = "broadcast"
 
         self.last_clk = clk_state
         #self.last_btn = btn_state
 
-        if self.counter > 25:
-            if self.top_rotation > 0:
+        if self.counter > 15:
+            if self.top_rotation > 0 and self.command != "listen":
                 self.top_rotation -= 1
-            if self.bottom_rotation > 0:
+                self.writeBulb(self.top_rotation)
+                self.writeBase(self.bottom_rotation)
+            if self.bottom_rotation > 0 and self.command != "broadcast"
                 self.bottom_rotation -= 1
+                self.writeBulb(self.top_rotation)
+                self.writeBase(self.bottom_rotation)
             self.counter = 0
 
-            self.writeBulb(self.top_rotation)
-            self.writeBase(self.bottom_rotation)
+
 
     def micLevels(self):
         while self.report:
