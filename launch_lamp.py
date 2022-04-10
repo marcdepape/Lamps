@@ -292,7 +292,7 @@ class Lamp(object):
                     if self.top_bright > 0:
                         self.setBulb(-1)
                         print("BULB -1 | {}".format(self.top_bright))
-                    elif self.botton_bright < 256:
+                    elif self.bottom_bright < 256:
                         self.setBase(1)
                         print("BASE +1 | {}".format(self.bottom_bright))
 
