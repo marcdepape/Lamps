@@ -190,8 +190,8 @@ class Lamp(object):
         self.btn = 16
         self.dt = 23
         self.clk = 24
-        self.rotation = 0
-        self.counter = 0
+        self.top_rotation = 0
+        self.bottom_rotation = 0
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -283,13 +283,18 @@ class Lamp(object):
 
         if clk_state != self.last_clk:
             if dt_state != clk_state:
-                    self.counter += 1
-                    self.rotation = 1
+                if self.bottom_rotation > 0:
+                    self.bottom_rotation -= 1
+                elif self.top_rotation < 255:
+                    self.top_rotation += 1
             else:
-                    self.counter -= 1
-                    self.rotation = -1
+                if self.top_rotation > 0:
+                    self.top_rotation -= 1
+                elif self.bottom_rotation < 255:
+                    self.bottom_rotation += 1
 
-            print("{} | {}".format(self.rotation, self.counter))
+        self.writeBulb(self.top_rotation, "ENCODER")
+        self.writeBase(self.bottom_rotation, "ENCODER")
 
         self.last_clk = clk_state
         #self.last_btn = btn_state
