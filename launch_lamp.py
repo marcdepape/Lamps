@@ -284,10 +284,12 @@ class Lamp(object):
             if clk_state != self.last_clk:
                 if dt_state != clk_state:
                         self.changeBase(-1)
-                        self.changeBulb(1)
+                        if(self.bottom_bright < 5):
+                            self.changeBulb(1)
                 else:
                         self.changeBulb(-1)
-                        self.changeBase(1)
+                        if(self.top_bright < 5):
+                            self.changeBase(1)
 
                 print("TOP: {} | BOTTOM: {}".format(self.top_bright, self.bottom_bright))
 
