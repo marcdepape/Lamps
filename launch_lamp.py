@@ -282,36 +282,38 @@ class Lamp(object):
         dt_state = GPIO.input(self.dt)
         #btn_state = GPIO.input(self.btn)
 
+        increment = 4
         self.counter += 1
 
         if clk_state != self.last_clk:
             counter = 0
             if dt_state != clk_state:
                 if self.bottom_rotation > 0:
-                    self.bottom_rotation -= 3
+                    self.bottom_rotation -= increment
                     if self.bottom_rotation < 0:
                         self.bottom_rotation = 0
                 elif self.top_rotation < 255:
-                    self.top_rotation += 3
+                    self.top_rotation += increment
                     if self.top_rotation > 255:
                         self.top_rotation = 255
             else:
                 if self.top_rotation > 0:
-                    self.top_rotation -= 3
+                    self.top_rotation -= increment
                     if self.top_rotation < 0:
                         self.top_rotation = 0
                 elif self.bottom_rotation < 255:
-                    self.bottom_rotation += 3
+                    self.bottom_rotation += increment
                     if self.bottom_rotation > 255:
                         self.bottom_rotation = 255
 
-            if self.top_rotation > 250:
-                print("MANUAL SWITCH!")
-            elif self.bottom_rotation > 250:
-                print("MANUAL BORADCAST!")
-                
             self.writeBulb(self.top_rotation,)
             self.writeBase(self.bottom_rotation)
+
+            if self.top_rotation > 200 and self.command != "LISTEN":
+                print("MANUAL LISTEN!")
+                self.command = "LISTEN"
+            elif self.bottom_rotation > 200 and self.command != "BROADCAST":
+                self.command = "BROADCAST"
 
         self.last_clk = clk_state
         #self.last_btn = btn_state
