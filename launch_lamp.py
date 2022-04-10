@@ -305,6 +305,11 @@ class Lamp(object):
                     if self.bottom_rotation > 255:
                         self.bottom_rotation = 255
 
+            if self.top_rotation > 250:
+                print("MANUAL SWITCH!")
+            elif self.bottom_rotation > 250:
+                print("MANUAL BORADCAST!")
+                
             self.writeBulb(self.top_rotation,)
             self.writeBase(self.bottom_rotation)
 
