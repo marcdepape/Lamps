@@ -293,8 +293,8 @@ class Lamp(object):
                 elif self.bottom_rotation < 255:
                     self.bottom_rotation += 1
 
-        self.writeBulb(self.top_rotation, "ENCODER")
-        self.writeBase(self.bottom_rotation, "ENCODER")
+            self.writeBulb(self.top_rotation, "ENCODER")
+            self.writeBase(self.bottom_rotation, "ENCODER")
 
         self.last_clk = clk_state
         #self.last_btn = btn_state
