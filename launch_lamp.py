@@ -314,7 +314,7 @@ class Lamp(object):
         if counter > 100:
             if self.top_rotation > 0:
                 self.top_rotation -= 1
-            if self.bottom_rotation > 0
+            if self.bottom_rotation > 0:
                 self.bottom_rotation -= 1
             counter = 0
 
