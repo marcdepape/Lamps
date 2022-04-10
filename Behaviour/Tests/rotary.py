@@ -25,7 +25,7 @@ try:
                                 counter += 1
                         else:
                                 counter -= 1
-                        print(counter)
+                        print("BTN: {} | CLK: {} | DT: {}".format(btnState, clkState, dtState))
 
                 if btnState != btnLastState:
                     print("BTN: {} | CLK: {} | DT: {}".format(btnState, clkState, dtState))
@@ -33,6 +33,6 @@ try:
                 clkLastState = clkState
                 btnLastState = btnState
 
-                sleep(0.01)
+                sleep(0.05)
 finally:
         GPIO.cleanup()
