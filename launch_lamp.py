@@ -310,7 +310,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        self.writeBase(self.bottom_bright)
+        self.writeBase(self.bottom_bright, "MIC LEVELS")
 
     def changeBase(self, value):
         value = self.mapRange(value, 0, 100, 0, 255)
@@ -321,9 +321,10 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        self.writeBase(self.bottom_bright)
+        self.writeBase(self.bottom_bright, "CHANGE BASE")
 
-    def writeBase(self, value):
+    def writeBase(self, value, source):
+        print("WRITE BASE: {}".format(source))
         self.top_bright = value
         intensity = int(self.top_bright * self.saturation)
         for i in range(16, self.num_pixels):
@@ -339,9 +340,10 @@ class Lamp(object):
         if self.top_bright > 255:
             self.top_bright = 255
 
-        self.writeBulb(self.top_bright)
+        self.writeBulb(self.top_bright, "CHANGE BULB")
 
-    def writeBulb(self, value):
+    def writeBulb(self, value, source):
+        print("WRITE BULB: {}".format(source))
         self.top_bright = value
         intensity = int(self.top_bright * self.saturation)
         for i in range(16):
@@ -371,7 +373,7 @@ class Lamp(object):
 
 def fadeIn():
     lamp.console = "Fading in..."
-    lamp.writeBase(0)
+    lamp.writeBase(0, "FADE IN")
     while streamer.volume < lamp.peak or lamp.top_bright < 255:
         if streamer.volume < lamp.peak:
             streamer.changeVolume(0.01)
@@ -384,7 +386,7 @@ def fadeIn():
 def fadeOut():
     print("FADING OUT!")
     lamp.console = "Fading out..."
-    lamp.writeBase(0)
+    lamp.writeBase(0, "FADE OUT")
     while streamer.volume > 0 or lamp.top_bright > 0 or lamp.bottom_bright < 255:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
@@ -440,8 +442,8 @@ if __name__ == '__main__':
     rotary = Thread(target=lamp.encoder, args=())
     rotary.start()
 
-    lamp.writeBulb(0)
-    lamp.writeBase(0)
+    lamp.writeBulb(0, "SETUP")
+    lamp.writeBase(0, "SETUP")
 
     while lamp.state == "?":
         pass
