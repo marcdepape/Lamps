@@ -276,22 +276,26 @@ class Lamp(object):
                 #print("IN UPDATE: " + str(self.in_update) + " | " + str(self.change))
 
     def encoder(self):
+        counter = 0
         while self.report:
             clk_state = GPIO.input(self.clk)
             dt_state = GPIO.input(self.dt)
+
             #btn_state = GPIO.input(self.btn)
 
             if clk_state != self.last_clk:
                 if dt_state != clk_state:
+                        counter += 1
                         self.changeBase(-1)
                         if(self.bottom_bright < 5):
                             self.changeBulb(1)
                 else:
+                        counter -= 1
                         self.changeBulb(-1)
                         if(self.top_bright < 5):
                             self.changeBase(1)
 
-                print("TOP: {} | BOTTOM: {}".format(self.top_bright, self.bottom_bright))
+                print("{} |TOP: {} | BOTTOM: {}".format(counter, self.top_bright, self.bottom_bright))
 
             self.last_clk = clk_state
             #self.last_btn = btn_state
