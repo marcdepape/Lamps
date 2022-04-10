@@ -290,7 +290,7 @@ class Lamp(object):
                         counter -= 1
                         self.rotation = -1
 
-                print("{} | {}".format(self.rotation, counter)
+                print("{} | {}".format(self.rotation, counter))
 
             self.last_clk = clk_state
             #self.last_btn = btn_state
