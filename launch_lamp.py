@@ -276,26 +276,22 @@ class Lamp(object):
                 #print("IN UPDATE: " + str(self.in_update) + " | " + str(self.change))
 
     def encoder(self):
-        counter = 0
-        while self.report:
-            clk_state = GPIO.input(self.clk)
-            dt_state = GPIO.input(self.dt)
-            #btn_state = GPIO.input(self.btn)
+        clk_state = GPIO.input(self.clk)
+        dt_state = GPIO.input(self.dt)
+        #btn_state = GPIO.input(self.btn)
 
-            if clk_state != self.last_clk:
-                if dt_state != clk_state:
-                        counter += 1
-                        self.rotation = 1
-                else:
-                        counter -= 1
-                        self.rotation = -1
+        if clk_state != self.last_clk:
+            if dt_state != clk_state:
+                    counter += 1
+                    self.rotation = 1
+            else:
+                    counter -= 1
+                    self.rotation = -1
 
-                print("{} | {}".format(self.rotation, counter))
+            print("{} | {}".format(self.rotation, counter))
 
-            self.last_clk = clk_state
-            #self.last_btn = btn_state
-
-            sleep(0.001)
+        self.last_clk = clk_state
+        #self.last_btn = btn_state
 
     def micLevels(self):
         while self.report:
@@ -465,4 +461,5 @@ if __name__ == '__main__':
                 lamp.change = False
                 #lamp.console = "Broadcasting..."
 
-            lamp.encoder()
+        lamp.encoder()
+        sleep(0.001)
