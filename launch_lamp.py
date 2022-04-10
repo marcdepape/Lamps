@@ -284,17 +284,17 @@ class Lamp(object):
                 if dt_state != clk_state:
                     if self.bottom_bright > 0:
                         self.setBase(-1)
-                        print("BASE -1")
+                        print("BASE -1 | {}".format(self.bottom_bright))
                     elif self.top_bright < 256:
                         self.setBulb(1)
-                        print("BULB +1")
+                        print("BULB +1 | {}".format(self.top_bright))
                 else:
                     if self.top_bright > 0:
                         self.setBulb(-1)
-                        print("BULB -1")
+                        print("BULB -1 | {}".format(self.top_bright))
                     elif self.botton_bright < 256:
                         self.setBase(1)
-                        print("BASE +1")
+                        print("BASE +1 | {}".format(self.bottom_bright))
 
             self.last_clk = clk_state
             #self.last_btn = btn_state
