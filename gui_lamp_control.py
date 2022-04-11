@@ -246,7 +246,7 @@ class Dashboard(GridLayout):
         print("MANUAL LISTEN! " + str(lamp) + " : " + str(to_lamp))
         self.resetShuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
-        broadcaster = 0
+        broadcasters = 0
         if to_lamp != -1:
             listeners[lamp] = to_lamp
             listeners[to_lamp] = -1
