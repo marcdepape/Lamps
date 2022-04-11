@@ -251,7 +251,7 @@ class Dashboard(GridLayout):
             listeners[lamp] = to_lamp
             listeners[to_lamp] = -1
             broadcasters = 1
-        elif
+        else:
             assignment = lamp
             while assignment == lamp:
                 assignment = random.randint(0, self.number_of_lamps-1)
