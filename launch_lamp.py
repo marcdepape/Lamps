@@ -288,31 +288,46 @@ class Lamp(object):
         if clk_state != self.last_clk:
             counter = 0
             if dt_state != clk_state:
-                if self.bottom_rotation > 0:
-                    self.bottom_rotation -= increment
-                    if self.bottom_rotation < 0:
-                        self.bottom_rotation = 0
-                elif self.top_rotation < 255:
-                    self.top_rotation += increment
-                    if self.top_rotation > 255:
-                        self.top_rotation = 255
+                if self.state == "streaming":
+                    if self.bottom_rotation > 0:
+                        self.bottom_rotation -= increment*2
+                        if self.bottom_rotation < 0:
+                            self.bottom_rotation = 0
+                    elif self.top_rotation < 255:
+                        self.top_rotation += increment*2
+                        if self.top_rotation > 255:
+                            self.top_rotation = 255
+                elif self.state == "broadcasting":
+                    if self.top_rotation < 255:
+                        self.top_rotation += increment
+                        if self.top_rotation > 255:
+                            self.top_rotation = 255
             else:
-                if self.top_rotation > 0:
-                    self.top_rotation -= increment
-                    if self.top_rotation < 0:
-                        self.top_rotation = 0
-                elif self.bottom_rotation < 255:
-                    self.bottom_rotation += increment
-                    if self.bottom_rotation > 255:
-                        self.bottom_rotation = 255
+                if self.state == "streaming":
+                    if self.top_rotation > 0:
+                        self.top_rotation -= increment*2
+                        if self.top_rotation < 0:
+                            self.top_rotation = 0
+                    elif self.bottom_rotation < 255:
+                        self.bottom_rotation += increment*2
+                        if self.bottom_rotation > 255:
+                            self.bottom_rotation = 255
+                elif self.state == "broadcasting":
+                    if self.top_rotation > 0:
+                        self.top_rotation -= increment
+                        if self.top_rotation < 0:
+                            self.top_rotation = 0
 
-            self.writeBulb(self.top_rotation,)
-            self.writeBase(self.bottom_rotation)
+            if self.state == "streaming":
+                self.writeBulb(self.top_rotation)
+                self.writeBase(self.bottom_rotation)
+            elif self.state == "broadcasting":
+                self.writeBulb(self.top_rotation)
 
-            if self.top_rotation > 150 and self.command != "listen":
+            if self.top_rotation == 0 and self.state == "broadcasting" and self.command != "listen":
                 print("MANUAL LISTEN!")
                 self.command = "listen"
-            elif self.bottom_rotation > 150 and self.command != "broadcast":
+            elif self.bottom_rotation > 200 and self.state == "streaming" and self.command != "broadcast":
                 print("MANUAL BROADCAST!")
                 self.command = "broadcast"
 
@@ -320,14 +335,16 @@ class Lamp(object):
         #self.last_btn = btn_state
 
         if self.counter > 20:
-            if self.top_rotation > 0 and self.command != "listen":
+            if self.top_rotation > 0 and self.state == "broadcasting" and self.command != "listen":
                 self.top_rotation -= 1
                 self.writeBulb(self.top_rotation)
-                self.writeBase(self.bottom_rotation)
-            if self.bottom_rotation > 0 and self.command != "broadcast":
-                self.bottom_rotation -= 1
-                self.writeBulb(self.top_rotation)
-                self.writeBase(self.bottom_rotation)
+            if self.state == "streaming" and self.command != "broadcast":
+                if self.bottom_rotation > 0:
+                    self.bottom_rotation -= 1
+                    self.writeBase(self.bottom_rotation)
+                elif self.top_rotation < 255:
+                    self.top_rotation += 1
+                    self.writeBulb(self.top_rotation)
             self.counter = 0
 
     def micLevels(self):
@@ -434,7 +451,7 @@ def changeListener():
     changing = 0
     tries = 0
     if lamp.stream == -1:
-        lamp.state ="broadcasting"
+        lamp.state = "broadcasting"
         return
 
     lamp.console = "Connecting...{}".format(lamp.state)
@@ -491,7 +508,7 @@ if __name__ == '__main__':
             if lamp.state == "streaming":
                 lamp.console = "CHANGE! {}".format(lamp.state)
                 changeListener()
-            else:
+            else if lamp.state == "broadcasting":
                 lamp.console = "CHANGE! {}".format(lamp.state)
                 streamer.mute()
                 lamp.change = False

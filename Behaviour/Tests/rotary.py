@@ -36,3 +36,58 @@ try:
                 sleep(0.001)
 finally:
         GPIO.cleanup()
+
+'''
+def encoder(self):
+    clk_state = GPIO.input(self.clk)
+    dt_state = GPIO.input(self.dt)
+    #btn_state = GPIO.input(self.btn)
+
+    increment = 4
+    self.counter += 1
+
+    if clk_state != self.last_clk:
+        counter = 0
+        if dt_state != clk_state:
+            if self.bottom_rotation > 0:
+                self.bottom_rotation -= increment
+                if self.bottom_rotation < 0:
+                    self.bottom_rotation = 0
+            elif self.top_rotation < 255:
+                self.top_rotation += increment
+                if self.top_rotation > 255:
+                    self.top_rotation = 255
+        else:
+            if self.top_rotation > 0:
+                self.top_rotation -= increment
+                if self.top_rotation < 0:
+                    self.top_rotation = 0
+            elif self.bottom_rotation < 255:
+                self.bottom_rotation += increment
+                if self.bottom_rotation > 255:
+                    self.bottom_rotation = 255
+
+        self.writeBulb(self.top_rotation,)
+        self.writeBase(self.bottom_rotation)
+
+        if self.top_rotation > 150 and self.command != "listen":
+            print("MANUAL LISTEN!")
+            self.command = "listen"
+        elif self.bottom_rotation > 150 and self.command != "broadcast":
+            print("MANUAL BROADCAST!")
+            self.command = "broadcast"
+
+    self.last_clk = clk_state
+    #self.last_btn = btn_state
+
+    if self.counter > 20:
+        if self.top_rotation > 0 and self.command != "listen":
+            self.top_rotation -= 1
+            self.writeBulb(self.top_rotation)
+            self.writeBase(self.bottom_rotation)
+        if self.bottom_rotation > 0 and self.command != "broadcast":
+            self.bottom_rotation -= 1
+            self.writeBulb(self.top_rotation)
+            self.writeBase(self.bottom_rotation)
+        self.counter = 0
+'''
