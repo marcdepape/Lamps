@@ -506,8 +506,8 @@ if __name__ == '__main__':
     lamp.change = False
 
     while True:
-        while lamp.change:
-            print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
+        while lamp.change and lamp.state != "start":
+            print("SWITCH | " + lamp.state + " : " + str(lamp.stream))
             lamp.console = "CHANGE! {}".format(lamp.stream)
             lamp.top_rotation = 0
             lamp.bottom_rotation = 0
