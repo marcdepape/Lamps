@@ -127,22 +127,22 @@ class Dashboard(GridLayout):
         for i in range(self.number_of_lamps):
             self.connection_times[i]+=1
 
-        if update["command"] == "listen":
-            self.manualListen(lamp, -1)
-            self.proxy.command[lamp] = "complete"
-        elif update["command"] == "broadcast":
-            self.manualBroadcast(lamp)
-            self.proxy.command[lamp] = "complete"
+        if lamp >= 0:
+            if update["command"] == "listen":
+                self.manualListen(lamp, -1)
+                self.proxy.command[lamp] = "complete"
+            elif update["command"] == "broadcast":
+                self.manualBroadcast(lamp)
+                self.proxy.command[lamp] = "complete"
 
-        if update["state"] == "error":
-            if update['stream'] > 0:
-                self.reset(update['stream'])
+            if update["state"] == "error":
+                if update['stream'] > 0:
+                    self.reset(update['stream'])
 
         if lamp == 0:
             self.display_console_0 = update["console"]
             self.display_connection_0 = "CONNECTED"
             self.connection_times[0] = 0
-
 
         elif lamp == 1:
             self.display_console_1 = update["console"]
