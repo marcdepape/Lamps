@@ -128,8 +128,10 @@ class Dashboard(GridLayout):
             self.connection_times[i]+=1
 
         if update["command"] == "listen":
+            self.manualListen(lamp, -1)
             self.proxy.command[lamp] = "complete"
         elif update["command"] == "broadcast":
+            self.manualBroadcast(lamp)
             self.proxy.command[lamp] = "complete"
 
         if update["state"] == "error":
@@ -244,9 +246,11 @@ class Dashboard(GridLayout):
         print("MANUAL LISTEN! " + str(lamp) + " : " + str(to_lamp))
         self.resetShuffle()
         listeners = [self.unassigned for i in range(self.number_of_lamps)]
-        listeners[lamp] = to_lamp
-        listeners[to_lamp] = -1
-        broadcasters = 1
+        broadcaster = 0
+        if to_lamp != -1:
+            listeners[lamp] = to_lamp
+            listeners[to_lamp] = -1
+            broadcasters = 1
         self.assignListeners(listeners, broadcasters)
 
     def manualBroadcast(self, lamp):
