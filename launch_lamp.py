@@ -505,6 +505,8 @@ if __name__ == '__main__':
         while lamp.change:
             print("SWITCH | " + lamp.state + ": " + str(lamp.stream))
             lamp.console = "CHANGE! {}".format(lamp.stream)
+            lamp.top_rotation = 0
+            lamp.bottom_rotation = 0
             fadeOut()
             if lamp.state == "streaming":
                 lamp.console = "CHANGE! {}".format(lamp.state)
