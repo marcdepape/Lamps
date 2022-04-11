@@ -456,16 +456,16 @@ def changeListener():
 
     lamp.console = "Connecting...{}".format(lamp.state)
 
-    while changing <= 0:
+    while changing == -1:
         changing = streamer.change(lamp.stream)
         tries = tries + changing
         print("TRIES: " + str(tries))
         if tries == -3:
             lamp.setError()
             lamp.console = "Error..."
-            lamp.state = "error"
+            #lamp.state = "error"
             lamp.change = False
-            return
+            #return
         sleep(1)
 
     if lamp.state != "error":
@@ -490,8 +490,6 @@ if __name__ == '__main__':
     subscriber.start()
     mic = Thread(target=lamp.micLevels, args=())
     mic.start()
-    #rotary = Thread(target=lamp.encoder, args=())
-    #rotary.start()
 
     lamp.writeBulb(0)
     lamp.writeBase(0)
