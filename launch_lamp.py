@@ -233,6 +233,9 @@ class Lamp(object):
             if self.command == "start":
                 self.state = "start"
                 self.command = "complete"
+            if self.command == "complete":
+                self.console = "complete"
+                self.command = "null"
 
         if self.in_update["rate"] != self.fade_rate:
             self.fade_rate = self.in_update["fade"]
