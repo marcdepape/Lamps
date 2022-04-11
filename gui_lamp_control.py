@@ -251,6 +251,13 @@ class Dashboard(GridLayout):
             listeners[lamp] = to_lamp
             listeners[to_lamp] = -1
             broadcasters = 1
+        elif
+            assignment = lamp
+            while assignment == lamp:
+                assignment = random.randint(0, self.number_of_lamps-1)
+                listeners[lamp] = assignment
+                listeners[assignment] = -1
+                broadcasters = 1
         self.assignListeners(listeners, broadcasters)
 
     def manualBroadcast(self, lamp):
