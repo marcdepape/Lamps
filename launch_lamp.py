@@ -509,7 +509,7 @@ if __name__ == '__main__':
             if lamp.state == "streaming":
                 lamp.console = "CHANGE! {}".format(lamp.state)
                 changeListener()
-            else if lamp.state == "broadcasting":
+            elif lamp.state == "broadcasting":
                 lamp.console = "CHANGE! {}".format(lamp.state)
                 streamer.mute()
                 lamp.change = False
