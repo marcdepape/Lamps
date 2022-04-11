@@ -436,6 +436,7 @@ def fadeIn():
         if lamp.top_bright < 255:
             lamp.changeBulb(1)
         sleep(lamp.fade_rate)
+    lamp.console = "Faded..."
 
 #------------------------------------------------------------------------------
 
@@ -451,6 +452,7 @@ def fadeOut():
         if lamp.bottom_bright < 255:
             lamp.changeBase(1)
         sleep(lamp.fade_rate)
+    lamp.console = "Faded..."
 
 def changeListener():
     changing = 0
