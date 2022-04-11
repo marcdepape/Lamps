@@ -329,7 +329,7 @@ class Lamp(object):
                 self.writeBulb(self.top_rotation)
                 print("BROADCASTING: {} | {}".format(self.top_rotation,self.bottom_rotation))
 
-            if self.top_rotation == 0 and self.state == "broadcasting" and self.command != "listen":
+            if self.top_rotation > 200 and self.state == "broadcasting" and self.command != "listen":
                 print("MANUAL LISTEN!")
                 self.command = "listen"
             elif self.bottom_rotation > 200 and self.state == "streaming" and self.command != "broadcast":
