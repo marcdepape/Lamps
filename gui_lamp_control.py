@@ -135,9 +135,12 @@ class Dashboard(GridLayout):
                 self.manualBroadcast(lamp)
                 self.proxy.command[lamp] = "complete"
 
-            if update["state"] == "error":
-                if update['stream'] > 0:
+            if update["command"] == "error":
+                if update['stream'] >= 0:
                     self.reset(update['stream'])
+                    self.proxy.command[lamp] = "reset"
+                else:
+                    self.reset(lamp)
 
         if lamp == 0:
             self.display_console_0 = update["console"]
@@ -185,12 +188,10 @@ class Dashboard(GridLayout):
 
     def reset(self, lamp):
         if lamp != -1:
-            #self.proxy.command[lamp] = "reboot"
             os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch.sh &".format(lamp))
 
         else:
             for i in range(self.number_of_lamps):
-                #self.proxy.command[i] = "reboot"
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp0.local sudo ./launch.sh &")
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp1.local sudo ./launch.sh &")
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp2.local sudo ./launch.sh &")

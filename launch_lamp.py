@@ -39,6 +39,7 @@ class ExtendedBin(Gst.Bin):
             print("ERROR:", message.src.get_name(), ":", error.message)
             if debug:
                 print ("Debug info: " + debug)
+            local.send_string("error")
         elif message.type == Gst.MessageType.EOS:
             print ("End of stream")
         elif message.type == Gst.MessageType.STATE_CHANGED:
@@ -225,17 +226,14 @@ class Lamp(object):
     def compare(self):
         if self.in_update["command"] != self.command:
             self.command = self.in_update["command"]
-            if self.command == "reboot":
-                self.command = "complete"
-                self.setReboot()
-                print("REBOOT!")
-                #os.system("reboot now")
             if self.command == "start":
                 self.state = "start"
                 self.command = "complete"
             if self.command == "complete":
-                self.console = "complete"
+                self.console = "Complete..."
                 self.command = "null"
+            if self.command == "reset":
+                self.console = "Reseting..."
 
         if self.in_update["rate"] != self.fade_rate:
             self.fade_rate = self.in_update["fade"]
@@ -355,8 +353,11 @@ class Lamp(object):
     def micLevels(self):
         while self.report:
             self.mic_signal = self.levels.recv_string()
-            if self.state == "broadcasting":
-                self.pulse(self.mic_signal)
+            if self.mic_signal != "error":
+                if self.state == "broadcasting":
+                    self.pulse(self.mic_signal)
+            else:
+                self.command = "error"
 
     def pulse(self, rms):
         self.bottom_bright = 100 + float(rms)
@@ -436,7 +437,6 @@ def fadeIn():
         if lamp.top_bright < 255:
             lamp.changeBulb(1)
         sleep(lamp.fade_rate)
-    lamp.console = "Faded..."
 
 #------------------------------------------------------------------------------
 
@@ -455,30 +455,32 @@ def fadeOut():
     lamp.console = "Faded..."
 
 def changeListener():
-    changing = 0
-    tries = 0
     if lamp.stream == -1:
         lamp.state = "broadcasting"
         return
 
-    lamp.console = "Connecting...{}".format(lamp.state)
+    lamp.console = "Connecting..."
+    changing = -1
+    tries = 0
+    current_stream = lamp.stream
+    current_state = lamp.state
 
     while changing == -1:
+        if current_stream != lamp.stream or current_state != lamp.state:
+            return
+
         changing = streamer.change(lamp.stream)
         tries = tries + changing
         print("TRIES: " + str(tries))
         if tries == -3:
             lamp.setError()
             lamp.console = "Error..."
-            #lamp.state = "error"
-            lamp.change = False
-            #return
-        sleep(1)
+            lamp.command = "error"
+        sleep(0.5)
 
-    if lamp.state != "error":
-        fadeIn()
-        lamp.change = False
-        lamp.console = "Streaming..."
+    if self.command == "reset":
+        self.command = "null"
+        lamp.writeBulb(0)
 
 #------------------------------------------------------------------------------
 
@@ -487,6 +489,7 @@ if __name__ == '__main__':
     print("--------------------------------------------")
     print("LAUNCH LAMP")
     print("")
+
     share = RTSP_Server(lamp_id)
     streamer = Streamer()
     lamp = Lamp(lamp_id)
@@ -501,25 +504,25 @@ if __name__ == '__main__':
     lamp.writeBulb(0)
     lamp.writeBase(0)
 
-    #while lamp.state == "?":
-        #pass
-    lamp.change = False
+    while lamp.state == "?":
+        pass
 
     while True:
-        while lamp.change and lamp.state != "start":
+        while lamp.change:
             print("SWITCH | " + lamp.state + " : " + str(lamp.stream))
-            lamp.console = "CHANGE! {}".format(lamp.stream)
+            lamp.console = "Switching..."
             lamp.top_rotation = 0
             lamp.bottom_rotation = 0
             fadeOut()
             if lamp.state == "streaming":
-                lamp.console = "CHANGE! {}".format(lamp.state)
                 changeListener()
-            elif lamp.state == "broadcasting":
-                lamp.console = "CHANGE! {}".format(lamp.state)
-                streamer.mute()
+                fadeIn()
+                lamp.console = "Streaming..."
                 lamp.change = False
-                #lamp.console = "Broadcasting..."
+            elif lamp.state == "broadcasting":
+                streamer.mute()
+                lamp.console = "Broadcasting..."
+                lamp.change = False
 
         lamp.encoder()
         sleep(0.001)
