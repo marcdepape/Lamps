@@ -206,13 +206,13 @@ class Lamp(object):
         # SERVER
         server_context = zmq.Context()
         self.publish = server_context.socket(zmq.PUB)
-        self.publish.connect("tcp://armadillo.local:8101")
+        self.publish.connect("tcp://downy.local:8101")
         self.publish.set_hwm(1)
 
         # CLIENT
         client_context = zmq.Context()
         self.subscribe = client_context.socket(zmq.SUB)
-        self.subscribe.connect("tcp://armadillo.local:8102")
+        self.subscribe.connect("tcp://downy.local:8102")
         self.subscribe.setsockopt(zmq.SUBSCRIBE, b'')
         self.subscribe.set_hwm(1)
 
