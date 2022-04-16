@@ -64,6 +64,8 @@ class Dashboard(GridLayout):
 
         self.shuffle_time = 180
 
+        self.setup = True
+
         self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle_time)
 
         self.display_connection_0 = ""
@@ -91,6 +93,7 @@ class Dashboard(GridLayout):
         self.display_fade_rate = str(self.fade_rate)
         self.display_saturation = str(self.saturation)
 
+        self.online = [0 for i in range(self.number_of_lamps)]
         self.connection_times = [0 for i in range(self.number_of_lamps)]
         self.listen_ids = [[0 for i in range(self.number_of_lamps)] for i in range(self.number_of_lamps)]
         self.broadcast_ids = [0 for i in range(self.number_of_lamps)]
@@ -116,6 +119,17 @@ class Dashboard(GridLayout):
         update = None
         lamp = None
         state = None
+
+        if self.setup:
+            update = json.loads(self.proxy.receive)
+            self.online[update["id"]] = 1
+            count = 0
+            for i in range(number_of_lamps):
+                count = count + self.online[i]
+            if count == 6:
+                self.setup = False
+            else:
+                return
 
         update = json.loads(self.proxy.receive)
         if update != self.inbound:
