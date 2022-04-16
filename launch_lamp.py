@@ -506,6 +506,8 @@ if __name__ == '__main__':
     while lamp.state == "?":
         pass
 
+    sleep(10)
+
     while True:
         while lamp.change:
             print("SWITCH | " + lamp.state + " : " + str(lamp.stream))
