@@ -36,6 +36,10 @@ class Dashboard(GridLayout):
     display_saturation = StringProperty()
     display_shuffle = StringProperty()
 
+    global_status_0 = StringProperty()
+    global_status_1 = StringProperty()
+    global_status_2 = StringProperty()
+
     display_console_0 = StringProperty()
     display_console_1 = StringProperty()
     display_console_2 = StringProperty()
@@ -94,6 +98,7 @@ class Dashboard(GridLayout):
             self.proxy.command[i] = "start"
 
         Clock.schedule_interval(self.update_GUI, 0.1)
+        self.gloablStatus("LAUNCHED")
 
     def start_proxy(self):
         subscriber = Thread(target=self.proxy.statusIn, args=())
@@ -135,9 +140,11 @@ class Dashboard(GridLayout):
 
             if update["command"] == "error":
                 if update['stream'] >= 0:
+                    self.gloablStatus("RESET: Stream")
                     self.reset(update['stream'])
                     self.proxy.command[lamp] = "reset"
                 else:
+                    self.gloablStatus("RESET: Broad")
                     self.reset(lamp)
 
         if lamp == 0:
@@ -197,6 +204,10 @@ class Dashboard(GridLayout):
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp4.local sudo ./launch.sh &")
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp5.local sudo ./launch.sh &")
 
+    def gloablStatus(self, message):
+        global_status_2 = global_status_1
+        global_status_1 = global_status_0
+        global_status_0 = message
 
     def constrain(self, val, min_val, max_val):
         return min(max_val, max(min_val, val))

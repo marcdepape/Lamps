@@ -255,7 +255,7 @@ class Lamp(object):
                 self.state = "broadcasting"
             else:
                 self.state = "streaming"
-            self.console = "Switching to {} {}".format(self.state, self.stream)
+            self.console = "Switching to {}".format(self.stream)
 
     def statusOut(self):
         while self.report:
@@ -509,9 +509,15 @@ if __name__ == '__main__':
 
     sleep(10)
 
+    while lamp.state == "start":
+        if lamp.stream == -1:
+            lamp.state = "broadcasting"
+        else:
+            lamp.state = "streaming"
+
     while True:
         while lamp.change:
-            print("SWITCH | " + lamp.state + " : " + str(lamp.stream))
+            #print("SWITCH | " + lamp.state + " : " + str(lamp.stream))
             lamp.console = "Switching..."
             lamp.top_rotation = 0
             lamp.bottom_rotation = 0
