@@ -128,6 +128,7 @@ class Dashboard(GridLayout):
                 count = count + self.online[i]
             if count == 6:
                 self.setup = False
+                print("SETUP COMPLETE! ALL 6 LAMPS ONLINE!")
             else:
                 return
 
