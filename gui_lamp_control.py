@@ -144,11 +144,11 @@ class Dashboard(GridLayout):
 
             if update["command"] == "error":
                 if update['stream'] >= 0:
-                    self.gloablStatus("RESET: Stream")
+                    self.gloablStatus("S.Reset: {}".format(update['stream']))
                     self.reset(update['stream'])
                     self.proxy.command[lamp] = "reset"
                 else:
-                    self.gloablStatus("RESET: Broad")
+                    self.gloablStatus("B.Reset: {}".format(lamp))
                     self.reset(lamp)
 
         if lamp == 0:
