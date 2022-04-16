@@ -156,7 +156,7 @@ class Streamer(object):
                 "vorbisdec ! "
                 "audioamplify name={} ! "
                 "audioconvert ! "
-                "audio/x-raw,format=S16LE,rate=44100,channels=2 ! "
+                "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
                 "alsasink"
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
@@ -370,7 +370,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        self.console("{} | {}".format(self.state, self.bottom_bright))
+        self.console = "{} | {}".format(self.state, self.bottom_bright)
         self.writeBase(self.bottom_bright)
 
     def changeBase(self, value):
