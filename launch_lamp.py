@@ -55,7 +55,8 @@ class ExtendedBin(Gst.Bin):
                 local.send_string(str(value[0]))
                 #level = value[0]
         else :
-            print("Some other message type: " + str(message.type))
+            pass
+            #print("Some other message type: " + str(message.type))
 
         #call base handler to enable message propagation
         Gst.Bin.do_handle_message(self,message)
