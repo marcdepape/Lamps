@@ -73,6 +73,10 @@ class Dashboard(GridLayout):
         self.display_connection_4 = ""
         self.display_connection_5 = ""
 
+        self.global_status_0 = "..."
+        self.global_status_1 = "..."
+        self.global_status_2 = "..."
+
         self.peak = 1.5
         self.fade_rate = 0.05
         self.saturation = 1.0
