@@ -471,11 +471,11 @@ def changeListener():
         changing = streamer.change(lamp.stream)
         tries = tries + changing
         print("TRIES: " + str(tries))
-        if tries == -6:
+        if tries == -5:
             lamp.setError()
             lamp.console = "Error..."
             lamp.command = "error"
-        sleep(0.5)
+        sleep(1)
 
     if lamp.command == "reset":
         lamp.command = "null"
