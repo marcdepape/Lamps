@@ -123,7 +123,7 @@ class Dashboard(GridLayout):
             update = json.loads(self.proxy.receive)
             self.online[update["id"]] = 1
             count = 0
-            for i in range(number_of_lamps):
+            for i in range(self.number_of_lamps):
                 count = count + self.online[i]
             if count == 6:
                 self.setup = False
