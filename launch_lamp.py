@@ -370,6 +370,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
+        self.console("{} | {}".format(self.state, self.bottom_bright))
         self.writeBase(self.bottom_bright)
 
     def changeBase(self, value):
