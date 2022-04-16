@@ -450,6 +450,9 @@ def fadeOut():
         if lamp.top_bright > 0:
             lamp.changeBulb(-1)
         sleep(lamp.fade_rate)
+    lamp.writeBulb(0)
+    streamer.mute()
+
     lamp.console = "Faded..."
 
 def changeListener():
