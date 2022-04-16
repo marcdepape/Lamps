@@ -209,9 +209,9 @@ class Dashboard(GridLayout):
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp5.local sudo ./launch.sh &")
 
     def gloablStatus(self, message):
-        global_status_2 = global_status_1
-        global_status_1 = global_status_0
-        global_status_0 = message
+        self.global_status_2 = self.global_status_1
+        self.global_status_1 = self.global_status_0
+        self.global_status_0 = message
 
     def constrain(self, val, min_val, max_val):
         return min(max_val, max(min_val, val))
