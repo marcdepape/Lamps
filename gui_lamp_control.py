@@ -62,7 +62,7 @@ class Dashboard(GridLayout):
         self.inbound = None
         self.start_proxy()
 
-        self.shuffle_time = 60
+        self.shuffle_time = 180
 
         self.shuffle_trigger = Clock.create_trigger(self.shuffle, self.shuffle_time)
 

@@ -444,13 +444,11 @@ def fadeIn():
 def fadeOut():
     lamp.console = "Fading out..."
     lamp.writeBase(0)
-    while streamer.volume > 0 or lamp.top_bright > 0 or lamp.bottom_bright < 255:
+    while streamer.volume > 0 or lamp.top_bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
         if lamp.top_bright > 0:
             lamp.changeBulb(-1)
-        if lamp.bottom_bright < 255:
-            lamp.changeBase(1)
         sleep(lamp.fade_rate)
     lamp.console = "Faded..."
 
@@ -532,5 +530,5 @@ if __name__ == '__main__':
                 lamp.console = "Broadcasting..."
                 lamp.change = False
 
-        lamp.encoder()
-        sleep(0.001)
+        #lamp.encoder()
+        #sleep(0.001)
