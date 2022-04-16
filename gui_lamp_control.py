@@ -75,7 +75,7 @@ class Dashboard(GridLayout):
         self.display_connection_4 = ""
         self.display_connection_5 = ""
 
-        self.global_status_0 = "..."
+        self.global_status_0 = "LAUNCHING"
         self.global_status_1 = "..."
         self.global_status_2 = "..."
 
@@ -105,7 +105,6 @@ class Dashboard(GridLayout):
             self.proxy.command[i] = "start"
 
         Clock.schedule_interval(self.update_GUI, 0.1)
-        self.gloablStatus("LAUNCHED")
 
     def start_proxy(self):
         subscriber = Thread(target=self.proxy.statusIn, args=())
@@ -128,7 +127,7 @@ class Dashboard(GridLayout):
                 count = count + self.online[i]
             if count == 6:
                 self.setup = False
-                print("SETUP COMPLETE! ALL 6 LAMPS ONLINE!")
+                self.gloablStatus("LAUNCHED")
             else:
                 return
 
