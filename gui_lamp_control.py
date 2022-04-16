@@ -128,7 +128,7 @@ class Dashboard(GridLayout):
             if count == 6:
                 self.setup = False
                 self.gloablStatus("LAUNCHED")
-                self.shuffle()
+                self.shuffle(0)
             else:
                 return
 
