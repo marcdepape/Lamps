@@ -533,5 +533,5 @@ if __name__ == '__main__':
                 lamp.console = "Broadcasting..."
                 lamp.change = False
 
-        #lamp.encoder()
-        #sleep(0.001)
+        lamp.encoder()
+        sleep(0.001)
