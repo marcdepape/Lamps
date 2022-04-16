@@ -441,7 +441,6 @@ def fadeIn():
 #------------------------------------------------------------------------------
 
 def fadeOut():
-    print("FADING OUT!")
     lamp.console = "Fading out..."
     lamp.writeBase(0)
     while streamer.volume > 0 or lamp.top_bright > 0 or lamp.bottom_bright < 255:
