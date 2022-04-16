@@ -67,7 +67,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory):
         GstRtspServer.RTSPMediaFactory.__init__(self)
 
     def do_create_element(self, url):
-        pipelineCmd = "alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=1 ! audioconvert ! audiowsinclimit cutoff=9000 ! level name=wavelevel interval=50000000 post-messages=TRUE ! audioconvert ! queue ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96"
+        pipelineCmd = "alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=1 ! audioconvert ! audiowsinclimit cutoff=100000 ! level name=wavelevel interval=50000000 post-messages=TRUE ! audioconvert ! queue ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96"
 
         self.pipeline = Gst.parse_launch(pipelineCmd)
         print ("Pipeline created: " + pipelineCmd)
