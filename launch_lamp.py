@@ -354,6 +354,8 @@ class Lamp(object):
     def micLevels(self):
         while self.report:
             self.mic_signal = self.levels.recv_string()
+            self.console = "{}".format(self.mic_signal)
+
             if self.mic_signal != "error":
                 if self.state == "broadcasting":
                     self.pulse(self.mic_signal)
@@ -370,7 +372,6 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        self.console = "{} | {}".format(self.state, self.bottom_bright)
         self.writeBase(self.bottom_bright)
 
     def changeBase(self, value):
