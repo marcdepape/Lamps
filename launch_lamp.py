@@ -29,11 +29,11 @@ local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
 
 #mic1 = alsaaudio.Mixer('Mic 1')
-#mic2 = alsaaudio.Mixer('Mic 2')
+mic2 = alsaaudio.Mixer('Mic 2')
 #ADC = alsaaudio.Mixer('ADC')
 #ADC.setvolume(80)
 #mic1.setvolume(0)
-#mic2.setvolume(60)
+mic2.setvolume(60)
 
 '''
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
