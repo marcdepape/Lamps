@@ -294,7 +294,6 @@ class Lamp(object):
             if update["lamp"] == self.id:
                 self.in_update = update
                 self.compare()
-                #print("IN UPDATE: " + str(self.in_update) + " | " + str(self.change))
 
     def encoder(self):
         clk_state = GPIO.input(self.clk)
