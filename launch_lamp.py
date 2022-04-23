@@ -81,16 +81,6 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
                         "rtpvorbispay name=pay0 pt=96"
                         ).format()
 
-                return ("rtspsrc latency=500 name={} ! "
-                        "queue ! "
-                        "rtpvorbisdepay ! "
-                        "vorbisdec ! "
-                        "audioamplify name={} ! "
-                        "audioconvert ! "
-                        "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
-                        "alsasink"
-                        ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
-
         self.pipeline = Gst.parse_launch(pipelineCmd)
         print ("Pipeline created: " + pipelineCmd)
 
