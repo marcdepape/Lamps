@@ -395,7 +395,7 @@ class Lamp(object):
         self.bottom_bright = 100 + float(rms)
         self.bottom_bright = self.constrain(self.bottom_bright, self.pulse_point, 95)
         self.bottom_bright = self.mapRange(self.bottom_bright, self.pulse_point, 95, 0, 255)
-        self.console = "{}".format(self.bottom_bright)
+        self.console = "{} | {}".format(self.record, self.bottom_bright)
 
         if self.bottom_bright < 0:
             self.bottom_bright = 0
