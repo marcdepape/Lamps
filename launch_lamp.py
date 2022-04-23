@@ -273,7 +273,7 @@ class Lamp(object):
 
         if self.in_update["record"] != self.record:
             self.record = self.in_update["record"]
-            #mic2.setvolume(self.record)
+            mic2.setvolume(self.record)
             self.console = "Rec: {}".format(self.record)
 
         if self.in_update["pulse"] != self.pulse_point:
