@@ -24,7 +24,7 @@ state.IQaudIOCODEC {
 			range '0 - 7'
 			dbmin -600
 			dbmax 3600
-			dbvalue.0 1800
+			dbvalue.0 2400
 		}
 	}
 	control.3 {

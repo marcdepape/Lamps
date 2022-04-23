@@ -1,50 +1,36 @@
 import os
 from time import sleep
 
-lamps = [][]
-address = 0
-state = 1
+print("PING ALL LAMPS!")
 
+address = []
+state = []
 
 for i in range(6):
-    lamps[i][address] = "lamp{}.local".format(i)
-    lamps[i][state] = 0
-
-lamps_live = 0
-
-while lamps_live != 6:
-    for i in range(6):
-        if lamps[i][state] != True:
-            response = os.system("ping -c 1 " + lamps[i][address])
-            print("LAMP {}: {}".format(i, response))
-            lamps[i][state] = response
-
-    lamps_live = 0
-    for i in range(6):
-        lamps_live = lamps_live + lamps[i][state]
-
-print("ALL LIVE!")
+    address.append("lamp{}.local".format(i))
+    state.append(0)
 
 live = False
 
 while True:
     for i in range(6):
-        if lamps[i][state] != True:
-            response = os.system("ping -c 1 " + lamps[i][address])
-            print("LAMP {}: {}".format(i, response))
-            lamps[i][state] = response
+        response = os.system("ping -c 1 " + address[i])
+        print("LAMP {}: {}".format(i, response))
+        if response > 0:
+            state[i] = True
 
     lamps_live = 0
     for i in range(6):
-        lamps_live = lamps_live + lamps[i][state]
+        lamps_live = lamps_live + state[i]
 
-    if lamps_live == 6 && live == False:
+    if lamps_live == 6 and live == False:
         print("ALL ARE LIVE!")
         live = True
     elif lamps_live < 6:
         print("OFFLINE!")
+        live = False
 
-    sleep(1)
+    sleep(5)
 
 
 
