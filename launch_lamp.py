@@ -461,8 +461,8 @@ def fadeIn():
 #------------------------------------------------------------------------------
 
 def fadeOut():
-    lamp.console = "Fading out..."
     lamp.writeBase(0)
+    lamp.console = "Fading out..."
     while streamer.volume > 0 or lamp.top_bright > 0:
         if streamer.volume > 0:
             streamer.changeVolume(-0.01)
@@ -538,7 +538,6 @@ if __name__ == '__main__':
 
     while True:
         while lamp.change:
-            #print("SWITCH | " + lamp.state + " : " + str(lamp.stream))
             lamp.console = "Switching..."
             lamp.top_rotation = 0
             lamp.bottom_rotation = 0
