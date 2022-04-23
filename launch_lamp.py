@@ -452,6 +452,7 @@ def fadeOut():
         if lamp.top_bright > 0:
             lamp.changeBulb(-1)
         sleep(lamp.fade_rate)
+        lamp.console = "{} | {}".format(streamer.volume, lamp.top_bright)
     lamp.writeBulb(0)
     streamer.mute()
 
