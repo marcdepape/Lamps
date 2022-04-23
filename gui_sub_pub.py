@@ -32,7 +32,7 @@ class LampProxy(object):
         self.peak = 1.5
         self.saturation = 1.0
         self.pulse_point = 65
-        self.record = 80
+        self.record = 60
         self.command = []
         self.listeners = []
 
@@ -47,7 +47,7 @@ class LampProxy(object):
                                 "stream": "STREAM",
                                 "state": "STATE",
                                 "command": "none",
-                                "record": 80,
+                                "record": 60,
                                 "pulse": 65,
                                 "mic": 0,
                                 "console": "Waiting..."})

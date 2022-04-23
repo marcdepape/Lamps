@@ -261,11 +261,11 @@ class Dashboard(GridLayout):
 
     def setPulse(self, change):
         self.pulse_point = self.constrain(self.pulse_point + change, 0, 90)
-        self.display_pulse = self.pulse_point
+        self.display_pulse = str(self.pulse_point)
 
     def setRecord(self, change):
         self.record = self.constrain(self.record + change, 0, 100)
-        self.display_record = self.record
+        self.display_record = str(self.record)
 
     def allStreamingOne(self, lamp):
         self.resetShuffle()
