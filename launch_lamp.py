@@ -28,20 +28,7 @@ local = local_context.socket(zmq.PUB)
 local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
 
-print("CARDS: {}".format(alsaaudio.cards()))
-print("MIXERS: {}".format(alsaaudio.mixers()))
-pcms = alsaaudio.pcms(alsaaudio.PCM_CAPTURE)
-print("PCM: {}".format(alsaaudio.PCM_CAPTURE))
-print(pcms)
-pcm = alsaaudio.PCM(alsaaudio.PCM_CAPTURE)
-cap_mixer = alsaaudio.Mixer('Capture')
-master_mixer = alsaaudio.Mixer('Master')
-print(cap_mixer.volumecap())
-print("CAPTURE RANGE: {}".format(cap_mixer.getrange(alsaaudio.PCM_CAPTURE)))
-print(master_mixer.volumecap())
-print("MASTER RANGE: {}".format(master_mixer.getrange(alsaaudio.PCM_PLAYBACK)))
-cap_mixer.setvolume(100)
-master_mixer.setvolume(100)
+mixer = alsaaudio.Mixer('Mic 1')
 
 '''
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
