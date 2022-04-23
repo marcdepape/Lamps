@@ -1,7 +1,7 @@
 import alsaaudio
 
-print(alsaaudio.cards())
-print(alsaaudio.mixers())
+print("CARDS: {}".format(alsaaudio.cards()))
+print("MIXERS: {}".format(alsaaudio.mixers()))
 pcms = alsaaudio.pcms(alsaaudio.PCM_CAPTURE)
 print("PCM: {}".format(alsaaudio.PCM_CAPTURE))
 print(pcms)
