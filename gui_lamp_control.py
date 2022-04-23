@@ -86,7 +86,7 @@ class Dashboard(GridLayout):
         self.saturation = 1.0
         self.unassigned = 255
         self.pulse_point = 65
-        self.record = 80
+        self.record = 60
 
         self.proxy.peak = self.peak
         self.proxy.fade_rate = self.fade_rate
