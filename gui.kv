@@ -101,8 +101,6 @@
 
 			Label:
 
-			Label:
-
 			GridLayout:
 				cols: 2
 				id: shuffle
@@ -123,6 +121,27 @@
 						id: shuffle_down
 						text: "-"
 						on_press: root.setShuffleTime(-30)
+
+			GridLayout:
+				cols: 2
+				id: peak
+				GridLayout:
+					rows: 2
+					Label:
+			            text: "PULSE"
+						font_size: 12
+					Label:
+				        text: root.display_pulse
+				GridLayout:
+					rows: 2
+					Button:
+						id: peak_up
+						text: "+"
+						on_press: root.setPulse(1)
+					Button:
+						id: peak_down
+						text: "-"
+						on_press: root.setPulse(-1)
 
 			GridLayout:
 				cols: 2

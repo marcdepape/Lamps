@@ -192,6 +192,7 @@ class Lamp(object):
         self.saturation = 1.0
         self.stream = 255
         self.change = False
+        self.pulse_point = 65
         self.state = "?"
         self.in_update = ""
         self.out_status = ""
@@ -270,6 +271,9 @@ class Lamp(object):
                 self.changeBulb(0)
                 self.changeBase(0)
 
+        if self.in_update["pulse"] != self.pulse_point:
+            self.pulse_point = self.in_update["pulse"]
+
         if self.in_update["stream"] != self.stream:
             self.stream = self.in_update["stream"]
             self.change = True
@@ -287,6 +291,7 @@ class Lamp(object):
                                         "stream": self.stream,
                                         "state": self.state,
                                         "command": self.command,
+                                        "pulse": self.pulse_point,
                                         "mic": self.mic_signal,
                                         "console": self.console})
             self.publish.send_json(self.out_status)
@@ -385,8 +390,8 @@ class Lamp(object):
 
     def pulse(self, rms):
         self.bottom_bright = 100 + float(rms)
-        self.bottom_bright = self.constrain(self.bottom_bright, 65, 95)
-        self.bottom_bright = self.mapRange(self.bottom_bright, 65, 95, 0, 255)
+        self.bottom_bright = self.constrain(self.bottom_bright, self.pulse_point, 95)
+        self.bottom_bright = self.mapRange(self.bottom_bright, self.pulse_point, 95, 0, 255)
         self.console = "{}".format(self.bottom_bright)
 
         if self.bottom_bright < 0:

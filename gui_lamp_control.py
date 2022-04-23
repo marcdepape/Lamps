@@ -35,6 +35,7 @@ class Dashboard(GridLayout):
     display_fade_rate = StringProperty()
     display_saturation = StringProperty()
     display_shuffle = StringProperty()
+    display_pulse = StringProperty()
 
     global_status_0 = StringProperty()
     global_status_1 = StringProperty()
@@ -83,15 +84,18 @@ class Dashboard(GridLayout):
         self.fade_rate = 0.05
         self.saturation = 1.0
         self.unassigned = 255
+        self.pulse_point = 65
 
         self.proxy.peak = self.peak
         self.proxy.fade_rate = self.fade_rate
         self.proxy.saturation = self.saturation
+        self.proxy.pulse_point = self.pulse_point
 
         self.display_shuffle = str(self.shuffle_time)
         self.display_peak = str(self.peak)
         self.display_fade_rate = str(self.fade_rate)
         self.display_saturation = str(self.saturation)
+        self.display_pulse = str(self.pulse_point)
 
         self.online = [0 for i in range(self.number_of_lamps)]
         self.connection_times = [0 for i in range(self.number_of_lamps)]
@@ -249,6 +253,10 @@ class Dashboard(GridLayout):
         self.saturation = self.constrain(self.saturation + change, 0.00, 1.0)
         self.proxy.saturation = self.saturation
         self.display_saturation = "{:.2f}".format(self.saturation)
+
+    def setPulse(self, change):
+        self.pulse_point = self.constrain(self.pulse_point + change, 0, 90)
+        self.display_pulse = self.pulse_point
 
     def allStreamingOne(self, lamp):
         self.resetShuffle()

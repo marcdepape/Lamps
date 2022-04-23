@@ -31,6 +31,7 @@ class LampProxy(object):
         self.fade_rate = 0.05
         self.peak = 1.5
         self.saturation = 1.0
+        self.pulse_point = 65
         self.command = []
         self.listeners = []
 
@@ -45,12 +46,14 @@ class LampProxy(object):
                                 "stream": "STREAM",
                                 "state": "STATE",
                                 "command": "none",
+                                "pulse": "PULSE"
                                 "mic": 0,
                                 "console": "Waiting..."})
 
         self.message = json.dumps({"rate": self.fade_rate,
                                 "peak": self.peak,
                                 "saturation": self.saturation,
+                                "pulse": self.pulse_point,
                                 "command": "none",
                                 "stream": -1})
 
