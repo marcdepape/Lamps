@@ -28,6 +28,7 @@ local = local_context.socket(zmq.PUB)
 local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
 
+pcm = alsaaudio.PCM(alsaaudio.PCM_CAPTURE)
 mixer = alsaaudio.Mixer('Capture')
 
 '''
