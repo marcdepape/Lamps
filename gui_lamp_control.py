@@ -266,6 +266,7 @@ class Dashboard(GridLayout):
     def setRecord(self, change):
         self.record = self.constrain(self.record + change, 0, 100)
         self.display_record = str(self.record)
+        print(self.record)
 
     def allStreamingOne(self, lamp):
         self.resetShuffle()
