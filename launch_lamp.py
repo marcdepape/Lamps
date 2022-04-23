@@ -28,6 +28,8 @@ local = local_context.socket(zmq.PUB)
 local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
 
+mixer = alsaaudio.Mixer('Capture')
+
 '''
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
@@ -203,8 +205,6 @@ class Lamp(object):
         )
         self.setOff()
 
-        self.mixer = alsaaudio.Mixer('Capture')
-
         # ENCODER
         self.btn = 16
         self.dt = 23
@@ -268,7 +268,7 @@ class Lamp(object):
 
         if self.in_update["record"] != self.record:
             self.record = self.in_update["record"]
-            self.mixer.setvolume(self.record)
+            mixer.setvolume(self.record)
             self.console = "Rec: {}".format(self.record)
 
         if self.in_update["pulse"] != self.pulse_point:
