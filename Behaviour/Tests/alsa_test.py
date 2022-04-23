@@ -1,6 +1,6 @@
 import alsaaudio
 
-pcms = alsaaudio.pcms("PCM_CAPTURE")
+pcms = alsaaudio.pcms(alsaaudio.PCM_CAPTURE)
 print(pcms)
 mixer = alsaaudio.Mixer()
-mixer.setvolume(100)["PCM_CAPTURE"]
+mixer.setvolume(100)[alsaaudio.PCM_CAPTURE]
