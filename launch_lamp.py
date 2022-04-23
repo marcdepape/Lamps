@@ -66,7 +66,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
     def __init__(self):
         GstRtspServer.RTSPMediaFactory.__init__(self)
 
-    def do_create_element(self):
+    def do_create_element(self, url):
         pipelineCmd = ("alsasrc ! "
                         "queue ! "
                         "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
