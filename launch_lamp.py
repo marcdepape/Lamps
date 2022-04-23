@@ -538,15 +538,17 @@ if __name__ == '__main__':
 
     while True:
         while lamp.change:
-            lamp.console = "Switching... {}".format(self.state)
-            lamp.top_rotation = 0
-            lamp.bottom_rotation = 0
-            fadeOut()
-            if lamp.state != "streaming" and lamp.state != broadcasting:
+            lamp.console = "Switching..."
+
+            if lamp.state != "streaming" and lamp.state != "broadcasting":
                 if lamp.stream == -1:
                     lamp.state = "broadcasting"
                 else:
                     lamp.state = "streaming"
+
+            lamp.top_rotation = 0
+            lamp.bottom_rotation = 0
+            fadeOut()
 
             if lamp.state == "streaming":
                 changeListener()
