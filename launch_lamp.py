@@ -61,13 +61,35 @@ class ExtendedBin(Gst.Bin):
         #call base handler to enable message propagation
         Gst.Bin.do_handle_message(self,message)
 
-class RtspMediaFactory(GstRtspServer.RTSPMediaFactory):
+class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
 
     def __init__(self):
         GstRtspServer.RTSPMediaFactory.__init__(self)
 
-    def do_create_element(self, url):
-        pipelineCmd = "alsasrc ! queue ! audio/x-raw,format=S16LE,rate=44100,channels=1 ! audioconvert ! audiowsinclimit cutoff=100000 ! level name=wavelevel interval=50000000 post-messages=TRUE ! audioconvert ! queue ! vorbisenc quality=0.4 ! queue ! rtpvorbispay name=pay0 pt=96"
+    def do_create_element(self):
+        pipelineCmd = ("alsasrc ! "
+                        "queue ! "
+                        "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
+                        "audioconvert ! "
+                        "audiowsinclimit cutoff=200000 ! "
+                        "level name=wavelevel interval=50000000 "
+                        "post-messages=TRUE ! "
+                        "audioconvert ! "
+                        "queue ! "
+                        "vorbisenc quality=0.4 ! "
+                        "queue ! "
+                        "rtpvorbispay name=pay0 pt=96"
+                        ).format()
+
+                return ("rtspsrc latency=500 name={} ! "
+                        "queue ! "
+                        "rtpvorbisdepay ! "
+                        "vorbisdec ! "
+                        "audioamplify name={} ! "
+                        "audioconvert ! "
+                        "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
+                        "alsasink"
+                        ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
         self.pipeline = Gst.parse_launch(pipelineCmd)
         print ("Pipeline created: " + pipelineCmd)
