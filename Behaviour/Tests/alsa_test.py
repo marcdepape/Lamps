@@ -9,4 +9,4 @@ pcm = alsaaudio.PCM(alsaaudio.PCM_CAPTURE)
 mixer = alsaaudio.Mixer('Capture')
 print(mixer.volumecap())
 print("RANGE: {}".format(mixer.getrange(alsaaudio.PCM_CAPTURE)))
-mixer.setvolume(100)[alsaaudio.PCM_CAPTURE]
+mixer.setvolume(65536)
