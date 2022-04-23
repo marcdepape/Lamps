@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import zmq
 import json
+import alsaaudio
 from threading import Thread
 from time import sleep
 import subprocess
@@ -14,18 +15,20 @@ gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GObject, GLib, GstRtspServer
 
+Gst.init(None)
+
 this_lamp = subprocess.check_output('hostname')
 this_lamp = this_lamp.decode("utf-8")
 this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
 
-Gst.init(None)
-
 local_context = zmq.Context()
 local = local_context.socket(zmq.PUB)
 local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
+
+mixer = alsaaudio.Mixer()
 
 '''
 gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
@@ -508,6 +511,7 @@ if __name__ == '__main__':
     print("--------------------------------------------")
     print("LAUNCH LAMP")
     print("")
+    print()
 
     share = RTSP_Server(lamp_id)
     streamer = Streamer()
