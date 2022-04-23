@@ -241,8 +241,8 @@ class Lamp(object):
         if self.in_update["command"] != self.command:
             self.command = self.in_update["command"]
             if self.command == "start":
-                self.state = "start"
-                self.command = "complete"
+                #self.state = "start"
+                #self.command = "complete"
             if self.command == "complete":
                 self.console = "Complete..."
                 self.command = "null"
