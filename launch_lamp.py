@@ -339,10 +339,8 @@ class Lamp(object):
             if self.state == "streaming":
                 self.writeBulb(self.top_rotation)
                 self.writeBase(self.bottom_rotation)
-                #print("STREAMING: {} | {}".format(self.top_rotation,self.bottom_rotation))
             elif self.state == "broadcasting":
                 self.writeBulb(self.top_rotation)
-                #print("BROADCASTING: {} | {}".format(self.top_rotation,self.bottom_rotation))
 
             if self.top_rotation > 200 and self.state == "broadcasting" and self.command != "listen" and self.command != "complete":
                 print("MANUAL LISTEN!")
