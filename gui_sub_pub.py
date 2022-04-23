@@ -46,7 +46,7 @@ class LampProxy(object):
                                 "stream": "STREAM",
                                 "state": "STATE",
                                 "command": "none",
-                                "pulse": "PULSE"
+                                "pulse": "PULSE",
                                 "mic": 0,
                                 "console": "Waiting..."})
 
