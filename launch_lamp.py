@@ -80,7 +80,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
                         "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
                         "audioconvert ! "
                         "audiowsinclimit cutoff=40000 ! "
-                        "level name=wavelevel interval=10000000 "
+                        "level name=wavelevel interval=25000000 "
                         "post-messages=TRUE ! "
                         "audioconvert ! "
                         "queue ! "
