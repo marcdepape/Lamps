@@ -184,7 +184,7 @@ class Lamp(object):
         self.stream = 255
         self.change = False
         self.pulse_point = 65
-        self.record = 80
+        self.record = 0
         self.state = "?"
         self.in_update = ""
         self.out_status = ""
