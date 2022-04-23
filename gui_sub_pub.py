@@ -46,7 +46,7 @@ class LampProxy(object):
                                 "stream": "STREAM",
                                 "state": "STATE",
                                 "command": "none",
-                                "pulse": "PULSE",
+                                "pulse": 65,
                                 "mic": 0,
                                 "console": "Waiting..."})
 
@@ -68,6 +68,7 @@ class LampProxy(object):
                                         "rate": self.fade_rate,
                                         "peak": self.peak,
                                         "saturation": self.saturation,
+                                        "pulse": self.pulse_point,
                                         "command": self.command[lamp_id],
                                         "stream": self.listeners[lamp_id]})
                 self.backend.send_json(self.message)
