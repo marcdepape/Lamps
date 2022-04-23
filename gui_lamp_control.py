@@ -226,6 +226,7 @@ class Dashboard(GridLayout):
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp3.local sudo ./launch.sh &")
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp4.local sudo ./launch.sh &")
                 os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp5.local sudo ./launch.sh &")
+            lamp = 255
 
     def gloablStatus(self, message):
         self.global_status_2 = self.global_status_1
