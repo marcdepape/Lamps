@@ -39,6 +39,7 @@ for i in range(16, 40):
 while True:
     response = os.system("ping -c 1 downy.local")
     if response == 0:
+        print("LAMP {} IS PINGED!".format(lamp_id))
         sleep(10)
     else:
         print("LAMP {} IS PINGING...".format(lamp_id))
