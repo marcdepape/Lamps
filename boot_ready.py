@@ -6,6 +6,12 @@ import board
 import neopixel
 import os
 from time import sleep
+import subprocess
+
+this_lamp = subprocess.check_output('hostname')
+this_lamp = this_lamp.decode("utf-8")
+this_lamp = this_lamp.replace('lamp','',1)
+lamp_id = int(this_lamp)
 
 # Choose an open pin connected to the Data In of the NeoPixel strip, i.e. board.D18
 # NeoPixels must be connected to D10, D12, D18 or D21 to work.
@@ -35,4 +41,5 @@ while True:
     if response == 0:
         sleep(10)
     else:
+        print("LAMP {} IS PINGING...".format(lamp_id))
         sleep(1)
