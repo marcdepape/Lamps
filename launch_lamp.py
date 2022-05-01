@@ -542,13 +542,9 @@ if __name__ == '__main__':
     while lamp.state == "?":
         pass
 
-    sleep(10)
+    sleep(3)
 
-    while lamp.state == "start":
-        if lamp.stream == -1:
-            lamp.state = "broadcasting"
-        else:
-            lamp.state = "streaming"
+    lamp.change = True
 
     while True:
         while lamp.change:
@@ -573,7 +569,6 @@ if __name__ == '__main__':
                 streamer.mute()
                 lamp.console = "Broadcasting..."
                 lamp.change = False
-
 
         lamp.encoder()
         sleep(0.001)
