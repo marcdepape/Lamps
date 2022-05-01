@@ -32,8 +32,7 @@ for i in range(16, 40):
 
 while True:
     response = os.system("ping -c 1 downy.local")
-    print("RESPONSE: {}".format(response))
-    if response > 0:
+    if response == 0:
         sleep(10)
     else:
         sleep(1)
