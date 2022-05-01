@@ -4,6 +4,8 @@
 # Simple test for NeoPixels on Raspberry Pi
 import board
 import neopixel
+import os
+from time import sleep
 
 # Choose an open pin connected to the Data In of the NeoPixel strip, i.e. board.D18
 # NeoPixels must be connected to D10, D12, D18 or D21 to work.
@@ -27,3 +29,10 @@ for i in range(0, 16):
 for i in range(16, 40):
     neo[i] = (0,0,0);
     neo.show()
+
+while True:
+    response = os.system("ping -c 1 downy.local")
+    if response:
+        sleep(10)
+    else:
+        sleep(1)
