@@ -76,7 +76,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
 
     def do_create_element(self, url):
         pipelineCmd = ("alsasrc ! "
-                        "queue leaky=downstream max-size-buffers=16 ! "
+                        "queue max-size-buffers=512 ! "
                         "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
                         "audioconvert ! "
                         "audiowsinclimit cutoff=40000 ! "
