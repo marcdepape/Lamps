@@ -76,7 +76,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
 
     def do_create_element(self, url):
         pipelineCmd = ("alsasrc ! "
-                        "queue ! "
+                        "queue leaky=downstream max-size-buffers=16 ! "
                         "audio/x-raw,format=S16LE,rate=44100,channels=1 ! "
                         "audioconvert ! "
                         "audiowsinclimit cutoff=40000 ! "
@@ -84,7 +84,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
                         "post-messages=TRUE ! "
                         "audioconvert ! "
                         "queue ! "
-                        "vorbisenc quality=0.4 ! "
+                        "vorbisenc quality=0.3 ! "
                         "queue ! "
                         "rtpvorbispay name=pay0 pt=96"
                         ).format()
