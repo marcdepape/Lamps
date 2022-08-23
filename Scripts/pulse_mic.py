@@ -5,6 +5,7 @@ from RPi import GPIO
 import board
 import neopixel
 from time import sleep
+from threading import Thread
 
 class Lamp(object):
     def __init__(self):
