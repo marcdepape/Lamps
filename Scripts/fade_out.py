@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from RPi import GPIO
+import board
 import neopixel
 import subprocess
 from time import sleep
