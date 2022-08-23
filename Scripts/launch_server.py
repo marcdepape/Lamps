@@ -120,3 +120,6 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.start()
 
 lamp_server = RTSP_Server(lamp_id)
+
+while True:
+    pass
