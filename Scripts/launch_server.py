@@ -114,6 +114,7 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         mountPoints = self.rtspServer.get_mount_points()
         mountPoints.add_factory("/mic", self.factory)
         self.rtspServer.attach(None)
+        print("FACTORY!")
         print(self.factory.get_launch())
         print ("RTSP server is ready")
 
