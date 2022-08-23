@@ -127,6 +127,7 @@ class RTSP_Server(GstRtspServer.RTSPServer):
 
 class Lamp(object):
     def __init__(self):
+        self.fade_rate = 0.05
         self.saturation = 1.0
         self.pulse_point = 65
         self.mic_signal = 0.0
