@@ -34,7 +34,6 @@ mic2.setvolume(60)
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
     def do_handle_message(self,message):
-        print(message)
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
             print("ERROR:", message.src.get_name(), ":", error.message)
@@ -50,10 +49,10 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
-            print(name)
 
             if name == "level":
                 value = structure.get_value("rms")
+                print(value[0])
                 local.send_string(str(value[0]))
 
                 #level = value[0]
