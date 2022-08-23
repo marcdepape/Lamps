@@ -29,12 +29,13 @@ num_pixels = 40
 ORDER = neopixel.GRB
 pulse_min = 65
 pulse_max = 95
+fade_rate = 0.05
 
 neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
 
-def pulse(self, rms):
+def pulse(rms):
     bottom_bright = 100 + float(rms)
     bottom_bright = constrain(bottom_bright, pulse_min, pulse_max)
     bottom_bright = mapRange(bottom_bright, pulse_min, pulse_max, 0, 255)
@@ -46,20 +47,20 @@ def pulse(self, rms):
 
     writeBase(bottom_bright)
 
-def mapRange(self, x, in_min, in_max, out_min, out_max):
+def mapRange(x, in_min, in_max, out_min, out_max):
   return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
 
-def constrain(self, val, min_val, max_val):
+def constrain(val, min_val, max_val):
     return min(max_val, max(min_val, val))
 
-def writeBulb(self, value):
+def writeBulb(value):
     top_bright = value
     intensity = int(top_bright * saturation)
     for i in range(16):
         neo[i] = (intensity,intensity,intensity);
     neo.show()
 
-def writeBase(self, value):
+def writeBase(value):
     intensity = int(value * saturation)
     for i in range(16, num_pixels):
         neo[i] = (intensity,intensity,intensity);
@@ -158,6 +159,15 @@ class RTSP_Server(GstRtspServer.RTSPServer):
 
 
 if __name__ == '__main__':
+    writeBase(0)
+
+    top_bright = 255
+
+    while top_bright > 0:
+        top_bright = top_bright - 1
+        writeBulb(top_bright)
+        sleep(fade_rate)
+
     lamp_server = RTSP_Server(lamp_id)
 
     while True:
