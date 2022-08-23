@@ -2,8 +2,13 @@
 import zmq
 import json
 import alsaaudio
-import subprocess
 from threading import Thread
+from time import sleep
+import subprocess
+import board
+from RPi import GPIO
+import neopixel
+import os
 
 import gi
 gi.require_version('Gst', '1.0')
