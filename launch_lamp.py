@@ -42,7 +42,6 @@ gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
     def do_handle_message(self,message):
-        print(message)
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
             print("ERROR:", message.src.get_name(), ":", error.message)

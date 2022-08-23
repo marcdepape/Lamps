@@ -132,5 +132,12 @@ if __name__ == '__main__':
         stream_state = streamer.change(lamp_num)
         sleep(1)
 
+    streamer.volume = 0
+
+    while streamer.volume < streamer.peak:
+        self.volume = self.volume + 0.01
+        self.audioamplify.set_property('amplification', self.volume)
+        sleep(fade_rate)
+
     while True:
         sleep(0.01)
