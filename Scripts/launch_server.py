@@ -126,8 +126,5 @@ if __name__ == '__main__':
 
     lamp_server = RTSP_Server(lamp_id)
 
-    mic = Thread(target=lamp.micLevels, args=())
-    mic.start()
-
     while True:
         pass
