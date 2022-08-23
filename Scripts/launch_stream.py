@@ -81,6 +81,7 @@ class Streamer(object):
         self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
         self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
         self.volume = 0
+        self.peak = 1.5
 
         print("pipeline:", self.pipeline_string)
 
