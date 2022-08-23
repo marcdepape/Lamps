@@ -72,7 +72,7 @@ class Lamp(object):
     def constrain(self, val, min_val, max_val):
         return min(max_val, max(min_val, val))
 
-lamp = Lamp(lamp_id)
+lamp = Lamp()
 lamp.writeBase(0)
 
 lamp.top_bright = 255
