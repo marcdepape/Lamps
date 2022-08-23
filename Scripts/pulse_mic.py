@@ -30,9 +30,13 @@ class Lamp(object):
 
     def micLevels(self):
             self.mic_signal = self.levels.recv_string()
-            print(self.mic_signal)
+
 
             if self.mic_signal != "error":
+                if self.mic_signal == "loop":
+                    print("THIS IS A LOOP")
+                else:
+                    print(self.mic_signal)
                     self.pulse(self.mic_signal)
             else:
                 for i in range(16, self.num_pixels):

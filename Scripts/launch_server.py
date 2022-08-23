@@ -53,14 +53,9 @@ class ExtendedBin(Gst.Bin):
 
 
             if name == "level":
-
                 value = structure.get_value("rms")
-
-                print(str(name) + " " + str(value[0]))
-
                 local.send_string(str(value[0]))
-
-                #level = value[0]
+                #print(str(name) + " " + str(value[0]))
         else :
             pass
             #print("Some other message type: " + str(message.type))
@@ -128,110 +123,9 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.daemon = True
         m.start()
 
-class Lamp(object):
-    def __init__(self):
-        self.saturation = 1.0
-        self.pulse_point = 65
-        self.mic_signal = 0.0
-        self.top_bright = 0
-        self.bottom_bright = 0
-
-        # NeoPixel
-        self.pixel_pin = board.D12
-        self.num_pixels = 40
-        self.neo = neopixel.NeoPixel(
-            self.pixel_pin, self.num_pixels, brightness=1.0, auto_write=False, pixel_order=neopixel.GRB
-        )
-        self.setOff()
-
-        # CLIENT
-        levels_context = zmq.Context()
-        self.levels = levels_context.socket(zmq.SUB)
-        self.levels.connect("tcp://localhost:8103")
-        self.levels.setsockopt(zmq.SUBSCRIBE, b'')
-        self.levels.set_hwm(1)
-
-    def micLevels(self):
-            self.mic_signal = self.levels.recv_string()
-            print(self.mic_signal)
-
-            if self.mic_signal != "error":
-                    self.pulse(self.mic_signal)
-            else:
-                for i in range(16, self.num_pixels):
-                    self.neo[i] = (255,0,0);
-
-    def pulse(self, rms):
-        self.bottom_bright = 100 + float(rms)
-        self.bottom_bright = self.constrain(self.bottom_bright, self.pulse_point, 95)
-        self.bottom_bright = self.mapRange(self.bottom_bright, self.pulse_point, 95, 0, 255)
-
-        if self.bottom_bright < 0:
-            self.bottom_bright = 0
-        if self.bottom_bright > 255:
-            self.bottom_bright = 255
-
-        self.writeBase(self.bottom_bright)
-
-    def changeBase(self, value):
-        value = self.mapRange(value, 0, 100, 0, 255)
-        self.bottom_bright = self.bottom_bright + value
-
-        if self.bottom_bright < 0:
-            self.bottom_bright = 0
-        if self.bottom_bright > 255:
-            self.bottom_bright = 255
-
-        self.writeBase(self.bottom_bright)
-
-    def writeBase(self, value):
-        self.top_bright = value
-        intensity = int(self.top_bright * self.saturation)
-        for i in range(16, self.num_pixels):
-            self.neo[i] = (intensity,intensity,intensity);
-        self.neo.show()
-
-    def changeBulb(self, value):
-        value = self.mapRange(value, 0, 100, 0, 255)
-        self.top_bright = self.top_bright + value
-
-        if self.top_bright < 0:
-            self.top_bright = 0
-        if self.top_bright > 255:
-            self.top_bright = 255
-
-        self.writeBulb(self.top_bright)
-
-    def writeBulb(self, value):
-        self.top_bright = value
-        intensity = int(self.top_bright * self.saturation)
-        for i in range(16):
-            self.neo[i] = (intensity,intensity,intensity);
-        self.neo.show()
-
-    def setOff(self):
-        for i in range(40):
-            self.neo[i] = (0,0,0);
-        self.neo.show()
-
-    def mapRange(self, x, in_min, in_max, out_min, out_max):
-      return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
-
-    def constrain(self, val, min_val, max_val):
-        return min(max_val, max(min_val, val))
-
 if __name__ == '__main__':
-    print("")
-    print("--------------------------------------------")
-    print("LAUNCH LAMP")
-    print("")
-    print()
-
     lamp_server = RTSP_Server(lamp_id)
-    #lamp = Lamp()
-
-    sleep(3)
 
     while True:
-        #lamp.micLevels()
-        sleep(0.001)
+        local.send_string("loop")
+        sleep(1)
