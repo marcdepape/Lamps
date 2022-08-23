@@ -32,16 +32,17 @@ class Lamp(object):
     def micLevels(self):
             self.mic_signal = self.levels.recv_string()
 
-
-            if self.mic_signal != "error":
-                if self.mic_signal == "loop":
-                    print("THIS IS A LOOP")
-                else:
-                    print(self.mic_signal)
-                    self.pulse(self.mic_signal)
+            if self.mic_signal == "loop":
+                print("THIS IS A LOOP")
             else:
-                for i in range(16, self.num_pixels):
-                    self.neo[i] = (255,0,0);
+                print(self.mic_signal)
+                self.pulse(self.mic_signal)
+
+            #if self.mic_signal != "error":
+
+            #else:
+            #    for i in range(16, self.num_pixels):
+            #        self.neo[i] = (255,0,0);
 
     def pulse(self, rms):
         self.bottom_bright = 100 + float(rms)
@@ -107,6 +108,9 @@ class Lamp(object):
 if __name__ == '__main__':
     lamp = Lamp()
 
+    mic = Thread(target=lamp.micLevels, args=())
+    mic.start()
+
     while True:
-        lamp.micLevels()
+        pass
         sleep(0.01)
