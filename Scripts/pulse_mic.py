@@ -108,3 +108,4 @@ if __name__ == '__main__':
 
     while True:
         lamp.micLevels()
+        sleep(0.01)
