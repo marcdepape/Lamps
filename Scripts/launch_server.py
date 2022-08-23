@@ -54,6 +54,7 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
+            check_lamp()
 
             if name == "level":
                 level = structure.get_value("rms")
