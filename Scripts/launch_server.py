@@ -180,7 +180,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        print("RMS PULSE: " + str(rms))
+        #print("RMS PULSE: " + str(rms))
         self.writeBase(self.bottom_bright)
 
     def changeBase(self, value):
