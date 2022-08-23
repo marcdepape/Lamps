@@ -55,7 +55,7 @@ class ExtendedBin(Gst.Bin):
             if name == "level":
                 level = structure.get_value("rms")
                 rms_level = level[0]
-                print("RMS BIN": " + str(rms_level))
+                print("RMS BIN: " + str(rms_level))
                 #local.send_string(str(value[0]))
 
         else :
