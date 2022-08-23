@@ -28,8 +28,16 @@ local = local_context.socket(zmq.PUB)
 local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
 
+#mic1 = alsaaudio.Mixer('Mic 1')
 mic2 = alsaaudio.Mixer('Mic 2')
+#ADC = alsaaudio.Mixer('ADC')
+#ADC.setvolume(80)
+#mic1.setvolume(0)
 mic2.setvolume(60)
+
+'''
+gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+'''
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
@@ -121,9 +129,59 @@ class RTSP_Server(GstRtspServer.RTSPServer):
 
 
 
+#------------------------------------------------------------------------------
+
 if __name__ == '__main__':
-    
-    lamp_server = RTSP_Server(lamp_id)
+    print("")
+    print("--------------------------------------------")
+    print("LAUNCH LAMP")
+    print("")
+    print()
+
+    share = RTSP_Server(lamp_id)
+    streamer = Streamer()
+    lamp = Lamp(lamp_id)
+
+    publisher = Thread(target=lamp.statusOut, args=())
+    publisher.start()
+    subscriber = Thread(target=lamp.updateIn, args=())
+    subscriber.start()
+    mic = Thread(target=lamp.micLevels, args=())
+    mic.start()
+
+    lamp.writeBulb(0)
+    lamp.writeBase(0)
+
+    while lamp.state == "?":
+        pass
+
+    sleep(3)
+
+    lamp.change = True
 
     while True:
-        pass
+        while lamp.change:
+            lamp.console = "Switching..."
+
+            if lamp.state != "streaming" and lamp.state != "broadcasting":
+                if lamp.stream == -1:
+                    lamp.state = "broadcasting"
+                else:
+                    lamp.state = "streaming"
+
+            lamp.top_rotation = 0
+            lamp.bottom_rotation = 0
+            fadeOut()
+
+            if lamp.state == "streaming":
+                changeListener()
+                fadeIn()
+                lamp.console = "Streaming..."
+                lamp.change = False
+            elif lamp.state == "broadcasting":
+                streamer.mute()
+                lamp.console = "Broadcasting..."
+                lamp.change = False
+
+        lamp.encoder()
+        sleep(0.001)
