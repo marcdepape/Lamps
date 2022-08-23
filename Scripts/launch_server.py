@@ -34,6 +34,7 @@ mic2.setvolume(60)
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
     def do_handle_message(self,message):
+        print(message)
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
             print("ERROR:", message.src.get_name(), ":", error.message)
@@ -121,11 +122,9 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.daemon = True
         m.start()
 
-
-
 if __name__ == '__main__':
 
     lamp_server = RTSP_Server(lamp_id)
 
     while True:
-        pass
+        sleep(0.001)
