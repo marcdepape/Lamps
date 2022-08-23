@@ -1,14 +1,65 @@
 #!/usr/bin/env python
-import argparse
 import alsaaudio
+from threading import Thread
 from time import sleep
 import subprocess
+import board
+from RPi import GPIO
+import neopixel
+import os
+
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 Gst.init(None)
+
+mic2 = alsaaudio.Mixer('Mic 2')
+mic2.setvolume(60)
+
+pixel_pin = board.D12
+num_pixels = 40
+ORDER = neopixel.GRB
+pulse_min = 65
+pulse_max = 95
+fade_rate = 0.05
+saturation = 1.0
+
+neo = neopixel.NeoPixel(
+    pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
+)
+
+def pulse(rms):
+    bottom_bright = 100 + float(rms)
+    bottom_bright = constrain(bottom_bright, pulse_min, pulse_max)
+    bottom_bright = mapRange(bottom_bright, pulse_min, pulse_max, 0, 255)
+
+    if bottom_bright < 0:
+        bottom_bright = 0
+    if bottom_bright > 255:
+        bottom_bright = 255
+
+    writeBase(bottom_bright)
+
+def mapRange(x, in_min, in_max, out_min, out_max):
+  return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
+
+def constrain(val, min_val, max_val):
+    return min(max_val, max(min_val, val))
+
+def writeBulb(value):
+    top_bright = value
+    intensity = int(top_bright * saturation)
+    for i in range(16):
+        neo[i] = (intensity,intensity,intensity);
+    neo.show()
+
+def writeBase(value):
+    intensity = int(value * saturation)
+    for i in range(16, num_pixels):
+        neo[i] = (intensity,intensity,intensity);
+    neo.show()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--num',
@@ -73,8 +124,10 @@ class Streamer(object):
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
 if __name__ == '__main__':
+
     streamer = Streamer()
-    streamer.change(lamp_num)
+    while !streamer.change(lamp_num):
+        pass
 
     while True:
-        pass
+        sleep(0.01)

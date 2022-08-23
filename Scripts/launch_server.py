@@ -156,9 +156,6 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.daemon = True
         m.start()
 
-
-
-
 if __name__ == '__main__':
     writeBase(0)
 
