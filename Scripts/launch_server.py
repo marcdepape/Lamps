@@ -27,7 +27,7 @@ mic2.setvolume(60)
 pixel_pin = board.D12
 num_pixels = 40
 ORDER = neopixel.GRB
-pulse_min = 60
+pulse_min = 50
 pulse_max = 95
 fade_rate = 0.025
 saturation = 1.0
