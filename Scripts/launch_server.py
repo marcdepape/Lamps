@@ -73,7 +73,6 @@ class ExtendedBin(Gst.Bin):
             print("ERROR:", message.src.get_name(), ":", error.message)
             if debug:
                 print ("Debug info: " + debug)
-            #local.send_string("error")
         elif message.type == Gst.MessageType.EOS:
             print ("End of stream")
         elif message.type == Gst.MessageType.STATE_CHANGED:
