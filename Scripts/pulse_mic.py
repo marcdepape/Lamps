@@ -110,9 +110,9 @@ class Lamp(object):
 if __name__ == '__main__':
     lamp = Lamp()
 
-    mic = Thread(target=lamp.micLevels, args=())
-    mic.start()
+    #mic = Thread(target=lamp.micLevels, args=())
+    #mic.start()
 
     while True:
-        pass
+        lamp.micLevels()
         sleep(0.01)
