@@ -123,8 +123,15 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.start()
 
 if __name__ == '__main__':
+    print("")
+    print("--------------------------------------------")
+    print("LAUNCH LAMP")
+    print("")
+    print()
 
     lamp_server = RTSP_Server(lamp_id)
+
+    sleep(3)
 
     while True:
         sleep(0.001)
