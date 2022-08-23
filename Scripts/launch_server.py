@@ -53,6 +53,7 @@ class ExtendedBin(Gst.Bin):
             if name == "level":
                 value = structure.get_value("rms")
                 local.send_string(str(value[0]))
+                print(str(value[0]))
                 #level = value[0]
         else :
             pass
@@ -122,7 +123,7 @@ class RTSP_Server(GstRtspServer.RTSPServer):
 
 
 if __name__ == '__main__':
-    
+
     lamp_server = RTSP_Server(lamp_id)
 
     while True:
