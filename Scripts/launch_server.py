@@ -56,7 +56,7 @@ class ExtendedBin(Gst.Bin):
 
                 value = structure.get_value("rms")
 
-                print(name + " " + value[0])
+                print(str(name) + " " + str(value[0]))
 
                 local.send_string(str(value[0]))
 
