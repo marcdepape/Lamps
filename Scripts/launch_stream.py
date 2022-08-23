@@ -126,8 +126,10 @@ class Streamer(object):
 if __name__ == '__main__':
 
     streamer = Streamer()
-    while !streamer.change(lamp_num):
-        pass
+    stream_state = -1
+    while stream_state == -1:
+        stream_state = streamer.change(lamp_num)
+        sleep(1)
 
     while True:
         sleep(0.01)
