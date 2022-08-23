@@ -30,6 +30,7 @@ class Lamp(object):
 
     def micLevels(self):
             self.mic_signal = self.levels.recv_string()
+            print(self.mic_signal)
 
             if self.mic_signal != "error":
                     self.pulse(self.mic_signal)
