@@ -227,8 +227,8 @@ class Lamp(object):
 if __name__ == '__main__':
     lamp_server = RTSP_Server(lamp_id)
 
-    lamp = lamp()
+    bulb = Lamp()
 
     while True:
-        lamp.pulse(rms_level)
+        bulb.pulse(rms_level)
         sleep(0.01)
