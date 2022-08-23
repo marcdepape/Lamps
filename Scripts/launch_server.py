@@ -49,12 +49,12 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
-            print("MESSAGE: " + str(name))
 
             if name == "level":
                 value = structure.get_value("rms")
+                print(str(name) + ": " + str(value[0]))
                 local.send_string(str(value[0]))
-                #print(str(name) + " " + str(value[0]))
+
         else :
             pass
             #print("Some other message type: " + str(message.type))
