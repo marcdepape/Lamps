@@ -140,6 +140,15 @@ if __name__ == '__main__':
         stream_state = streamer.change(lamp_num)
         sleep(1)
 
+    writeBase(0)
+
+    top_bright = 0
+
+    while top_bright < 255:
+        top_bright = top_bright + 1
+        writeBulb(top_bright)
+        sleep(fade_rate)
+
     streamer.fadeIn(fade_rate)
 
     while True:
