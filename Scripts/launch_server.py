@@ -226,10 +226,18 @@ class Lamp(object):
 
 
 if __name__ == '__main__':
+    lamp = Lamp()
+
+    lamp.writeBase(0)
+
+    lamp.top_bright = 255
+
+    while lamp.top_bright > 0:
+        lamp.changeBulb(-1)
+        sleep(lamp.fade_rate)
+
     lamp_server = RTSP_Server(lamp_id)
 
-    bulb = Lamp()
-
     while True:
-        bulb.pulse(rms_level)
-        sleep(0.1)
+        lamp.pulse(rms_level)
+        sleep(0.01)
