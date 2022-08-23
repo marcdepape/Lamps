@@ -35,6 +35,10 @@ mic2.setvolume(60)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
+    def __init__(self, this_lamp):
+        print("EXTENDED BIN INIT!")
+        lamp_bulb = this_lamp
+
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
