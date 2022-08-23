@@ -2,6 +2,7 @@
 import zmq
 import json
 from RPi import GPIO
+import board
 import neopixel
 
 class Lamp(object):
@@ -99,6 +100,6 @@ class Lamp(object):
 
 if __name__ == '__main__':
     lamp = Lamp()
-    
+
     while True:
         lamp.micLevels()
