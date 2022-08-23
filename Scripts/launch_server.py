@@ -50,10 +50,13 @@ class ExtendedBin(Gst.Bin):
             structure = message.get_structure()
             name = structure.get_name()
 
-            print(name)
+
 
             if name == "level":
+
                 value = structure.get_value("rms")
+
+                print(name + " " + value[0])
 
                 local.send_string(str(value[0]))
 
