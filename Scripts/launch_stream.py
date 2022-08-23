@@ -24,7 +24,7 @@ num_pixels = 40
 ORDER = neopixel.GRB
 pulse_min = 65
 pulse_max = 95
-fade_rate = 0.05
+fade_rate = 0.025
 saturation = 1.0
 
 neo = neopixel.NeoPixel(
