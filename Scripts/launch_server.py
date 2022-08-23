@@ -39,7 +39,7 @@ class ExtendedBin(Gst.Bin):
             print("ERROR:", message.src.get_name(), ":", error.message)
             if debug:
                 print ("Debug info: " + debug)
-            local.send_string("error")
+            #local.send_string("error")
         elif message.type == Gst.MessageType.EOS:
             print ("End of stream")
         elif message.type == Gst.MessageType.STATE_CHANGED:
@@ -49,9 +49,8 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
-
-
-
+            print("MESSAGE: " + String(message))
+            
             if name == "level":
                 value = structure.get_value("rms")
                 local.send_string(str(value[0]))
