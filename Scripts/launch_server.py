@@ -94,7 +94,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
         print ("Pipeline created: " + pipelineCmd)
 
         # creates extended Gst.Bin with message debugging enabled
-        extendedBin = ExtendedBin("extendedBin")
+        extendedBin = ExtendedBin("extendedBin", lamp_bulb)
 
         # Gst.pipeline inherits Gst.Bin and Gst.Element so following is possible
         extendedBin.add(self.pipeline)
