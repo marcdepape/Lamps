@@ -33,13 +33,12 @@ class Lamp(object):
     def micLevels(self):
             print("micLevels")
             self.mic_signal = self.levels.recv_string()
-            self.pulse(self.mic_signal)
 
-            #if self.mic_signal == "loop":
-            #    print("THIS IS A LOOP")
-            #else:
-            #    print(self.mic_signal)
-            #    self.pulse(self.mic_signal)
+            if self.mic_signal == "loop":
+                print("THIS IS A LOOP")
+            else:
+                print(self.mic_signal)
+                self.pulse(self.mic_signal)
 
             #if self.mic_signal != "error":
 
