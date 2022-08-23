@@ -4,6 +4,7 @@ import json
 from RPi import GPIO
 import board
 import neopixel
+from time import sleep
 
 class Lamp(object):
     def __init__(self):
