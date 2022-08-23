@@ -35,10 +35,8 @@ mic2.setvolume(60)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
-    def __init__(self, this_lamp):
-        print("EXTENDED BIN INIT!")
-        lamp_bulb = this_lamp
-
+    def check_lamp(self):
+        print("CHECKING LAMP HERE!")
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
@@ -55,7 +53,7 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
-
+            check_lamp()
             if name == "level":
                 level = structure.get_value("rms")
                 rms_level = level[0]
@@ -94,7 +92,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
         print ("Pipeline created: " + pipelineCmd)
 
         # creates extended Gst.Bin with message debugging enabled
-        extendedBin = ExtendedBin("extendedBin", lamp_bulb)
+        extendedBin = ExtendedBin("extendedBin")
 
         # Gst.pipeline inherits Gst.Bin and Gst.Element so following is possible
         extendedBin.add(self.pipeline)
