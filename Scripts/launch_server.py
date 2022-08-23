@@ -33,10 +33,11 @@ rms_level = 1024
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
+def check_lamp():
+    print("CHECKING LAMP!")
+
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
-    def check_lamp(self):
-        print("CHECKING LAMP HERE!")
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
@@ -53,7 +54,7 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
-            check_lamp()
+
             if name == "level":
                 level = structure.get_value("rms")
                 rms_level = level[0]
