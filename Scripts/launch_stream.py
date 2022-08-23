@@ -111,7 +111,7 @@ class Streamer(object):
         self.volume = self.volume + change
         self.audioamplify.set_property('amplification', self.volume)
 
-    def fadeIn(rate):
+    def fadeIn(self, rate):
         self.volume = 0
         while self.volume < self.peak:
             self.volume = self.volume + 0.01
