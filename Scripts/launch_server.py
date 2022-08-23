@@ -51,7 +51,6 @@ class ExtendedBin(Gst.Bin):
             name = structure.get_name()
 
             if name == "level":
-                print("RMS:" + str(value[0]))
                 value = structure.get_value("rms")
                 local.send_string(str(value[0]))
 
@@ -126,6 +125,9 @@ class RTSP_Server(GstRtspServer.RTSPServer):
 if __name__ == '__main__':
 
     lamp_server = RTSP_Server(lamp_id)
+
+    mic = Thread(target=lamp.micLevels, args=())
+    mic.start()
 
     while True:
         pass
