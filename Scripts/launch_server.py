@@ -28,13 +28,13 @@ local = local_context.socket(zmq.PUB)
 local.bind("tcp://127.0.0.1:8103")
 local.set_hwm(1)
 
-rms_level = 0
+rms_level = 1024
 
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
-class ExtendedBin(Gst.Bin, lamp_bulb):
+class ExtendedBin(Gst.Bin):
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
@@ -55,8 +55,7 @@ class ExtendedBin(Gst.Bin, lamp_bulb):
             if name == "level":
                 level = structure.get_value("rms")
                 rms_level = level[0]
-                print(str(name) + ": " + str(value[0]))
-                lamp_bulb.pulse(rms_level)
+                print("RMS BIN": " + str(rms_level))
                 #local.send_string(str(value[0]))
 
         else :
@@ -91,7 +90,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
         print ("Pipeline created: " + pipelineCmd)
 
         # creates extended Gst.Bin with message debugging enabled
-        extendedBin = ExtendedBin("extendedBin", lamp_bulb)
+        extendedBin = ExtendedBin("extendedBin")
 
         # Gst.pipeline inherits Gst.Bin and Gst.Element so following is possible
         extendedBin.add(self.pipeline)
@@ -177,7 +176,7 @@ class Lamp(object):
         if self.bottom_bright > 255:
             self.bottom_bright = 255
 
-        print("PULSE: " + str(self.bottom_bright))
+        print("RMS PULSE: " + str(rms))
         self.writeBase(self.bottom_bright)
 
     def changeBase(self, value):
