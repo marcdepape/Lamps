@@ -96,9 +96,8 @@ class ExtendedBin(Gst.Bin):
 
 class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
 
-    def __init__(self, this_lamp):
+    def __init__(self):
         GstRtspServer.RTSPMediaFactory.__init__(self)
-        lamp_bulb = this_lamp
 
     def do_create_element(self, url):
         pipelineCmd = ("alsasrc ! "
@@ -131,7 +130,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
         return self.extendedPipeline
 
 class RTSP_Server(GstRtspServer.RTSPServer):
-    def __init__(self, this_lamp, lamp_number):
+    def __init__(self, lamp_number):
         self.rtspServer = GstRtspServer.RTSPServer()
 
         self.address = 'lamp{}.local'.format(lamp_number)
@@ -140,7 +139,7 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         self.rtspServer.set_address(self.address)
         self.rtspServer.set_service(self.port)
 
-        self.factory = RtspMediaFactory(this_lamp)
+        self.factory = RtspMediaFactory()
         self.factory.set_shared(True)
         mountPoints = self.rtspServer.get_mount_points()
         mountPoints.add_factory("/mic", self.factory)
@@ -159,7 +158,7 @@ class RTSP_Server(GstRtspServer.RTSPServer):
 
 
 if __name__ == '__main__':
-    lamp_server = RTSP_Server(lamp, lamp_id)
+    lamp_server = RTSP_Server(lamp_id)
 
     while True:
         sleep(0.01)
