@@ -53,7 +53,8 @@ class ExtendedBin(Gst.Bin):
             name = structure.get_name()
 
             if name == "level":
-                rms_level = structure.get_value("rms")
+                level = structure.get_value("rms")
+                rms_level = value[0]
                 #print(str(name) + ": " + str(value[0]))
                 #local.send_string(str(value[0]))
 
@@ -231,4 +232,4 @@ if __name__ == '__main__':
 
     while True:
         bulb.pulse(rms_level)
-        sleep(0.01)
+        sleep(0.1)
