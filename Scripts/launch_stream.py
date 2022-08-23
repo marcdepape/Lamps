@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import alsaaudio
+import argparse
 from threading import Thread
 from time import sleep
 import subprocess
