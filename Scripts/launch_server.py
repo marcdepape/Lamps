@@ -225,10 +225,10 @@ if __name__ == '__main__':
     print()
 
     lamp_server = RTSP_Server(lamp_id)
-    lamp = Lamp()
+    #lamp = Lamp()
 
     sleep(3)
 
     while True:
-        lamp.micLevels()
+        #lamp.micLevels()
         sleep(0.001)
