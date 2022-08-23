@@ -239,7 +239,7 @@ if __name__ == '__main__':
         lamp.changeBulb(-1)
         sleep(lamp.fade_rate)
 
-    lamp_server = RTSP_Server(lamp_id)
+    lamp_server = RTSP_Server(lamp, lamp_id)
 
     while True:
         lamp.pulse(rms_level)
