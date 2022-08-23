@@ -69,7 +69,7 @@ parser.add_argument('--num',
                     type=int,
                     )
 args = parser.parse_args()
-lamp_num = args.numd
+lamp_num = args.num
 
 class Streamer(object):
     def __init__(self):
