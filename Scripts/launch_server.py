@@ -34,7 +34,7 @@ mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
-class ExtendedBin(Gst.Bin):
+class ExtendedBin(Gst.Bin, lamp_bulb):
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
@@ -55,7 +55,8 @@ class ExtendedBin(Gst.Bin):
             if name == "level":
                 level = structure.get_value("rms")
                 rms_level = level[0]
-                #print(str(name) + ": " + str(value[0]))
+                print(str(name) + ": " + str(value[0]))
+                lamp_bulb.pulse(rms_level)
                 #local.send_string(str(value[0]))
 
         else :
@@ -67,8 +68,9 @@ class ExtendedBin(Gst.Bin):
 
 class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
 
-    def __init__(self):
+    def __init__(self, this_lamp):
         GstRtspServer.RTSPMediaFactory.__init__(self)
+        lamp_bulb = this_lamp
 
     def do_create_element(self, url):
         pipelineCmd = ("alsasrc ! "
@@ -89,7 +91,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
         print ("Pipeline created: " + pipelineCmd)
 
         # creates extended Gst.Bin with message debugging enabled
-        extendedBin = ExtendedBin("extendedBin")
+        extendedBin = ExtendedBin("extendedBin", lamp_bulb)
 
         # Gst.pipeline inherits Gst.Bin and Gst.Element so following is possible
         extendedBin.add(self.pipeline)
@@ -101,7 +103,7 @@ class RtspMediaFactory(GstRtspServer.RTSPMediaFactory, ):
         return self.extendedPipeline
 
 class RTSP_Server(GstRtspServer.RTSPServer):
-    def __init__(self, lamp_number):
+    def __init__(self, this_lamp, lamp_number):
         self.rtspServer = GstRtspServer.RTSPServer()
 
         self.address = 'lamp{}.local'.format(lamp_number)
@@ -110,7 +112,7 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         self.rtspServer.set_address(self.address)
         self.rtspServer.set_service(self.port)
 
-        self.factory = RtspMediaFactory()
+        self.factory = RtspMediaFactory(this_lamp)
         self.factory.set_shared(True)
         mountPoints = self.rtspServer.get_mount_points()
         mountPoints.add_factory("/mic", self.factory)
