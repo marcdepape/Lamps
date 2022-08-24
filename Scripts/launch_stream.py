@@ -26,9 +26,6 @@ mic2.setvolume(60)
 
 #master = alsaaudio.Mixer('Master')
 
-print("MASTER VOLUME---------")
-print(master.getvolume())
-
 pixel_pin = board.D12
 num_pixels = 40
 ORDER = neopixel.GRB
