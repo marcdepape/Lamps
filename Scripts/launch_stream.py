@@ -109,7 +109,7 @@ def transition():
                     fade_up = True
                     fade_base = False
             writeBase(bottom_bright)
-        sleep(fade_rate)
+        sleep(fade_rate/2)
 
     print("STOP FADING!")
 
