@@ -31,11 +31,7 @@ pulse_min = 60
 pulse_max = 95
 fade_rate = 0.025
 saturation = 1.0
-top_bright = 0
-bottom_bright = 0
-fade_bulb = True
-fade_base = False
-fade_up = True
+fading = True
 
 neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
@@ -73,6 +69,11 @@ def writeBase(value):
     neo.show()
 
 def transition():
+    top_bright = 0
+    bottom_bright = 0
+    fade_bulb = True
+    fade_base = False
+    fade_up = True
     writeBase(0)
 
     if top_bright < 255:
@@ -84,7 +85,7 @@ def transition():
         fade_up = False
         fade_base = False
 
-    while True:
+    while fading:
         if fade_bulb == True and fade_base == False:
             if fade_up:
                 if top_bright < 255:
@@ -114,6 +115,8 @@ def transition():
                     fade_base = False
             writeBase(bottom_bright)
         sleep(fade_rate)
+
+    print("STOP FADING!")
 
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
