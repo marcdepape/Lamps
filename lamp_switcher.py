@@ -81,6 +81,7 @@ def shuffleLamps():
             broadcast_lamps.append(assignment)
             broadcast_count[assignment] = broadcast_count[assignment] + 1
             broadcasts = broadcasts + 1
+            stream_count[assignment] = 0
 
     print("BROADCASTERS----------------------")
     print(broadcast_lamps)
@@ -92,6 +93,7 @@ def shuffleLamps():
                 new_states[i] = assignment
                 broadcast_lamps.remove(assignment)
                 stream_count[i] = stream_count[i] + 1
+                broadcast_count[i] = 0
 
     print("BROADCAST COUNT----------------------")
     print(broadcast_count)
