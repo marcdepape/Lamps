@@ -19,7 +19,8 @@ Gst.init(None)
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
-#master = alsaaudio.Mixer('Master')
+print("VOLUME--------------")
+print(alsaaudio.Mixer.getvolume())
 
 pixel_pin = board.D12
 num_pixels = 40
