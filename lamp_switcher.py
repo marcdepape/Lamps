@@ -89,12 +89,12 @@ def shuffleLamps():
             while new_states[i] == default:
                 if not broadcast_lamps:
                     new_states[i] = assignment
-                    stream_count[assignment] = stream_count[assignment] + 1
+                    stream_count[i] = stream_count[i] + 1
                 else:
                     assignment = random.choice(broadcast_lamps)
                     new_states[i] = assignment
                     broadcast_lamps.remove(assignment)
-                    stream_count[assignment] = stream_count[assignment] + 1
+                    stream_count[i] = stream_count[i] + 1
 
     print("BROADCAST COUNT----------------------")
     print(broadcast_count)
