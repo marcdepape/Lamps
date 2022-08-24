@@ -16,7 +16,7 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 Gst.init(None)
 
-m = alsaaudio.Mixer()
+m = alsaaudio.Mixer('PCM')
 vol = m.getvolume()[0]
 
 print("VOLUME----------------------")
