@@ -79,7 +79,7 @@ def transition():
         fade_bulb = True
         fade_up = True
         fade_base = False
-    else top_bright == 255:
+    elif top_bright == 255:
         fade_bulb = True
         fade_up = False
         fade_base = False
