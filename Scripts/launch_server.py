@@ -214,7 +214,7 @@ if __name__ == '__main__':
 
     lamp_server = RTSP_Server(lamp_id)
 
-    fader.pause()
+    fading = False
 
     if fade_bulb:
         while top_bright > 0:
