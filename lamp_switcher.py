@@ -131,4 +131,7 @@ if __name__ == '__main__':
         shuffleLamps()
         print("UPDATE STATES-------------------")
         updateStates()
-        sleep(30)
+        cycle = random.randint(90, 180)
+        print("NEXT CYCLE------------------")
+        print(cycle)
+        sleep(cycle)
