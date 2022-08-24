@@ -57,7 +57,9 @@ def shuffleLamps():
     broadcasts = 0
     streams = 0
 
-    new_states = [default for i in range(number_of_lamps)]
+    for i in range(number_of_lamps):
+        new_states[i] = default
+
     for i in range(number_of_lamps):
         if broadcast_states[i] == 2:
             new_states[i] == stream
