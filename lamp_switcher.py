@@ -87,11 +87,11 @@ def shuffleLamps():
     for i in range(number_of_lamps):
         if new_states[i] == default:
             while new_states[i] == default:
-                assignment = random.choice(broadcast_lamps)
                 if not broadcast_lamps:
                     new_states[i] = assignment
                     stream_count[assignment] = stream_count[assignment] + 1
                 else:
+                    assignment = random.choice(broadcast_lamps)
                     new_states[i] = assignment
                     broadcast_lamps.remove(assignment)
                     stream_count[assignment] = stream_count[assignment] + 1
