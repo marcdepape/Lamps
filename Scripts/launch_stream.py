@@ -16,11 +16,6 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 Gst.init(None)
 
-def list_mixers(kwargs):
-    print("Available mixer controls:")
-    for m in alsaaudio.mixers(**kwargs):
-        print("  '%s'" % m)
-
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
@@ -200,7 +195,6 @@ class Streamer(object):
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
 if __name__ == '__main__':
-    list_mixers()
     fader = Thread(target=transition, args=())
     fader.start()
 
