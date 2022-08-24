@@ -216,16 +216,5 @@ if __name__ == '__main__':
 
     fading = False
 
-    if fade_bulb:
-        while top_bright > 0:
-            top_bright = top_bright - 1
-            writeBulb(top_bright)
-            sleep(fade_rate)
-    elif fade_base:
-        while bottom_bright > 0:
-            bottom_bright = bottom_bright - 1
-            writeBase(bottom_bright)
-            sleep(fade_rate)
-
     while True:
         sleep(0.01)
