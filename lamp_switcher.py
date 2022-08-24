@@ -26,19 +26,6 @@ sudo alsactl restore -f alsa_lamps_codec.state
 sudo python3 Scripts/launch_stream.py --num $1 &
 '''
 
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp0.local sudo ./launch_broadcast.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp1.local sudo ./launch_lamp.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp2.local sudo ./launch.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp3.local sudo ./launch.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp4.local sudo ./launch.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp5.local sudo ./launch.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp0.local sudo ./launch_broadcast.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp1.local sudo ./launch_stream.sh 0 &")
-#sleep(60)
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp1.local sudo ./launch_broadcast.sh &")
-#os.system("sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp0.local sudo ./launch_stream.sh 1 &")
-#sleep(60)
-
 default = 255
 stream = 0
 broadcast = -1
@@ -61,9 +48,6 @@ def shuffleLamps():
     for i in range(number_of_lamps):
         new_states[i] = default
 
-    print("DEFAULT STATES----------------------")
-    print(new_states)
-
     for i in range(number_of_lamps):
         if stream_count[i] == 2:
             new_states[i] = broadcast
@@ -71,8 +55,6 @@ def shuffleLamps():
             broadcasts = broadcasts + 1
             broadcast_lamps.append(i)
             print("{} TO BROADCAST".format(i))
-            print(new_states)
-            print(broadcast_lamps)
 
     for i in range(number_of_lamps):
         if broadcast_count[i] == 2:
@@ -82,8 +64,6 @@ def shuffleLamps():
                 broadcast_lamps.remove(assignment)
                 stream_count[i] = stream_count[i] + 1
                 broadcast_count[i] = 0
-                print("{} TO STREAM".format(i))
-                print(new_states)
             else:
                 while new_states[i] == default:
                     assignment = random.randint(0, number_of_lamps-1)
@@ -95,10 +75,6 @@ def shuffleLamps():
                             broadcasts = broadcasts + 1
                             broadcast_lamps.append(assignment)
             print("{} TO STREAM".format(i))
-            print(new_states)
-
-    if broadcast > 3:
-        print("TOO MANY BROADCASTS!")
 
     while broadcasts < 3:
         assignment = random.randint(0, number_of_lamps-1)
@@ -110,22 +86,12 @@ def shuffleLamps():
             broadcasts = broadcasts + 1
             stream_count[assignment] = 0
 
-
-
     for i in range(number_of_lamps):
         tries = 0
         if new_states[i] == default:
-            print("CURRENT STATES-------------")
-            print(new_states)
-            print("BROADCASTERS----------------------")
-            print(broadcast_lamps)
             while new_states[i] == default and tries < number_of_lamps:
-                if not broadcast_lamps:
-                    print("NO MORE BRODCASTERS-------------")
-                    print(new_states)
-                    sleep(300)
-                elif assignment != new_states[i]:
-                    assignment = random.choice(broadcast_lamps)
+                assignment = random.choice(broadcast_lamps)
+                if assignment != new_states[i]:
                     new_states[i] = assignment
                     broadcast_lamps.remove(assignment)
                     stream_count[i] = stream_count[i] + 1
@@ -135,12 +101,6 @@ def shuffleLamps():
 
             if tries >= number_of_lamps:
                 print("NEED TO SHUFFLE AGAIN!")
-
-    print("BROADCAST COUNT----------------------")
-    print(broadcast_count)
-
-    print("STREAM COUNT----------------------")
-    print(stream_count)
 
     print("NEW STATES----------------------")
     print(new_states)

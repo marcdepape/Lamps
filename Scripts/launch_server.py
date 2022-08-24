@@ -31,6 +31,11 @@ pulse_min = 60
 pulse_max = 95
 fade_rate = 0.025
 saturation = 1.0
+top_bright = 0
+bottom_bright = 0
+fade_bulb = True
+fade_base = False
+fade_up = True
 
 neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
@@ -66,6 +71,50 @@ def writeBase(value):
     for i in range(16, num_pixels):
         neo[i] = (intensity,intensity,intensity);
     neo.show()
+
+def transition():
+    writeBase(0)
+
+    if top_bright < 255:
+        fade_bulb = True
+        fade_up = True
+        fade_base = False
+    else top_bright == 255:
+        fade_bulb = True
+        fade_up = False
+        fade_base = False
+
+    while True:
+        if fade_bulb == True and fade_base == False:
+            if fade_up:
+                if top_bright < 255:
+                        top_bright = top_bright + 1
+                else:
+                    fade_up = False
+            else:
+                if top_bright > 0:
+                        top_bright = top_bright - 1
+                else:
+                    fade_bulb = False
+                    fade_up = True
+                    fade_base = True
+            writeBulb(top_bright)
+        elif fade_bulb == False and fade_base == True:
+            if fade_up:
+                if bottom_bright < 255:
+                        bottom_bright = bottom_bright + 1
+                else:
+                    fade_up = False
+            else:
+                if bottom_bright > 0:
+                        bottom_bright = bottom_bright - 1
+                else:
+                    fade_bulb = True
+                    fade_up = True
+                    fade_base = False
+            writeBase(bottom_bright)
+        sleep(fade_rate)
+
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
@@ -157,16 +206,23 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.start()
 
 if __name__ == '__main__':
-    writeBase(0)
-
-    top_bright = 255
+    fader = Thread(target=transition, args=())
+    fader.start()
 
     lamp_server = RTSP_Server(lamp_id)
 
-    while top_bright > 0:
-        top_bright = top_bright - 1
-        writeBulb(top_bright)
-        sleep(fade_rate)
+    fader.terminate()
+
+    if fade_bulb:
+        while top_bright > 0:
+            top_bright = top_bright - 1
+            writeBulb(top_bright)
+            sleep(fade_rate)
+    elif fade_base:
+        while bottom_bright > 0:
+            bottom_bright = bottom_bright - 1
+            writeBase(bottom_bright)
+            sleep(fade_rate)
 
     while True:
         sleep(0.01)
