@@ -43,10 +43,14 @@ new_states = [default for i in range(number_of_lamps)]
 previous_states = []
 previous_states = [default for i in range(number_of_lamps)]
 
-def shuffleLamps(previous):
+def shuffleLamps():
     broadcasts = 0
     streams = 0
     broadcast_lamps = []
+
+    old = [default for i in range(number_of_lamps)]
+    for i in range(number_of_lamps):
+        old[i] = new_states[i]
 
     for i in range(number_of_lamps):
         new_states[i] = default
@@ -91,23 +95,35 @@ def shuffleLamps(previous):
 
     for i in range(number_of_lamps):
         tries = 0
+        duplicate = -1
         if new_states[i] == default:
             while new_states[i] == default and tries < number_of_lamps:
                 assignment = random.choice(broadcast_lamps)
-                if assignment != previous[i]:
+                if assignment != old[i]:
                     new_states[i] = assignment
                     broadcast_lamps.remove(assignment)
                     stream_count[i] = stream_count[i] + 1
                     broadcast_count[i] = 0
                 else:
+                    print("ALREADY STREAMING {}".format(assignment))
                     tries = tries + 1
 
             if tries >= number_of_lamps:
-                print("NEED TO SHUFFLE AGAIN!")
+                swaping = True
+                while swaping:
+                    swap = random.randint(0, number_of_lamps-1)
+                    if swap != i and new_states[swap] != broadcast:
+                        print("SWAPING {} and {}".format(i, swap))
+                        new_stream = new_states[swap]
+                        new_states[swap] = new_states[i]
+                        new_states[i] = new_stream
+                        swaping = False
 
 
     print("NEW STATES----------------------")
+    print(old)
     print(new_states)
+    previous_states = new_states
     return new_states
 
 def pull():
@@ -133,10 +149,10 @@ if __name__ == '__main__':
     sleep(10)
     while True:
         print("SHUFFLE LAMPS-------------------")
-        previous_states = shuffleLamps(previous_states)
+        shuffleLamps()
         print("UPDATE STATES-------------------")
         updateStates()
-        cycle = random.randint(10, 30)
+        cycle = random.randint(90, 180)
         print("NEXT CYCLE------------------")
         print(cycle)
         sleep(cycle)
