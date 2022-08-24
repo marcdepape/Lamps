@@ -90,9 +90,11 @@ def shuffleLamps():
     for i in range(number_of_lamps):
         tries = 0
         if new_states[i] == default:
+            print("CURRENT STATES-------------")
+            print(new_states)
+            print("BROADCASTERS----------------------")
+            print(broadcast_lamps)
             while new_states[i] == default and tries < number_of_lamps:
-                print("BROADCASTERS----------------------")
-                print(broadcast_lamps)
                 if not broadcast_lamps:
                     print("NO MORE BRODCASTERS-------------")
                     print(new_states)
