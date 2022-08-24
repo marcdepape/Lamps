@@ -16,14 +16,18 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 Gst.init(None)
 
-mic2 = alsaaudio.Mixer('Mic 2')
-mic2.setvolume(60)
-
 m = alsaaudio.Mixer()
 vol = m.getvolume()[0]
 
 print("VOLUME----------------------")
 print(vol)
+
+mic2 = alsaaudio.Mixer('Mic 2')
+mic2.setvolume(60)
+
+
+
+
 
 pixel_pin = board.D12
 num_pixels = 40
