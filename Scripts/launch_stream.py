@@ -24,7 +24,7 @@ def list_mixers(kwargs):
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
-master = alsaaudio.Mixer('Master')
+#master = alsaaudio.Mixer('Master')
 
 print("MASTER VOLUME---------")
 print(master.getvolume())
