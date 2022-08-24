@@ -105,6 +105,11 @@ def shuffleLamps():
     print("NEW STATES----------------------")
     print(new_states)
 
+def pull():
+    for i in range(number_of_lamps):
+        command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./pull.sh".format(i)
+        os.system(command)
+
 def updateStates():
     for i in range(number_of_lamps):
         if new_states[i] == broadcast:
@@ -119,6 +124,8 @@ def updateStates():
             os.system(command)
 
 if __name__ == '__main__':
+    pull()
+    sleep(15)
     while True:
         print("SHUFFLE LAMPS-------------------")
         shuffleLamps()
