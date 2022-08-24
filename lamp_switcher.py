@@ -40,7 +40,10 @@ stream_count = [0 for i in range(number_of_lamps)]
 new_states = []
 new_states = [default for i in range(number_of_lamps)]
 
-def shuffleLamps():
+previous_states = []
+previous_states = [default for i in range(number_of_lamps)]
+
+def shuffleLamps(previous):
     broadcasts = 0
     streams = 0
     broadcast_lamps = []
@@ -91,7 +94,7 @@ def shuffleLamps():
         if new_states[i] == default:
             while new_states[i] == default and tries < number_of_lamps:
                 assignment = random.choice(broadcast_lamps)
-                if assignment != new_states[i]:
+                if assignment != previous[i]:
                     new_states[i] = assignment
                     broadcast_lamps.remove(assignment)
                     stream_count[i] = stream_count[i] + 1
@@ -102,8 +105,10 @@ def shuffleLamps():
             if tries >= number_of_lamps:
                 print("NEED TO SHUFFLE AGAIN!")
 
+
     print("NEW STATES----------------------")
     print(new_states)
+    return new_states
 
 def pull():
     for i in range(number_of_lamps):
@@ -125,13 +130,13 @@ def updateStates():
 
 if __name__ == '__main__':
     pull()
-    sleep(15)
+    sleep(10)
     while True:
         print("SHUFFLE LAMPS-------------------")
-        shuffleLamps()
+        previous_states = shuffleLamps(previous_states)
         print("UPDATE STATES-------------------")
         updateStates()
-        cycle = random.randint(90, 180)
+        cycle = random.randint(10, 30)
         print("NEXT CYCLE------------------")
         print(cycle)
         sleep(cycle)
