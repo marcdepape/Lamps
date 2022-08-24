@@ -117,7 +117,7 @@ def transition():
         sleep(fade_rate/10)
 
     while top_bright > 0:
-        top_bright = top_bright + 1
+        top_bright = top_bright - 1
         writeBulb(top_bright)
         sleep(fade_rate)
 
