@@ -61,14 +61,18 @@ def shuffleLamps():
     for i in range(number_of_lamps):
         new_states[i] = default
 
+    print("DEFAULT STATES----------------------")
+    print(new_states)
+
     for i in range(number_of_lamps):
         if stream_count[i] == 2:
-            new_states[i] == broadcast
+            new_states[i] = broadcast
             stream_count[i] = 0
             broadcasts = broadcasts + 1
             broadcast_lamps.append(i)
             print("{} TO BROADCAST".format(i))
             print(new_states)
+            print(broadcast_lamps)
 
     for i in range(number_of_lamps):
         if broadcast_count[i] == 2:
