@@ -66,14 +66,14 @@ def shuffleLamps():
             new_states[i] == stream
             broadcast_count[i] = 0
             streams = streams + 1
-            print("{} TO STREAM").format(i)
+            print("{} TO STREAM".format(i))
 
         if stream_count[i] == 2:
             new_states[i] == broadcast
             stream_count[i] = 0
             broadcasts = broadcasts + 1
             broadcast_lamps.append(i)
-            print("{} TO BROADCAST").format(i)
+            print("{} TO BROADCAST".format(i))
 
     while broadcasts < 3:
         assignment = random.randint(0, number_of_lamps-1)
