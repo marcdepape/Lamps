@@ -74,12 +74,14 @@ def shuffleLamps():
         if new_states[assignment] == default:
             new_states[assignment] = broadcast
             broadcast_states[assignment] = broadcast_states[assignment] + 1
+            broadcasts = broadcasts + 1
 
     while streams < 3:
         assignment = random.randint(0, number_of_lamps-1)
         if new_states[assignment] == default:
             new_states[assignment] = assignment
             stream_states[assignment] = stream_states[assignment] + 1
+            streams = streams + 1
 
     print("NEW STATES----------------------")
     print(new_states)
