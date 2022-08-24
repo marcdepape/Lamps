@@ -109,9 +109,18 @@ def transition():
                     fade_up = True
                     fade_base = False
             writeBase(bottom_bright)
-        sleep(fade_rate/2)
+        sleep(fade_rate/10)
 
-    print("STOP FADING!")
+    while bottom_bright > 0:
+        bottom_bright = bottom_bright -1
+        writeBase(bottom_bright)
+        sleep(fade_rate)
+
+    while top_bright < 255:
+        top_bright = top_bright + 1
+        writeBulb(top_bright)
+        sleep(fade_rate)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--num',

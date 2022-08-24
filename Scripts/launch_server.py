@@ -114,10 +114,15 @@ def transition():
                     fade_up = True
                     fade_base = False
             writeBase(bottom_bright)
-        sleep(fade_rate/2)
+        sleep(fade_rate/10)
 
-    print("STOP FADING!")
+    while top_bright > 0:
+        top_bright = top_bright + 1
+        writeBulb(top_bright)
+        sleep(fade_rate)
 
+    while bottom_bright > 0:
+        writeBase(0)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
