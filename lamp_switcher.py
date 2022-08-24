@@ -90,9 +90,11 @@ def updateStates():
     for i in range(number_of_lamps):
         if new_states[i] == broadcast:
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_broadcast.sh &".format(i)
+            print(command)
             os.system(command)
         elif new_states[i] == stream:
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_stream.sh {} &".format(i, new_states[i])
+            print(command)
             os.system(command)
 
 if __name__ == '__main__':
