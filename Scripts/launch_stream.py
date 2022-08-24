@@ -24,7 +24,7 @@ num_pixels = 40
 ORDER = neopixel.GRB
 pulse_min = 60
 pulse_max = 95
-fade_rate = 0.01
+fade_rate = 0.001
 saturation = 1.0
 fading = True
 
