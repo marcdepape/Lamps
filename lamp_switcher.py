@@ -53,7 +53,7 @@ stream_states = [0 for i in range(number_of_lamps)]
 new_states = []
 new_states =  [default for i in range(number_of_lamps)]
 
-def shuffleLamps()
+def shuffleLamps():
     broadcasts = 0
     streams = 0
 
@@ -84,7 +84,7 @@ def shuffleLamps()
     print("NEW STATES----------------------")
     print(new_states)
 
-def updateStates()
+def updateStates():
     for i in range(number_of_lamps):
         if new_states[i] == broadcast
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_broadcast.sh &".format(i)
