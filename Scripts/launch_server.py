@@ -161,12 +161,12 @@ if __name__ == '__main__':
 
     top_bright = 255
 
+    lamp_server = RTSP_Server(lamp_id)
+
     while top_bright > 0:
         top_bright = top_bright - 1
         writeBulb(top_bright)
         sleep(fade_rate)
-
-    lamp_server = RTSP_Server(lamp_id)
 
     while True:
         sleep(0.01)
