@@ -44,11 +44,11 @@ stream = 0
 broadcast = -1
 number_of_lamps = 6
 
-broadcast_states = []
-broadcast_states = [0 for i in range(number_of_lamps)]
+broadcast_count = []
+broadcast_count = [0 for i in range(number_of_lamps)]
 
-stream_states = []
-stream_states = [0 for i in range(number_of_lamps)]
+stream_count = []
+stream_count = [0 for i in range(number_of_lamps)]
 
 new_states = []
 new_states = [default for i in range(number_of_lamps)]
@@ -61,37 +61,46 @@ def shuffleLamps():
         new_states[i] = default
 
     for i in range(number_of_lamps):
-        if broadcast_states[i] == 2:
+        if broadcast_count[i] == 2:
             new_states[i] == stream
-            broadcast_states[i] = 0
+            broadcast_count[i] = 0
             streams = streams + 1
 
-        if stream_states[i] == 2:
+        if stream_count[i] == 2:
             new_states[i] == broadcast
-            stream_states[i] = 0
+            stream_count[i] = 0
             broadcasts = broadcasts + 1
 
+    broadcast_lamps = []
     while broadcasts < 3:
         assignment = random.randint(0, number_of_lamps-1)
 
         if new_states[assignment] == default:
             new_states[assignment] = broadcast
-            broadcast_states[assignment] = broadcast_states[assignment] + 1
+            broadcast_lamps.append(assignment)
+            broadcast_count[assignment] = broadcast_count[assignment] + 1
             broadcasts = broadcasts + 1
 
     print("BROADCASTERS----------------------")
-    print(new_states)
+    print(broadcast_lamps)
 
-    while streams < 3:
-        assignment = random.randint(0, number_of_lamps-1)
+    for i in range(number_of_lamps):
+        if new_states[i] == default:
+            while new_states[i] == default:
+                assignment = random.choice(broadcast_lamps)
+                if not broadcast_lamps:
+                    new_states[i] = assignment
+                    stream_count[assignment] = stream_count[assignment] + 1
+                else:
+                    new_states[i] = assignment
+                    broadcast_lamps.remove(assignment)
+                    stream_count[assignment] = stream_count[assignment] + 1
 
-        if new_states[assignment] == default:
-            lamp = random.randint(0, number_of_lamps-1)
+    print("BROADCAST COUNT----------------------")
+    print(broadcast_count)
 
-            if lamp != assignment and new_states[lamp] == broadcast:
-                new_states[assignment] = lamp
-                stream_states[assignment] = stream_states[assignment] + 1
-                streams = streams + 1
+    print("STREAM COUNT----------------------")
+    print(stream_count)
 
     print("NEW STATES----------------------")
     print(new_states)
@@ -100,17 +109,19 @@ def updateStates():
     for i in range(number_of_lamps):
         if new_states[i] == broadcast:
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_broadcast.sh &".format(i)
-            print(command)
+            message = "LAMP {} IS BROADCASTING".format(i)
+            print(message)
             os.system(command)
         else:
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_stream.sh {} &".format(i, new_states[i])
-            print(command)
+            message = "LAMP {} IS STREAMING LAMP {}".format(i, new_states[i])
+            print(message)
             os.system(command)
 
 if __name__ == '__main__':
     while True:
-        print("SHUFFLE LAMPS")
+        print("SHUFFLE LAMPS-------------------")
         shuffleLamps()
-        print("UPDATE STATES")
+        print("UPDATE STATES-------------------")
         updateStates()
         sleep(60)
