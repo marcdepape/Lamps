@@ -92,6 +92,8 @@ def shuffleLamps():
     print(new_states)
 
 def updateStates():
+    print("THE STATES----------------------")
+    print(new_states)
     for i in range(number_of_lamps):
         if new_states[i] == default:
             print("DEFAULT!")
