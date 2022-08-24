@@ -190,7 +190,7 @@ if __name__ == '__main__':
         stream_state = streamer.change(lamp_num)
         sleep(1)
 
-    fader.terminate()
+    fader.pause()
 
     if fade_bulb:
         while top_bright < 255:
