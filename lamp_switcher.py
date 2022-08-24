@@ -92,7 +92,7 @@ def updateStates():
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_broadcast.sh &".format(i)
             print(command)
             os.system(command)
-        elif new_states[i] == stream:
+        else:
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_stream.sh {} &".format(i, new_states[i])
             print(command)
             os.system(command)
