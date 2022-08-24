@@ -70,12 +70,23 @@ def shuffleLamps():
             print("{} TO BROADCAST".format(i))
 
         if broadcast_count[i] == 2:
-            assignment = random.choice(broadcast_lamps)
-            new_states[i] = assignment
-            broadcast_lamps.remove(assignment)
-            stream_count[i] = stream_count[i] + 1
-            broadcast_count[i] = 0
-            print("{} TO STREAM".format(i))
+            if broadcast_lamps:
+                assignment = random.choice(broadcast_lamps)
+                new_states[i] = assignment
+                broadcast_lamps.remove(assignment)
+                stream_count[i] = stream_count[i] + 1
+                broadcast_count[i] = 0
+                print("{} TO STREAM".format(i))
+            else:
+                while new_states[i] == default:
+                    assignment = random.randint(0, number_of_lamps-1)
+                    if assignment != i:
+                        new_states[i] = assignment
+                        if new_states[assignment] != broadcast:
+                            new_states[assignment] == broadcast
+                            stream_count[assignment] = 0
+                            broadcasts = broadcasts + 1
+                            broadcast_lamps.append(assignment)
 
     if broadcast > 3:
         print("TOO MANY BROADCASTS!")
