@@ -96,6 +96,7 @@ def shuffleLamps():
                 if not broadcast_lamps:
                     print("NO MORE BRODCASTERS-------------")
                     print(new_states)
+                    sleep(300)
                 elif assignment != new_states[i]:
                     assignment = random.choice(broadcast_lamps)
                     new_states[i] = assignment
