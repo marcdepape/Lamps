@@ -79,6 +79,9 @@ def shuffleLamps():
             broadcast_states[assignment] = broadcast_states[assignment] + 1
             broadcasts = broadcasts + 1
 
+    print("BROADCASTERS----------------------")
+    print(new_states)
+
     while streams < 3:
         assignment = random.randint(0, number_of_lamps-1)
 
@@ -94,12 +97,7 @@ def shuffleLamps():
     print(new_states)
 
 def updateStates():
-    print("THE STATES----------------------")
-    print(new_states)
     for i in range(number_of_lamps):
-        if new_states[i] == default:
-            print("DEFAULT!")
-
         if new_states[i] == broadcast:
             command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_broadcast.sh &".format(i)
             print(command)
