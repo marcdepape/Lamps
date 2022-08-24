@@ -95,6 +95,8 @@ def updateStates():
 
 if __name__ == '__main__':
     while True:
+        print("SHUFFLE LAMPS")
         shuffleLamps()
+        print("UPDATE STATES")
         updateStates()
         sleep(60)
