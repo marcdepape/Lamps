@@ -43,6 +43,9 @@ new_states = [default for i in range(number_of_lamps)]
 previous_states = []
 previous_states = [default for i in range(number_of_lamps)]
 
+last_states = []
+last_states = [default for i in range(number_of_lamps)]
+
 def shuffleLamps():
     broadcasts = 0
     streams = 0
@@ -50,6 +53,7 @@ def shuffleLamps():
 
     old = [default for i in range(number_of_lamps)]
     for i in range(number_of_lamps):
+        last_states[i] = previous_states[i]
         old[i] = new_states[i]
 
     for i in range(number_of_lamps):
@@ -139,7 +143,7 @@ def updateStates():
             print(message)
             os.system(command)
         else:
-            command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_stream.sh {} &".format(i, new_states[i])
+            command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_stream.sh {} {} &".format(i, new_states[i], last_states[i])
             message = "LAMP {} IS STREAMING LAMP {}".format(i, new_states[i])
             print(message)
             os.system(command)

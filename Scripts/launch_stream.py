@@ -16,9 +16,6 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 Gst.init(None)
 
-lineout = alsaaudio.Mixer('Lineout')
-
-
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
@@ -34,6 +31,24 @@ fading = True
 neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--num',
+                    dest='num',
+                    help='stream number',
+                    type=int,
+                    )
+
+parser.add_argument('--state',
+                    dest='state',
+                    help='previous state',
+                    type=int,
+                    )
+
+args = parser.parse_args()
+lamp_num = args.num
+lamp_state = args.state
 
 def pulse(rms):
     bottom_bright = 100 + float(rms)
@@ -74,13 +89,15 @@ def transition():
     fade_up = True
     writeBase(0)
 
-    if top_bright < 255:
-        fade_bulb = True
-        fade_up = True
-        fade_base = False
-    elif top_bright == 255:
+    if lamp_state != -1:
+        top_bright = 255
         fade_bulb = True
         fade_up = False
+        fade_base = False
+    else:
+        top_bright = 0
+        fade_bulb = True
+        fade_up = True
         fade_base = False
 
     while fading:
@@ -123,16 +140,6 @@ def transition():
         top_bright = top_bright + 1
         writeBulb(top_bright)
         sleep(fade_rate)
-
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--num',
-                    dest='num',
-                    help='Define integers to perform addition',
-                    type=int,
-                    )
-args = parser.parse_args()
-lamp_num = args.num
 
 class Streamer(object):
     def __init__(self):
