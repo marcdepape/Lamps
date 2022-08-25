@@ -24,6 +24,8 @@ lamp_id = int(this_lamp)
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
+server_launched = False
+
 pixel_pin = board.D12
 num_pixels = 40
 ORDER = neopixel.GRB
@@ -76,6 +78,8 @@ def transition():
     fade_up = True
     writeBase(0)
 
+    fades = 0
+
     if top_bright < 255:
         fade_bulb = True
         fade_up = True
@@ -85,7 +89,8 @@ def transition():
         fade_up = False
         fade_base = False
 
-    while fading:
+    while fading and fades >= 3:
+        fades = fades + 1
         if fade_bulb == True and fade_base == False:
             if fade_up:
                 if top_bright < 255:
@@ -115,6 +120,10 @@ def transition():
                     fade_base = False
             writeBase(bottom_bright)
         sleep(fade_rate/10)
+
+    if fades >= 3:
+        command = "sudo python3 launch_server.py &"
+        os.system(command)
 
     while top_bright > 0:
         top_bright = top_bright - 1
