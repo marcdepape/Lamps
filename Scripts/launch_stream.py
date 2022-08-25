@@ -17,17 +17,13 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 Gst.init(None)
 
 lineout = alsaaudio.Mixer('Lineout')
-vol = lineout.getvolume()
+vol = lineout.getvolume('Lineout')
 
 print("VOLUME----------------------")
 print(vol)
 
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
-
-
-
-
 
 pixel_pin = board.D12
 num_pixels = 40
