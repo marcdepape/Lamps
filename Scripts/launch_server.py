@@ -126,7 +126,7 @@ def transition():
             writeBase(bottom_bright)
         sleep(fade_rate/10)
 
-    if fades >= 3:
+    if fades >= 5:
         red_error = True
         writeBase(255)
         writeBulb(255)
