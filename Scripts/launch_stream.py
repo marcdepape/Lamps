@@ -17,10 +17,7 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 Gst.init(None)
 
 lineout = alsaaudio.Mixer('Lineout')
-vol = lineout.getvolume()
 
-print("VOLUME----------------------")
-print(vol)
 
 mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
@@ -199,6 +196,11 @@ class Streamer(object):
                 ).format(self.RTSP_ELEMENT_NAME, self.AMP_ELEMENT_NAME)
 
 if __name__ == '__main__':
+    vol = lineout.getvolume()
+
+    print("VOLUME----------------------")
+    print(vol)
+    
     fader = Thread(target=transition, args=())
     fader.start()
 
