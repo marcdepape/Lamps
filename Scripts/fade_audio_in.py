@@ -1,10 +1,10 @@
 import alsaaudio
 from time import sleep
 
-master = alsaaudio.Mixer('Master')
-current_vol = master.getvolume()
+lineout = alsaaudio.Mixer('Lineout')
+current_vol = int(lineout.getvolume())
 
-while current_vol < 100:
+while current_vol < 95:
     current_vol = current_vol + 1
-    master.setvolume(current_vol)
+    lineout.setvolume(current_vol)
     sleep(0.01)
