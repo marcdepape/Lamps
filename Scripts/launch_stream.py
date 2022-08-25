@@ -217,9 +217,9 @@ if __name__ == '__main__':
     while stream_state == -1:
         tries = tries + 1
         stream_state = streamer.change(lamp_num)
-        sleep(1)
+        sleep(3)
 
-        if tries > 10:
+        if tries > 5:
             red_error = True
 
     red_error = False
