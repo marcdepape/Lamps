@@ -8,22 +8,20 @@ from time import sleep, process_time, time, strftime
 # launch_broadcast.sh script
 '''
 #!/bin/bash
-sudo killall -9 python3
 cd Projects/Lamps/
-git reset --hard
-git pull
-sudo alsactl restore -f alsa_lamps_codec.state
+sudo python3 Scripts/fade_audio_out.py
+sudo killall -9 python3
+sudo python3 Scripts/fade_audio_in.py
 sudo python3 Scripts/launch_server.py &
 '''
 
 '''
 #!/bin/bash
-sudo killall -9 python3
 cd Projects/Lamps/
-git reset --hard
-git pull
-sudo alsactl restore -f alsa_lamps_codec.state
-sudo python3 Scripts/launch_stream.py --num $1 &
+sudo python3 Scripts/fade_audio_out.py
+sudo killall -9 python3
+sudo python3 Scripts/fade_audio_in.py
+sudo python3 Scripts/launch_stream.py --num $1 --state $2 &
 '''
 
 default = 255
@@ -40,9 +38,6 @@ stream_count = [0 for i in range(number_of_lamps)]
 new_states = []
 new_states = [default for i in range(number_of_lamps)]
 
-previous_states = []
-previous_states = [default for i in range(number_of_lamps)]
-
 last_states = []
 last_states = [default for i in range(number_of_lamps)]
 
@@ -53,7 +48,7 @@ def shuffleLamps():
 
     old = [default for i in range(number_of_lamps)]
     for i in range(number_of_lamps):
-        last_states[i] = previous_states[i]
+        last_states[i] = new_states[i]
         old[i] = new_states[i]
 
     for i in range(number_of_lamps):
@@ -127,7 +122,6 @@ def shuffleLamps():
     print("NEW STATES----------------------")
     print(old)
     print(new_states)
-    previous_states = new_states
     return new_states
 
 def pull():
