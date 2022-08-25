@@ -61,7 +61,7 @@ def constrain(val, min_val, max_val):
 def writeBulb(value):
     for i in range(16):
         if red_error:
-            neo[i] = (value,0,0)
+            neo[i] = (value,0,value)
         else:
             neo[i] = (value,value,value)
     neo.show()
@@ -70,7 +70,7 @@ def writeBase(value):
     intensity = int(value * saturation)
     for i in range(16, num_pixels):
         if red_error:
-            neo[i] = (value,0,0)
+            neo[i] = (value,0,value)
         else:
             neo[i] = (value,value,value)
     neo.show()
