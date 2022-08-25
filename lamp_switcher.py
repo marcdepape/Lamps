@@ -81,6 +81,7 @@ def shuffleLamps():
                             stream_count[assignment] = 0
                             broadcasts = broadcasts + 1
                             broadcast_lamps.append(assignment)
+            stream_lamps.append(i)
             print("{} TO STREAM".format(i))
 
     while broadcasts < 3:
@@ -94,9 +95,6 @@ def shuffleLamps():
             stream_count[assignment] = 0
 
     for i in range(number_of_lamps):
-        tries = 0
-        duplicate = -1
-        assignment = 0
         if new_states[i] == default:
             while new_states[i] == default:
                 assignment = random.choice(broadcast_lamps)
@@ -106,29 +104,39 @@ def shuffleLamps():
                 broadcast_count[i] = 0
                 stream_lamps.append(i)
 
+    print("STREAMERS--------------------")
+    print(stream_lamps)
+
     duplicate = True
+    swaps = []
+    swaps = [default for i in range(3)]
+
     while duplicate:
-        swaps = []
-        while new_states[stream_lamps[0] == old[stream_lamps[0]] or new_states[stream_lamps[1] == old[stream_lamps[1]] or new_states[stream_lamps[2] == old[stream_lamps[2]]:
+            count = 0
             for i in range(3):
-                swaps[i] = stream_lamps[i]
+                if new_states[stream_lamps[i]] == old[stream_lamps[i]]:
+                    count = count + 1
 
-            assignment = random.choice(swaps[i])
-            new_states[stream_lamps[0]] = assignment
-            swaps.remove(assignment)
+            if count > 0:
+                for i in range(3):
+                    swaps[i] = stream_lamps[i]
 
-            assignment = random.choice(swaps[i])
-            new_states[stream_lamps[1]] = assignment
-            swaps.remove(assignment)
+                assignment = random.choice(swaps)
+                new_states[stream_lamps[0]] = assignment
+                swaps.remove(assignment)
 
-            assignment = random.choice(swaps[i])
-            new_states[stream_lamps[2]] = assignment
-            swaps.remove(assignment)
+                assignment = random.choice(swaps)
+                new_states[stream_lamps[1]] = assignment
+                swaps.remove(assignment)
 
-            print("SWAPING--------------------")
-            print(new_states)
+                assignment = random.choice(swaps)
+                new_states[stream_lamps[2]] = assignment
+                swaps.remove(assignment)
 
-        duplicate = False
+                print("SWAPING--------------------")
+                print(new_states)
+            else:
+                duplicate = False
 
     print("NEW STATES----------------------")
     print(old)
