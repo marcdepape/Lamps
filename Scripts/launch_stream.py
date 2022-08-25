@@ -25,6 +25,7 @@ ORDER = neopixel.GRB
 pulse_min = 60
 pulse_max = 95
 fade_rate = 0.005
+red_error = False
 saturation = 1.0
 fading = True
 
@@ -69,16 +70,20 @@ def constrain(val, min_val, max_val):
     return min(max_val, max(min_val, val))
 
 def writeBulb(value):
-    top_bright = value
-    intensity = int(top_bright * saturation)
     for i in range(16):
-        neo[i] = (intensity,intensity,intensity);
+        if red_error:
+            neo[i] = (value,0,0);
+        else:
+            neo[i] = (value,value,value);
     neo.show()
 
 def writeBase(value):
     intensity = int(value * saturation)
-    for i in range(16, num_pixels):
-        neo[i] = (intensity,intensity,intensity);
+    for i in range(16):
+        if red_error:
+            neo[i] = (value,0,0);
+        else:
+            neo[i] = (value,value,value);
     neo.show()
 
 def transition():
@@ -208,10 +213,16 @@ if __name__ == '__main__':
 
     streamer = Streamer()
     stream_state = -1
+    tries = 0
     while stream_state == -1:
+        tries = tries + 1
         stream_state = streamer.change(lamp_num)
         sleep(1)
 
+        if tries > 10:
+            red_error = True
+
+    red_error = False
     fading = False
 
     streamer.fadeIn(fade_rate)

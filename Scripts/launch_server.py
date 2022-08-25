@@ -32,6 +32,7 @@ ORDER = neopixel.GRB
 pulse_min = 60
 pulse_max = 95
 fade_rate = 0.005
+red_error = False
 saturation = 1.0
 fading = True
 
@@ -58,16 +59,20 @@ def constrain(val, min_val, max_val):
     return min(max_val, max(min_val, val))
 
 def writeBulb(value):
-    top_bright = value
-    intensity = int(top_bright * saturation)
     for i in range(16):
-        neo[i] = (intensity,intensity,intensity);
+        if red_error:
+            neo[i] = (value,0,0)
+        else:
+            neo[i] = (value,value,value)
     neo.show()
 
 def writeBase(value):
     intensity = int(value * saturation)
     for i in range(16, num_pixels):
-        neo[i] = (intensity,intensity,intensity);
+        if red_error:
+            neo[i] = (value,0,0)
+        else:
+            neo[i] = (value,value,value)
     neo.show()
 
 def transition():
@@ -122,7 +127,10 @@ def transition():
         sleep(fade_rate/10)
 
     if fades >= 3:
-        command = "sudo python3 launch_server.py &"
+        red_error = True
+        writeBase(255)
+        writeBulb(255)
+        command = "cd ; echo marcdepape | sudo -S ./launch_broadcast.sh"
         os.system(command)
 
     while top_bright > 0:
