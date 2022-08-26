@@ -130,7 +130,8 @@ def transition():
         red_error = True
         writeBase(255)
         writeBulb(255)
-        subprocess.call(['sudo', './home/pi/Projects/Lamps/Scripts/relaunch_server.sh'])
+        subprocess.call("echo marcdepape | sudo")
+        subprocess.call("/home/pi/Projects/Lamps/Scripts/relaunch_server.sh")
 
     while top_bright > 0:
         top_bright = top_bright - 1
