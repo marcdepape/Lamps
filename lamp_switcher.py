@@ -110,8 +110,6 @@ def shuffleLamps():
     print(stream_lamps)
 
     duplicate = True
-    swaps = []
-    swaps = [default for i in range(3)]
 
     while duplicate:
             count = 0
@@ -120,13 +118,14 @@ def shuffleLamps():
                     count = count + 1
 
             if count > 0:
+                swaps = []
+                swaps = [default for i in range(3)]
                 streamer = 0
                 print("SWAPING--------------------")
                 for i in range(number_of_lamps):
                     if new_states[i] == broadcast:
                         print("{}: BROADCAST LAMP {}".format(streamer, i))
-
-                        swaps[streamer] = new_states[i]
+                        swaps[streamer] = i
                         streamer = streamer + 1
 
                 assignment = random.choice(swaps)
@@ -169,15 +168,15 @@ def updateStates():
             os.system(command)
 
 if __name__ == '__main__':
-    pull()
-    sleep(10)
+    #pull()
+    #sleep(10)
     while True:
         print("SHUFFLE LAMPS-------------------")
         shuffleLamps()
         print("UPDATE STATES-------------------")
-        updateStates()
+        #updateStates()
         #cycle = random.randint(90, 180)
-        cycle = 60
+        cycle = 1
         print("NEXT CYCLE------------------")
         print(cycle)
         sleep(cycle)
