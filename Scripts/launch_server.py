@@ -125,13 +125,13 @@ def transition():
                     fade_base = False
             writeBase(bottom_bright)
         sleep(fade_rate/10)
-
+    '''
     if fades >= 10:
         red_error = True
         writeBase(255)
         writeBulb(255)
         os.system("sudo bash /home/pi/Projects/Lamps/Scripts/relaunch_server.sh")
-
+    '''
     while top_bright > 0:
         top_bright = top_bright - 1
         writeBulb(top_bright)
