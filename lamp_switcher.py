@@ -97,7 +97,9 @@ def shuffleLamps():
     for i in range(number_of_lamps):
         if new_states[i] == default:
             while new_states[i] == default:
-                assignment = random.choice(broadcast_lamps)
+                assignment = i
+                while assignment == i:
+                    assignment = random.choice(broadcast_lamps)
                 new_states[i] = assignment
                 broadcast_lamps.remove(assignment)
                 stream_count[i] = stream_count[i] + 1
@@ -118,20 +120,28 @@ def shuffleLamps():
                     count = count + 1
 
             if count > 0:
-                for i in range(3):
-                    swaps[i] = stream_lamps[i]
+                exclusive = True
+                while exclusive:
+                    for i in range(3):
+                        swaps[i] = stream_lamps[i]
 
-                assignment = random.choice(swaps)
-                new_states[stream_lamps[0]] = assignment
-                swaps.remove(assignment)
+                    assignment = stream_lamps[0]
+                    while assignment == stream_lamps[0]:
+                        assignment = random.choice(swaps)
+                    new_states[stream_lamps[0]] = assignment
+                    swaps.remove(assignment)
 
-                assignment = random.choice(swaps)
-                new_states[stream_lamps[1]] = assignment
-                swaps.remove(assignment)
+                    assignment = stream_lamps[1]
+                    while assignment == stream_lamps[1]:
+                        assignment = random.choice(swaps)
+                    new_states[stream_lamps[1]] = assignment
+                    swaps.remove(assignment)
 
-                assignment = random.choice(swaps)
-                new_states[stream_lamps[2]] = assignment
-                swaps.remove(assignment)
+                    assignment = random.choice(swaps)
+                    if assignment != stream_lamps[2]:
+                        new_states[stream_lamps[2]] = assignment
+                        swaps.remove(assignment)
+                        exclusive = False
 
                 print("SWAPING--------------------")
                 print(new_states)
@@ -169,7 +179,8 @@ if __name__ == '__main__':
         shuffleLamps()
         print("UPDATE STATES-------------------")
         updateStates()
-        cycle = random.randint(90, 180)
+        #cycle = random.randint(90, 180)
+        cycle(60)
         print("NEXT CYCLE------------------")
         print(cycle)
         sleep(cycle)
