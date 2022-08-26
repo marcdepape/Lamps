@@ -130,7 +130,7 @@ def transition():
         red_error = True
         writeBase(255)
         writeBulb(255)
-        subprocess.call("./home/pi/launch_broadcast.sh", shell=True)
+        subprocess.call("/home/pi/launch_broadcast.sh")
 
     while top_bright > 0:
         top_bright = top_bright - 1
