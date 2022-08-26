@@ -124,7 +124,7 @@ def shuffleLamps():
                 print("SWAPING--------------------")
                 for i in range(number_of_lamps):
                     if new_states[i] == broadcast:
-                        print("LAMP {} TO STREAM LAMP {}".format(streamer, i))
+                        print("{}: BROADCAST LAMP {}".format(streamer, i))
 
                         swaps[streamer] = new_states[i]
                         streamer = streamer + 1
