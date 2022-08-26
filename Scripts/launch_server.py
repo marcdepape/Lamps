@@ -94,7 +94,7 @@ def transition():
         fade_up = False
         fade_base = False
 
-    while fading and fades < 5:
+    while fading and fades < 10:
         fades = fades + 1
         if fade_bulb == True and fade_base == False:
             if fade_up:
@@ -126,7 +126,7 @@ def transition():
             writeBase(bottom_bright)
         sleep(fade_rate/10)
 
-    if fades >= 5:
+    if fades >= 10:
         red_error = True
         writeBase(255)
         writeBulb(255)
