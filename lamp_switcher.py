@@ -120,9 +120,11 @@ def shuffleLamps():
                     count = count + 1
 
             if count > 0:
+                streamer = 0
                 for i in range(number_of_lamps):
                     if new_states[i] == broadcast:
-                        swaps[i] = new_states[i]
+                        swaps[streamer] = new_states[i]
+                        streamer = streamer + 1
 
                 assignment = random.choice(swaps)
                 new_states[stream_lamps[0]] = assignment
