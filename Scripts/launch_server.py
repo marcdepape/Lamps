@@ -130,8 +130,8 @@ def transition():
         red_error = True
         writeBase(255)
         writeBulb(255)
-        command = "cd ~ ; echo marcdepape | sudo -S ./launch_broadcast.sh"
-        os.system(command)
+        #command = "cd ~ ; echo marcdepape | sudo -S ./launch_broadcast.sh"
+        #os.system(command)
 
     while top_bright > 0:
         top_bright = top_bright - 1
