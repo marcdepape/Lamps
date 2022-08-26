@@ -121,8 +121,11 @@ def shuffleLamps():
 
             if count > 0:
                 streamer = 0
+                print("SWAPING--------------------")
                 for i in range(number_of_lamps):
                     if new_states[i] == broadcast:
+                        print("LAMP {} TO STREAM LAMP {}".format(streamer, i))
+
                         swaps[streamer] = new_states[i]
                         streamer = streamer + 1
 
@@ -138,7 +141,6 @@ def shuffleLamps():
                 new_states[stream_lamps[2]] = assignment
                 swaps.remove(assignment)
 
-                print("SWAPING--------------------")
                 print(new_states)
             else:
                 duplicate = False
