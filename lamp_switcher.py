@@ -168,15 +168,14 @@ def updateStates():
             os.system(command)
 
 if __name__ == '__main__':
-    #pull()
-    #sleep(10)
+    pull()
+    sleep(10)
     while True:
         print("SHUFFLE LAMPS-------------------")
         shuffleLamps()
         print("UPDATE STATES-------------------")
-        #updateStates()
-        #cycle = random.randint(90, 180)
-        cycle = 1
+        updateStates()
+        cycle = random.randint(90, 180)
         print("NEXT CYCLE------------------")
         print(cycle)
         sleep(cycle)
