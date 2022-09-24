@@ -3,6 +3,9 @@ from time import sleep
 import board
 from RPi import GPIO
 import neopixel
+pixel_pin = board.D12
+num_pixels = 40
+ORDER = neopixel.GRB
 
 lineout = alsaaudio.Mixer('Lineout')
 current_vol = int(lineout.getvolume()[0])
@@ -22,6 +25,7 @@ while value < 255:
         neo[i] = (value,value,value)
     neo.show()
     value = value + 1
+    sleep(0.001)
 
 while current_vol > 0:
     current_vol = current_vol - 1
@@ -33,3 +37,4 @@ while value > 0:
         neo[i] = (value,value,value)
     neo.show()
     value = value - 1
+    sleep(0.001)
