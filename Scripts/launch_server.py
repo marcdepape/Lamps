@@ -94,7 +94,7 @@ def transition():
         fade_up = False
         fade_base = False
 
-    while fading and fades < 5:
+    while fading:
         if fade_bulb == True and fade_base == False:
             if fade_up:
                 if top_bright < 255:
