@@ -82,6 +82,7 @@ def transition():
     fade_base = False
     fade_up = True
     writeBase(0)
+    writeTop(255)
 
     fades = 0
 
