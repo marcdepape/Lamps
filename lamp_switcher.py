@@ -168,7 +168,7 @@ def updateStates():
             os.system(command)
 
 if __name__ == '__main__':
-    #pull()
+    pull()
     sleep(10)
     while True:
         print("SHUFFLE LAMPS-------------------")

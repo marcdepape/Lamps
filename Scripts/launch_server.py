@@ -236,7 +236,7 @@ if __name__ == '__main__':
 
     lamp_server = RTSP_Server(lamp_id)
 
-    fading = False
+    #fading = False
 
     while True:
         sleep(0.01)
