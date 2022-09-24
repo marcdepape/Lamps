@@ -41,6 +41,7 @@ neo = neopixel.NeoPixel(
 )
 
 def pulse(rms):
+    fading = False
     bottom_bright = 100 + float(rms)
     bottom_bright = constrain(bottom_bright, pulse_min, pulse_max)
     bottom_bright = mapRange(bottom_bright, pulse_min, pulse_max, 0, 255)
@@ -155,7 +156,6 @@ class ExtendedBin(Gst.Bin):
             #oldState, newState, pendingState = message.parse_state_changed()
             #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState,newState,pendingState))
         elif message.type == Gst.MessageType.ELEMENT:
-            fading = False
             structure = message.get_structure()
             name = structure.get_name()
 
