@@ -34,14 +34,13 @@ pulse_max = 95
 fade_rate = 0.005
 red_error = False
 saturation = 1.0
-global fading
+fading = True
 
 neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
 
 def pulse(rms):
-    fading = False
     bottom_bright = 100 + float(rms)
     bottom_bright = constrain(bottom_bright, pulse_min, pulse_max)
     bottom_bright = mapRange(bottom_bright, pulse_min, pulse_max, 0, 255)
@@ -231,13 +230,12 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.start()
 
 if __name__ == '__main__':
-    fading = True
     fader = Thread(target=transition, args=())
     fader.start()
 
     lamp_server = RTSP_Server(lamp_id)
 
-    #fading = False
+    fading = False
 
     while True:
         sleep(0.01)
