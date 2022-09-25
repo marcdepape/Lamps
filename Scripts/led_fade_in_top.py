@@ -28,4 +28,4 @@ if __name__ == '__main__':
     while top_bright < 255:
         writeBulb(top_bright)
         top_bright = top_bright + 1
-        sleep(0.001)
+        sleep(0.01)
