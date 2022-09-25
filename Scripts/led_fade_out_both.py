@@ -52,20 +52,22 @@ if __name__ == '__main__':
             bottom_bright = bottom_bright + 1
             sleep(0.01)
 
-        while bottom_bright > 0 and top_bright > 0:
+        while bottom_bright >= 0 and top_bright >= 0:
             writeBase(bottom_bright)
             writeBulb(top_bright)
             top_bright = top_bright - 1
             bottom_bright = bottom_bright - 1
             sleep(0.01)
     else:
-        while bottom_bright < 255 and top_bright < 255:
+        top_bright = 0
+        bottom_bright = 0
+        while bottom_bright =< 255 and top_bright =< 255:
             writeBulb(top_bright)
             writeBase(bottom_bright)
             top_bright = top_bright + 1
             bottom_bright = bottom_bright + 1
             sleep(0.01)
-        while bottom_bright > 0 and top_bright > 0:
+        while bottom_bright >= 0 and top_bright >= 0:
             writeBase(bottom_bright)
             writeBulb(top_bright)
             top_bright = top_bright - 1
