@@ -79,11 +79,11 @@ def writeBulb(value):
 
 def writeBase(value):
     intensity = int(value * saturation)
-    for i in range(16):
+    for i in range(16, num_pixels):
         if red_error:
-            neo[i] = (value,0,0);
+            neo[i] = (value,0,value)
         else:
-            neo[i] = (value,value,value);
+            neo[i] = (value,value,value)
     neo.show()
 
 def transition():
