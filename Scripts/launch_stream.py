@@ -95,7 +95,7 @@ def transition():
     writeBase(0)
 
     if lamp_state != -1:
-        top_bright = 255
+        top_bright = 0
         fade_bulb = True
         fade_up = False
         fade_base = False
