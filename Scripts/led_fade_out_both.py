@@ -10,8 +10,8 @@ neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
 
-top_bright = 0
-bottom_bright = 255
+top_bright = 255
+bottom_bright = 0
 
 def writeBulb(value):
     for i in range(16):
@@ -25,8 +25,8 @@ def writeBase(value):
 
 if __name__ == '__main__':
     while bottom_bright < 255:
-        writeBulb(top_bright)
-        top_bright = top_bright + 1
+        writeBase(bottom_bright)
+        bottom_bright = bottom_bright + 1
         sleep(0.01)
 
     while bottom_bright > 0 and top_bright > 0:
