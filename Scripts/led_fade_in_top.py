@@ -23,7 +23,7 @@ def writeBase(value):
     neo.show()
 
 if __name__ == '__main__':
-    while top_bright < 255:
-        writeBulb(top_bright)
-        top_bright = top_bright + 1
-        sleep(0.01)
+    #while top_bright < 255:
+    #    writeBulb(top_bright)
+    #    top_bright = top_bright + 1
+    #    sleep(0.01)
