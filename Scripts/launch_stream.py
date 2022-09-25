@@ -94,16 +94,10 @@ def transition():
     fade_up = True
     writeBase(0)
 
-    if lamp_state != -1:
-        top_bright = 0
-        fade_bulb = True
-        fade_up = False
-        fade_base = False
-    else:
-        top_bright = 0
-        fade_bulb = True
-        fade_up = True
-        fade_base = False
+    top_bright = 0
+    fade_bulb = True
+    fade_up = True
+    fade_base = False
 
     while fading:
         if fade_bulb == True and fade_base == False:
