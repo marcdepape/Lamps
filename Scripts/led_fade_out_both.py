@@ -42,10 +42,6 @@ def writeBase(value):
         neo[i] = (value,value,value)
     neo.show()
 
-def from_stream():
-
-def fromt_broadcast():
-
 if __name__ == '__main__':
     if lamp_state != -1:
         top_bright = 255
