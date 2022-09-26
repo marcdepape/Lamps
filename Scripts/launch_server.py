@@ -153,7 +153,7 @@ class ExtendedBin(Gst.Bin):
 
         elif message.type == Gst.MessageType.STATE_CHANGED:
             #pass
-            get_name = gst.element_state_get_name
+            get_name = Gst.element_state_get_name
             oldState, newState, pendingState = message.parse_state_changed()
 
             print(get_name(newState))
