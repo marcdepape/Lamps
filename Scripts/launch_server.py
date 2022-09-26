@@ -88,17 +88,6 @@ def transition():
     fade_up = True
     writeBase(0)
 
-    fades = 0
-
-    if top_bright < 255:
-        fade_bulb = True
-        fade_up = True
-        fade_base = False
-    elif top_bright == 255:
-        fade_bulb = True
-        fade_up = False
-        fade_base = False
-
     while fading:
         if fade_bulb == True and fade_base == False:
             if fade_up:
@@ -129,18 +118,12 @@ def transition():
                     fade_up = True
                     fade_base = False
             writeBase(bottom_bright)
-        sleep(fade_rate/10)
-
-    if fades >= 5:
-        red_error = True
-        writeBase(255)
-        writeBulb(255)
-        os.system("sudo bash /home/pi/Projects/Lamps/Scripts/relaunch_server.sh")
+        sleep(0.01)
 
     while top_bright > 0:
         top_bright = top_bright - 1
         writeBulb(top_bright)
-        sleep(fade_rate)
+        sleep(0.01)
 
     while bottom_bright > 0:
         writeBase(0)
