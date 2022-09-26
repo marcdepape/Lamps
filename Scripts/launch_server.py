@@ -156,6 +156,7 @@ class ExtendedBin(Gst.Bin):
             #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
 
             #check = newState
+            print(newState)
             if newState == GST_STATE_PLAYING:
                 print("PLAYING!")
 
