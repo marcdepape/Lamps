@@ -43,6 +43,7 @@ neo = neopixel.NeoPixel(
 )
 
 def fadingFlip(state):
+    print("FADING STATE: {}".format(fading))
     fading = state
     print("FADING FLIP: {}".format(fading))
 
@@ -148,6 +149,7 @@ def transition():
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
+    now_playing = False
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
             error, debug = message.parse_error()
@@ -163,8 +165,9 @@ class ExtendedBin(Gst.Bin):
             oldState, newState, pendingState = message.parse_state_changed()
             print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
 
-            if newState == Gst.State.PLAYING and fading:
+            if newState == Gst.State.PLAYING and !now_playing:
                 print("PLAYING!")
+                now_playing = True
                 fadingFlip(False)
 
         elif message.type == Gst.MessageType.ELEMENT:
