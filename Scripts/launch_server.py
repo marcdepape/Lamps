@@ -149,6 +149,7 @@ def transition():
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
+    global now_playing
     now_playing = False
     def do_handle_message(self,message):
         if message.type == Gst.MessageType.ERROR:
