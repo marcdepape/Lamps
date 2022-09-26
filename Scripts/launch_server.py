@@ -152,11 +152,10 @@ class ExtendedBin(Gst.Bin):
             print ("End of stream")
         elif message.type == Gst.MessageType.STATE_CHANGED:
             #pass
-            print(list(message))
-            #oldState, newState, pendingState = message.parse_state_changed()
-            #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState.message,pendingState))
+            oldState, newState, pendingState = message.parse_state_changed()
+            print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState.name, pendingState))
 
-            #check = newState.value
+            check = newState.value
             #print(check)
 
 
