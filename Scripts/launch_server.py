@@ -165,7 +165,7 @@ class ExtendedBin(Gst.Bin):
             oldState, newState, pendingState = message.parse_state_changed()
             print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
 
-            if newState == Gst.State.PLAYING and !now_playing:
+            if newState == Gst.State.PLAYING and now_playing == False:
                 print("PLAYING!")
                 now_playing = True
                 fadingFlip(False)
