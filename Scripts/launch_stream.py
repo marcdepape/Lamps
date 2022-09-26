@@ -128,17 +128,17 @@ def transition():
                     fade_up = True
                     fade_base = False
             writeBase(bottom_bright)
-        sleep(fade_rate/10)
+        sleep(0.01)
 
     while bottom_bright > 0:
         bottom_bright = bottom_bright -1
         writeBase(bottom_bright)
-        sleep(fade_rate)
+        sleep(0.01)
 
     while top_bright < 255:
         top_bright = top_bright + 1
         writeBulb(top_bright)
-        sleep(fade_rate)
+        sleep(0.01)
 
 class Streamer(object):
     def __init__(self):
