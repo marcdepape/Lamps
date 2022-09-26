@@ -41,10 +41,7 @@ neo = neopixel.NeoPixel(
 )
 
 def pulse(rms):
-    if fading:
-        fading = False
-        print("FADING PULSE: {}".format(fading))
-
+    print(rms)
     bottom_bright = 100 + float(rms)
     bottom_bright = constrain(bottom_bright, pulse_min, pulse_max)
     bottom_bright = mapRange(bottom_bright, pulse_min, pulse_max, 0, 255)
