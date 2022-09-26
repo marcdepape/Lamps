@@ -150,17 +150,15 @@ class ExtendedBin(Gst.Bin):
                 print ("Debug info: " + debug)
         elif message.type == Gst.MessageType.EOS:
             print ("End of stream")
+
         elif message.type == Gst.MessageType.STATE_CHANGED:
             #pass
-            print(message)
             oldState, newState, pendingState = message.parse_state_changed()
-            #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
+            print ("State changed -> old:{}, new:{}, pending:{}".format(oldState.get_name(), newState.get_name(), pendingState.getName()))
 
-            #check = newState
-            #print(newState.get_state())
 
-            #if newState.get_state() == GST_STATE_PLAYING:
-            #    print("PLAYING!")
+
+
 
 
         elif message.type == Gst.MessageType.ELEMENT:
