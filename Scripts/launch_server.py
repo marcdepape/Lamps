@@ -157,7 +157,7 @@ class ExtendedBin(Gst.Bin):
 
             #check = newState
             print(newState)
-            if newState == GST_STATE_PLAYING:
+            if newState == Gst.State.GST_STATE_PLAYING:
                 print("PLAYING!")
 
 
