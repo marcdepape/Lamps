@@ -118,12 +118,12 @@ def transition():
                     fade_up = True
                     fade_base = False
             writeBase(bottom_bright)
-        sleep(0.01)
+        sleep(0.001)
 
     while top_bright > 0:
         top_bright = top_bright - 1
         writeBulb(top_bright)
-        sleep(0.01)
+        sleep(0.001)
 
     while bottom_bright > 0:
         writeBase(0)
