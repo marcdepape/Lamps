@@ -41,6 +41,10 @@ neo = neopixel.NeoPixel(
 )
 
 def pulse(rms):
+    if fading:
+        fading = False
+        print("FADING PULSE: {}".format(fading))
+
     bottom_bright = 100 + float(rms)
     bottom_bright = constrain(bottom_bright, pulse_min, pulse_max)
     bottom_bright = mapRange(bottom_bright, pulse_min, pulse_max, 0, 255)
@@ -151,9 +155,9 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.EOS:
             print ("End of stream")
         elif message.type == Gst.MessageType.STATE_CHANGED:
-            pass
+            #pass
             #oldState, newState, pendingState = message.parse_state_changed()
-            #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState,newState,pendingState))
+            print ("State changed -> old:{}, new:{}, pending:{}".format(oldState,newState,pendingState))
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
@@ -230,12 +234,13 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.start()
 
 if __name__ == '__main__':
+    print("FADING START: {}".format(fading))
     fader = Thread(target=transition, args=())
     fader.start()
 
     lamp_server = RTSP_Server(lamp_id)
 
-    fading = False
+    #fading = False
 
     while True:
         sleep(0.01)
