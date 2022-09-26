@@ -43,9 +43,7 @@ neo = neopixel.NeoPixel(
 
 def fadingFlip(state):
     global fading
-    print("FADING STATE: {}".format(fading))
     fading = state
-    print("FADING FLIP: {}".format(fading))
 
 def pulse(rms):
     bottom_bright = 100 + float(rms)
@@ -165,7 +163,6 @@ class ExtendedBin(Gst.Bin):
             #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
 
             if newState == Gst.State.PLAYING:
-                print("PLAYING!")
                 fadingFlip(False)
 
         elif message.type == Gst.MessageType.ELEMENT:
@@ -244,13 +241,10 @@ class RTSP_Server(GstRtspServer.RTSPServer):
         m.start()
 
 if __name__ == '__main__':
-    print("FADING START: {}".format(fading))
     fader = Thread(target=transition, args=())
     fader.start()
 
     lamp_server = RTSP_Server(lamp_id)
-
-    #fading = False
 
     while True:
         sleep(0.01)
