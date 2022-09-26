@@ -34,6 +34,8 @@ pulse_max = 95
 fade_rate = 0.005
 red_error = False
 saturation = 1.0
+
+global fading
 fading = True
 
 neo = neopixel.NeoPixel(
