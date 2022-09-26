@@ -163,7 +163,7 @@ class ExtendedBin(Gst.Bin):
             #pass
 
             oldState, newState, pendingState = message.parse_state_changed()
-            print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
+            #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
 
             if newState == Gst.State.PLAYING and now_playing == False:
                 print("PLAYING!")
