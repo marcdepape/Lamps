@@ -42,6 +42,10 @@ neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
 
+def fadingFlip(state):
+    fading = state
+    print("FADING FLIP: {}".format(fading))
+
 def pulse(rms):
     bottom_bright = 100 + float(rms)
     bottom_bright = constrain(bottom_bright, pulse_min, pulse_max)
@@ -161,7 +165,7 @@ class ExtendedBin(Gst.Bin):
 
             if newState == Gst.State.PLAYING and fading:
                 print("PLAYING!")
-                fading = False
+                fadingFlip(False)
 
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
