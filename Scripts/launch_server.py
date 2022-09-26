@@ -157,6 +157,8 @@ class ExtendedBin(Gst.Bin):
             oldState, newState, pendingState = message.parse_state_changed()
             print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
 
+            if newState == Gst.State.PLAYING:
+                print("PLAYING!")
         elif message.type == Gst.MessageType.ELEMENT:
             structure = message.get_structure()
             name = structure.get_name()
