@@ -153,10 +153,11 @@ class ExtendedBin(Gst.Bin):
         elif message.type == Gst.MessageType.STATE_CHANGED:
             #pass
             oldState, newState, pendingState = message.parse_state_changed()
-            print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState.name, pendingState))
+            #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState, pendingState))
 
-            check = newState.value
-            #print(check)
+            #check = newState
+            if newState == GST_STATE_PLAYING:
+                print("PLAYING!")
 
 
         elif message.type == Gst.MessageType.ELEMENT:
