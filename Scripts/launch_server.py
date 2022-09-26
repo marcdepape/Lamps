@@ -35,7 +35,6 @@ fade_rate = 0.005
 red_error = False
 saturation = 1.0
 
-global fading
 fading = True
 
 neo = neopixel.NeoPixel(
@@ -43,6 +42,7 @@ neo = neopixel.NeoPixel(
 )
 
 def fadingFlip(state):
+    global fading
     print("FADING STATE: {}".format(fading))
     fading = state
     print("FADING FLIP: {}".format(fading))
