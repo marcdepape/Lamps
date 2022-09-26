@@ -155,7 +155,7 @@ class ExtendedBin(Gst.Bin):
             oldState, newState, pendingState = message.parse_state_changed()
             #print ("State changed -> old:{}, new:{}, pending:{}".format(oldState, newState.message,pendingState))
 
-            check = newState.get_structure()
+            check = newState.value
             print(check)
 
 
