@@ -102,7 +102,6 @@ def transition():
                     fade_bulb = False
                     fade_up = True
                     fade_base = True
-                    fades = fades + 1
             writeBulb(top_bright)
         elif fade_bulb == False and fade_base == True:
             if fade_up:
