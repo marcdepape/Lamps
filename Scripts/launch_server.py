@@ -125,7 +125,7 @@ def transition():
         sleep(0.001)
 
     sleeper = 0.2
-    for i in range(10):
+    for i in range(12):
         writeBase(0)
         sleep(sleeper)
         writeBase(255)
