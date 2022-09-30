@@ -16,8 +16,8 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 Gst.init(None)
 
-mic2 = alsaaudio.Mixer('Mic 2')
-mic2.setvolume(60)
+#mic2 = alsaaudio.Mixer('Mic 2')
+#mic2.setvolume(60)
 
 pixel_pin = board.D12
 num_pixels = 40
@@ -213,7 +213,7 @@ if __name__ == '__main__':
         stream_state = streamer.change(lamp_num)
         sleep(3)
 
-        if tries > 5:
+        if tries > 7:
             red_error = True
 
     red_error = False

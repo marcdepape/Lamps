@@ -24,6 +24,10 @@ sudo python3 Scripts/fade_audio_in.py
 sudo python3 Scripts/launch_stream.py --num $1 --state $2 &
 '''
 
+speaker = 60
+peak = 1.3
+pulse = 60
+
 default = 255
 stream = 0
 broadcast = -1

@@ -21,8 +21,8 @@ this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
 
-mic2 = alsaaudio.Mixer('Mic 2')
-mic2.setvolume(60)
+#mic2 = alsaaudio.Mixer('Mic 2')
+#mic2.setvolume(60)
 
 server_launched = False
 
