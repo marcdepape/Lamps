@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import random
 import os
 
 number_of_lamps = 6
