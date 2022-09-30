@@ -124,7 +124,7 @@ def transition():
         writeBulb(top_bright)
         sleep(0.001)
 
-    sleeper = 0.25
+    sleeper = 0.2
     for i in range(10):
         writeBase(0)
         sleep(sleeper)
