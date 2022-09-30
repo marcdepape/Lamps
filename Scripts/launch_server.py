@@ -3,6 +3,7 @@ import alsaaudio
 from threading import Thread
 from time import sleep
 import subprocess
+import argparse
 import board
 from RPi import GPIO
 import neopixel
