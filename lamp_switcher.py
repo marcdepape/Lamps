@@ -178,7 +178,7 @@ if __name__ == '__main__':
     cycle = 0
     cycle_count = 0
     while True:
-        if(cycle == cycle_count)
+        if cycle == cycle_count:
             print("SHUFFLE LAMPS-------------------")
             shuffleLamps()
             print("UPDATE STATES-------------------")
