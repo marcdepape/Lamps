@@ -190,9 +190,9 @@ if __name__ == '__main__':
             sleep(1)
             cycle_count = cycle_count + 1
 
-            if cycle - cycle_count == 30:
+            if (cycle - cycle_count) == 30:
                 print("30 seconds")
-            elif cycle - cycle_count == 10:
+            elif (cycle - cycle_count) == 10:
                 print("10 seconds")
-            elif cycle - cycle_count < 6:
+            elif (cycle - cycle_count) < 6:
                 print(cycle - cycle_count)
