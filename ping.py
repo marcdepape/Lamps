@@ -1,3 +1,5 @@
+import os
+
 while True:
     response = os.system("ping -c 1 lamp{}.local".format(ping))
     if response != 0:
