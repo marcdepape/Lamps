@@ -177,7 +177,7 @@ if __name__ == '__main__':
     sleep(10)
     cycle = 0
     cycle_count = 0
-    ping = 0
+    
     while True:
         if cycle == cycle_count:
             cycle_count = 0
