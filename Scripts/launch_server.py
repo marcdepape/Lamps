@@ -124,8 +124,15 @@ def transition():
         writeBulb(top_bright)
         sleep(0.001)
 
-    while bottom_bright > 0:
+    scaler = 1
+    for i in range(5):
         writeBase(0)
+        sleep(0.1/scaler)
+        writeBase(255)
+        sleep(0.1/scaler)
+        scaler = scaler*10
+
+    writeBase(0)
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
 class ExtendedBin(Gst.Bin):
