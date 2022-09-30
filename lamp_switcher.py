@@ -175,12 +175,24 @@ def updateStates():
 if __name__ == '__main__':
     pull()
     sleep(10)
+    cycle = 0
+    cycle_count = 0
     while True:
-        print("SHUFFLE LAMPS-------------------")
-        shuffleLamps()
-        print("UPDATE STATES-------------------")
-        updateStates()
-        cycle = random.randint(90, 120)
-        print("NEXT CYCLE------------------")
-        print(cycle)
-        sleep(cycle)
+        if(cycle == cycle_count)
+            print("SHUFFLE LAMPS-------------------")
+            shuffleLamps()
+            print("UPDATE STATES-------------------")
+            updateStates()
+            cycle = random.randint(90, 120)
+            print("NEXT CYCLE------------------")
+            print(cycle)
+        else:
+            sleep(1)
+            cycle_count = cycle_count + 1
+
+            if cycle - cycle_count == 30:
+                print("30 seconds")
+            elif cycle - cycle_count == 10:
+                print("10 seconds")
+            elif cycle - cycle_count < 6:
+                print(cycle - cycle_count)
