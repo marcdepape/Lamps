@@ -141,7 +141,7 @@ def transition():
         writeBase(bright)
         sleep(sleeper)
         sleeper = sleeper * 0.7
-        bright = bright * 0.9
+        bright = bright * 0.8
 
     writeBase(0)
 
