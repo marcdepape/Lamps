@@ -11,8 +11,9 @@ from time import sleep, process_time, time, strftime
 cd Projects/Lamps/
 sudo python3 Scripts/fade_audio_out.py
 sudo killall -9 python3
+sudo python3 Scripts/led_fade_out_both.py --num $1 --state $2
 sudo python3 Scripts/fade_audio_in.py
-sudo python3 Scripts/launch_server.py &
+sudo python3 Scripts/launch_stream.py --num $1 --state $2 --peak $3 &
 '''
 
 '''
@@ -20,8 +21,9 @@ sudo python3 Scripts/launch_server.py &
 cd Projects/Lamps/
 sudo python3 Scripts/fade_audio_out.py
 sudo killall -9 python3
+sudo python3 Scripts/led_fade_out_both.py --num $1 --state $2
 sudo python3 Scripts/fade_audio_in.py
-sudo python3 Scripts/launch_stream.py --num $1 --state $2 &
+sudo python3 Scripts/launch_stream.py --num $1 --state $2 --peak $3 &
 '''
 
 peak = 1.3
@@ -178,8 +180,7 @@ if __name__ == '__main__':
         shuffleLamps()
         print("UPDATE STATES-------------------")
         updateStates()
-        #cycle = random.randint(90, 180)
-        cycle = 60
+        cycle = random.randint(90, 120)
         print("NEXT CYCLE------------------")
         print(cycle)
         sleep(cycle)
