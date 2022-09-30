@@ -21,9 +21,6 @@ this_lamp = this_lamp.replace('lamp','',1)
 print("THIS LAMP IS LAMP NUMBER: " + this_lamp)
 lamp_id = int(this_lamp)
 
-#mic2 = alsaaudio.Mixer('Mic 2')
-#mic2.setvolume(60)
-
 server_launched = False
 
 pixel_pin = board.D12
@@ -40,6 +37,17 @@ fading = True
 neo = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--pulse',
+                    dest='pulse',
+                    help='pulse minimum',
+                    type=int,
+                    )
+
+args = parser.parse_args()
+pulse_min = args.pulse
 
 def fadingFlip(state):
     global fading
@@ -124,13 +132,15 @@ def transition():
         writeBulb(top_bright)
         sleep(0.001)
 
+    bright = 255
     sleeper = 0.3
     for i in range(10):
         writeBase(0)
         sleep(sleeper)
-        writeBase(255)
+        writeBase(bright)
         sleep(sleeper)
-        sleeper = sleeper * 0.75
+        sleeper = sleeper * 0.7
+        bright = bright * 0.9
 
     writeBase(0)
 

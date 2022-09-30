@@ -24,7 +24,6 @@ sudo python3 Scripts/fade_audio_in.py
 sudo python3 Scripts/launch_stream.py --num $1 --state $2 &
 '''
 
-speaker = 60
 peak = 1.3
 pulse = 60
 
@@ -161,12 +160,12 @@ def pull():
 def updateStates():
     for i in range(number_of_lamps):
         if new_states[i] == broadcast:
-            command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_broadcast.sh &".format(i)
+            command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_broadcast.sh {} &".format(i, pulse)
             message = "LAMP {} IS BROADCASTING".format(i)
             print(message)
             os.system(command)
         else:
-            command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_stream.sh {} {} &".format(i, new_states[i], last_states[i])
+            command = "sshpass -p \'marcdepape\' ssh -o StrictHostKeyChecking=no pi@lamp{}.local sudo ./launch_stream.sh {} {} {} &".format(i, new_states[i], last_states[i], peak)
             message = "LAMP {} IS STREAMING LAMP {}".format(i, new_states[i])
             print(message)
             os.system(command)

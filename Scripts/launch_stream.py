@@ -16,9 +16,6 @@ from gi.repository import Gst, GObject, GLib, GstRtspServer
 
 Gst.init(None)
 
-#mic2 = alsaaudio.Mixer('Mic 2')
-#mic2.setvolume(60)
-
 pixel_pin = board.D12
 num_pixels = 40
 ORDER = neopixel.GRB
@@ -47,9 +44,16 @@ parser.add_argument('--state',
                     type=int,
                     )
 
+parser.add_argument('--peak',
+                    dest='peak',
+                    help='peak volume',
+                    type=float,
+                    )
+
 args = parser.parse_args()
 lamp_num = args.num
 lamp_state = args.state
+peak_volume = args.peak
 
 def pulse(rms):
     bottom_bright = 100 + float(rms)
@@ -150,7 +154,9 @@ class Streamer(object):
         self.rtspsrc = self.pipeline.get_by_name(self.RTSP_ELEMENT_NAME)
         self.audioamplify = self.pipeline.get_by_name(self.AMP_ELEMENT_NAME)
         self.volume = 0
-        self.peak = 1.3
+
+        global peak_volume
+        self.peak = peak_volume
 
         print("pipeline:", self.pipeline_string)
 

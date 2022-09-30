@@ -36,7 +36,7 @@ mic2 = alsaaudio.Mixer('Mic 2')
 mic2.setvolume(60)
 
 '''
-gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp3.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
+gst-launch-1.0 rtspsrc latency=1024 location=rtsp://lamp1.local:8100/mic ! queue ! rtpvorbisdepay ! vorbisdec ! audioconvert ! audio/x-raw,format=S16LE,channels=2 ! alsasink
 '''
 
 # extended Gst.Bin that overrides do_handle_message and adds debugging
